@@ -7,3 +7,5 @@ Konfliktusos Bontás 0,5
 Katasztrófa 0,5
 Metropolisz 0,5
 Haladó grafika 0,5 - 1
+
+
