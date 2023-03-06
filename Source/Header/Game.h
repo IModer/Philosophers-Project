@@ -2,7 +2,6 @@
 #define _GAME_
 
 #include "global.h"
-#include <raylib.h>
 
 class Game
 {
@@ -14,6 +13,7 @@ class Game
 
     // functions
     Game();
+    void GameLoop();
     private:
     // static
     static Game* _instance;

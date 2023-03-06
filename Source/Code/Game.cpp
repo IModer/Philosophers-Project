@@ -15,5 +15,19 @@ void Game::DeleteInstance()
 
 Game::Game()
 {
-    
+
+}
+
+void Game::GameLoop()
+{
+    ///// UPDATE //////
+
+
+    ///// RENDER //////
+
+        BeginDrawing();
+        {
+            ClearBackground(RAYWHITE);
+            DrawRectangle(200, 200, 100, 100, RED);
+        } EndDrawing();
 }

@@ -1,15 +1,15 @@
 #include "../Header/global.h"
-#include <raylib.h>
+#include "../Header/global.h"
+#include "../Header/Game.h"
 
 int main()
 {
     InitWindow(800, 400, "test");
     SetTargetFPS(60);
 
+    Game* game = Game::Instance();
+
     while(!WindowShouldClose()){
-        ClearBackground(RAYWHITE);
-        BeginDrawing();
-        DrawRectangle(200, 200, 100, 100, RED);
-        EndDrawing();
-    }
+        game->GameLoop();
+    }   
 }
