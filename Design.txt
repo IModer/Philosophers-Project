@@ -9,3 +9,23 @@ Metropolisz 0,5
 Haladó grafika 0,5 - 1
 
 
+A gameloop lehetséges feladatai:
+Lakosszám, 
+Adók behajtása
+Áramellátás frissítése, 
+Az idő megállításával megállni, 
+Katasztrófát generálni,
+Metropolisz: a fejlődő épületek állapotának ellenőrzése
+Elégedtség mérése -> ??
+Erdők növekedésének felügyelete
+Tüzek generálása ? <- és eloltása
+
+A gameloopon kívüli feladatok:
+Építés, 
+Bontás
+Fejlesztés
+Adók módosítása
+Hitel felvétele
+
+Objektumok kirajzolása: ?
+
