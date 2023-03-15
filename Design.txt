@@ -1,14 +1,3 @@
-A plussz feladatok:
-Tűzoltóság 1
-Áramellátás 1
-Erdők 0,5
-Perzisztencia 0,5
-Konfliktusos Bontás 0,5
-Katasztrófa 0,5
-Metropolisz 0,5
-Haladó grafika 0,5 - 1
-
-
 A gameloop lehetséges feladatai:
 Lakosszám, 
 Adók behajtása
@@ -28,4 +17,3 @@ Adók módosítása
 Hitel felvétele
 
 Objektumok kirajzolása: ?
-
