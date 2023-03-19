@@ -1,1 +1,22 @@
+Követelmények feltárása és elemzése:
+Funckionális specifikáció(funkciók amelyeket a rendszernek meg kell tudnia valósítani):
 
+Játékot megelőzően:
+-----------------------------------------
+Új játék indítása
+|-> Az új játék nevének megadása
+|-> Megadni, hogy az új játék melyik "save slot"-ot írja felül
+Mentett játék betöltése
+Az alkalmazás bezárása
+
+
+Játék közben:
+-----------------------------------------
+Az aktuállis játékállás megjelenítése
+Az idő múlásának kezelése
+Épületek építése
+Épületek bontása
+Hitel felvétele
+Játék végének felismerése 
+|-> Új játék indítása / mentett játékállás betöltése
+ 
