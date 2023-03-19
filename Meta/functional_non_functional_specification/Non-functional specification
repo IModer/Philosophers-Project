@@ -1,0 +1,57 @@
+Az alkalmazás nem funkcionális specifikációja:
+
+Hatékonyság:
+--------------
+Közepes terhelés a grafikus megjelenítő egységekre az épületek és folyamatok kirajzolása miatt
+
+Minimális terhelés a memóriára a játékban használt tömbök eltárolására (Tervezetten <100Mb)
+
+Jelentéktelen terhelés a háttértárra
+
+Gyors válaszidő minden bevitelre egy alsó-középkategóriás számítógépen
+---------------
+
+Megbízhatóság:
+---------------
+Szabványos használat esetén nem fordul elő hibajelenség, nem jelenik meg olyan hibaüzenet, ami ne lenne a játékmenet része. (pl: nem lehet ide rendőrséget lerakni)
+---------------
+
+Biztonság:
+---------------
+Nem releváns
+---------------
+
+Hordozhatóság:
+---------------
+Windows (7, 8.1, 10, 11)
+Linux - Desktop (multiple distributions, X11 and Wayland based)
+Linux - Native (no windowing system, DRM)
+macOS (multiple versions, including ARM64)
+FreeBSD, OpenBSD, NetBSD, DragonFly
+Raspberry Pi (desktop and native)
+Android (multiple API versions and architectures)
+HTML5 (WebAssembly)
+Haiku
+---------------
+
+Felhasználhatóság
+---------------
+A játék ismertsége és a felhasználói felületek megfelelő instrukciói miatt a felhasználás intuitív, oktatást nem igényel.
+---------------
+
+Környezeti
+---------------
+Nem működik együtt semmilyen külső alkalmazással.
+---------------
+
+Működési
+---------------
+Mivel a játékot nem lehet megnyerni, így a futási idő nem becsülhető, a játékos dedikáltságától függ
+
+GYakori használat
+---------------
+
+Fejlesztési
+---------------
+C++ nyelv, Raylib, Visual Studio
+---------------
