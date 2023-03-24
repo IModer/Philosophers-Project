@@ -28,6 +28,6 @@ void Game::GameLoop()
         BeginDrawing();
         {
             ClearBackground(RAYWHITE);
-            DrawRectangle(200, 200, 100, 100, RED);
+            DrawRectangle(150, 150, 100, 100, RED);
         } EndDrawing();
 }
