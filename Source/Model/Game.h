@@ -1,7 +1,7 @@
 #ifndef _GAME_
 #define _GAME_
 
-#include "global.h"
+#include "../App/global.h"
 
 class Game
 {

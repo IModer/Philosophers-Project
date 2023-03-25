@@ -1,5 +1,5 @@
-#include "../Header/global.h"
-#include "../Header/Game.h"
+#include "global.h"
+#include "../Model/Game.h"
 
 int main()
 {
