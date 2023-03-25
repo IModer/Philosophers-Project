@@ -3,5 +3,7 @@
 
 #include "raylib.h"
 
+#include <string>
+#include <vector>
 
 #endif
