@@ -1,3 +1,6 @@
+#ifndef _PERSISTENCE_
+#define _PERSISTENCE_
+
 #include "../App/global.h"
 #include "GameObject.h"
 
@@ -7,3 +10,5 @@ class Persistence
     std::vector<GameObject*> ReadGameState(std::string fileName);
     bool WriteGameState(std::string fileName, std::vector<GameObject*> gameObjects);
 };
+
+#endif
