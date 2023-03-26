@@ -15,7 +15,7 @@ class Field : public GameObject
     Field(int id, int x, int y, int width, int height);
     std::string ToString();
 
-    private:
+    protected:
     int id;
     Vector2 pos;
     Vector2 size;
