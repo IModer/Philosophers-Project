@@ -2,14 +2,15 @@
 #define _VIEW_
 
 #include "../App/global.h"
-// #include "../Model/Model.h" // még nincs
+#include "../Model/GameModel.h"
 
 class View 
 {
     public:
+    View(GameModel* model) {};
     void Render();
     private:
-    // Model _model;
+    GameModel _model;
 };
 
 #endif

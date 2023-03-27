@@ -2,7 +2,7 @@
 #include "App.h"
 
 //TODO remove this
-#include "../Model/Game.h"
+#include "../Model/GameModel.h"
 
 int main()
 {
@@ -14,11 +14,5 @@ int main()
     //  |
     //  V
     InitWindow(400, 400, "test");
-    SetTargetFPS(60);
-
-    Game* game = Game::Instance();
-
-    while(!WindowShouldClose()){
-        game->GameLoop();
-    }   
+    SetTargetFPS(60); 
 }

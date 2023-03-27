@@ -21,16 +21,7 @@ public:
 
     Zone(int id,
            INT_TOUPLE location,
-           INT_TOUPLE size,
-           Direction dir,
-           bool hasElectricity,
-           bool isOnFire,
-           bool isConnectedToRoad,
-           bool isHabitable,
-           int maintenanceCost,
-           int profit,
-           int workers) : GameField(id, location, size, dir, hasElectricity, isOnFire, isConnectedToRoad, isHabitable, maintenanceCost),
-                               profit(profit), workers(workers) {}
+           INT_TOUPLE size) : GameField(id, location, size, 10) {} // TODO: ne 10
 
 
     int electricityConsumption();

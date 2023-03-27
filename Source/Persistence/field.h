@@ -1,8 +1,8 @@
 #ifndef FIELD_H_DEFINED
 #define FIELD_H_DEFINED
 
+#include "../App/global.h"
 #include "gameObject.h"
-#include "int_touple.h"
 
 
 class Field : public GameObject
@@ -16,6 +16,8 @@ class Field : public GameObject
     
     //lehet "privatizálni a metódusokat ha úgy van"
     private:
+
+        //a pegazus előtt semmi sem privát
 
 };
 

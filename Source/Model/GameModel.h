@@ -1,14 +1,17 @@
 #ifndef MODEL_H_DEFINED
 #define MODEL_H_DEFINED
-#include "persistence.h"
-#include "int_touple.h"
+
+#include "../App/global.h"
+#include "../Persistence/persistence.h"
 #include "time_enum.h"
 
-class Model
+class GameModel
 {
     public:
         Persistence _persistence;
         std::list<GameObject> _fields;
+
+        GameModel() {};
 
         void NewGame();
         void SaveGame();

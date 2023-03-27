@@ -1,17 +1,17 @@
 #ifndef ROADS_AND_ELECTRIC_POLES_H_DEFINED
 #define ROADS_AND_ELECTRIC_POLES_H_DEFINED
-#include "field.h"
+#include "../Persistence/field.h"
 #include "direction_enum.h"
 
 
 class RoadsAndElectricPoles : Field
 {
     public:
-        RoadsAndElectricPoles(int id, INT_TOUPLE location, INT_TOUPLE size, Direction dir): Field(id,location,size), direction(dir) {}
+        RoadsAndElectricPoles(int id, INT_TOUPLE location, INT_TOUPLE size): Field(id,location,size) {}
         int id;
         INT_TOUPLE location;
         INT_TOUPLE size;
-        Direction direction;
+        int direction;
         std::string toString();
 
 };

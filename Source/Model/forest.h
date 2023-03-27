@@ -21,15 +21,10 @@ public:
     Forest(int id,
            INT_TOUPLE location,
            INT_TOUPLE size,
-           Direction dir,
-           bool hasElectricity,
-           bool isOnFire,
-           bool isConnectedToRoad,
-           bool isHabitable,
-           int maintenanceCost,
-           int age,
-           bool hasGrownOut) : GameField(id, location, size, dir, hasElectricity, isOnFire, isConnectedToRoad, isHabitable, maintenanceCost),
-                               age(age), hasGrownOut(hasGrownOut) {}
+           int age) : GameField(id, location, size, 10),
+                               age(age) {
+                                // TODO: set hasGrownOut
+                               }
 };
 
 #endif
