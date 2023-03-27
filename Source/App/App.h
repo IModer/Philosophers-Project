@@ -10,10 +10,10 @@ class App
     // fields
 
     //TODO Should be Model*
-    Game* App::_model;
+    Game* _model;
     // TODO Need view for this
     // View* App::_view;
-    Persistence* App::_persistence;
+    Persistence* _persistence;
 
     // static
     static App* Instance();
