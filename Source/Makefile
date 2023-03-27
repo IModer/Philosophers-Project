@@ -350,7 +350,10 @@ endif
 #rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 # Define all source files required
-SRC_DIR = Code
+SRC_DIR = .
+
+#TODO make Obj folder
+
 OBJ_DIR = Obj
 
 # Define all object files from source files
