@@ -36,6 +36,7 @@ COMPILER_PATH      ?= C:/raylib/w64devkit/bin
 # Define default options
 # One of PLATFORM_DESKTOP, PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
 PLATFORM           ?= PLATFORM_DESKTOP
+#PLATFORM			?= PLATFORM_WEB
 
 # Locations of your newly installed library and associated headers. See ../src/Makefile
 # On Linux, if you have installed raylib but cannot compile the examples, check that
@@ -122,7 +123,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 	EMSDK_PATH         ?= C:/emsdk
 	EMSCRIPTEN_PATH    ?= $(EMSDK_PATH)/upstream/emscripten
 	CLANG_PATH          = $(EMSDK_PATH)/upstream/bin
-	PYTHON_PATH         = $(EMSDK_PATH)/python/3.9.2-1_64bit
+	PYTHON_PATH         = $(EMSDK_PATH)/python/3.9.2-nuget_64bit #latest emskd has this path so.....
 	NODE_PATH           = $(EMSDK_PATH)/node/14.18.2_64bit/bin
 	export PATH         = $(EMSDK_PATH);$(EMSCRIPTEN_PATH);$(CLANG_PATH);$(NODE_PATH);$(PYTHON_PATH):$$(PATH)
 endif
@@ -174,7 +175,8 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 endif
 
 # Define default make program: Mingw32-make
-MAKE = mingw32-make
+#MAKE = mingw32-make
+MAKE = make
 
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 	ifeq ($(PLATFORM_OS),LINUX)
@@ -239,7 +241,8 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 	# --profiling                # include information for code profiling
 	# --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
 	# --preload-file resources   # specify a resources folder for data compilation
-	CFLAGS += -Os -s USE_GLFW=3 -s TOTAL_MEMORY=16777216 --preload-file resources
+	# --preload-file resources   # IDK why but leave this out
+	CFLAGS += -Os -s USE_GLFW=3 -s TOTAL_MEMORY=16777216 
 	ifeq ($(BUILD_MODE), DEBUG)
 		CFLAGS += -s ASSERTIONS=1 --profiling
 	endif
@@ -354,12 +357,15 @@ SRC_DIR = .
 
 #TODO make Obj folder
 
-OBJ_DIR = Obj
+OBJ_DIR = obj
+#OBJS = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 # Define all object files from source files
-SRC = $(call rwildcard, $(SRC_DIR), *.cpp *.h)
-#OBJS = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
-OBJS = $(SRC:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)
+
+SRC = $(call rwildcard, $(SRC_DIR), *.cpp *.h)		#SLOW but might not work
+OBJS ?= $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)		#SLOW but might not work
+#SRC2 = $(call rwildcard, $(SRC_DIR), *.cpp)  		#FAST but might not work
+#OBJS2 ?= $(SRC2:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o) 	#FAST but might not work
 
 # For Android platform we call a custom Makefile.Android
 ifeq ($(PLATFORM),PLATFORM_ANDROID)
@@ -372,19 +378,24 @@ endif
 
 # Default target entry
 # NOTE: We call this Makefile target or Makefile.Android target
+
 all:
+#$(info $$OBJS2 is [${OBJS2}])
 	$(MAKE) $(MAKEFILE_PARAMS)
 
 # Project target defined by PROJECT_NAME
-$(PROJECT_NAME): $(OBJS)
-	$(CC) -o $(PROJECT_NAME)$(EXT) $(OBJS) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+$(PROJECT_NAME): $(OBJS2)
+	$(CC) -o $(PROJECT_NAME)$(EXT) $(OBJS2) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 #$(info $$SRC is [${SRC_DIR}])
 
 # Compile source files
 # NOTE: This pattern will compile every module defined on $(OBJS)
 #%.o: %.cpp
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) -c $< -o $@ $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM)
+	mkdir -p $(@D)
+	$(CC) -c "$<" -o "$@" $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM)
+#$(info $$< is [${<}])
+#$(info $$@ is [${@}])
 
 # Clean everything
 clean:
