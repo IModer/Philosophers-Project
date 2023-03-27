@@ -15,18 +15,13 @@ public:
     bool isHabitable;
     int maintenanceCost;
     int capacity;
+    static const int maxCapacity = 10; // TODO: ne 10
 
     PowerPlant(int id,
            INT_TOUPLE location,
-           INT_TOUPLE size,
-           Direction dir,
-           bool hasElectricity,
-           bool isOnFire,
-           bool isConnectedToRoad,
-           bool isHabitable,
-           int maintenanceCost,
-           int capacity) : GameField(id, location, size, dir, hasElectricity, isOnFire, isConnectedToRoad, isHabitable, maintenanceCost),
-                               capacity(capacity) {}
+           INT_TOUPLE size) : GameField(id, location, size, 10) {
+            capacity = maxCapacity;
+           }
 };
 
 #endif

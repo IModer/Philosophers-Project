@@ -1,8 +1,9 @@
 #ifndef _APP_
 #define _APP_
 
-#include "../Model/Game.h" //TODO : rename to Model
-#include "../Persistence/Persistence.h"
+#include "../View/View.h"
+#include "../Model/GameModel.h" //TODO : rename to Model
+#include "../Persistence/persistence.h"
 
 class App
 {
@@ -10,7 +11,7 @@ class App
     // fields
 
     //TODO Should be Model*
-    Game* _model;
+    GameModel* _model;
     // TODO Need view for this
     // View* App::_view;
     Persistence* _persistence;

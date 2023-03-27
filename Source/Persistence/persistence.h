@@ -1,5 +1,6 @@
 #ifndef PERSISTANCE_H_DEFINED
 #define PERSISTANCE_H_DEFINED
+
 #include "gameObject.h"
 #include <list>
 

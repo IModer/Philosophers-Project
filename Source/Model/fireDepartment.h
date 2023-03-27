@@ -15,20 +15,12 @@ public:
     bool isHabitable;
     int maintenanceCost;
     bool hasOpenCapacity;
-    int radius;
+    static const int radius = 10; // TODO: ne 10
 
     FireDepartment(int id,
            INT_TOUPLE location,
            INT_TOUPLE size,
-           Direction dir,
-           bool hasElectricity,
-           bool isOnFire,
-           bool isConnectedToRoad,
-           bool isHabitable,
-           int maintenanceCost,
-           bool hasOpenCapacity,
-           int radius) : GameField(id, location, size, dir, hasElectricity, isOnFire, isConnectedToRoad, isHabitable, maintenanceCost),
-                               hasOpenCapacity(hasOpenCapacity), radius(radius) {}
+           int maintenanceCost) : GameField(id, location, size, maintenanceCost) {}
 };
 
 #endif
