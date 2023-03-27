@@ -14,5 +14,5 @@ int main()
     //  |
     //  V
     InitWindow(400, 400, "test");
-    SetTargetFPS(60); 
+    SetTargetFPS(60);
 }

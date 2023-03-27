@@ -1,5 +1,7 @@
 #include "App.h"
 
+App *App::_instance = nullptr;
+
 App *App::Instance()
 {
     return (_instance == nullptr) ? (new App()) : _instance;
@@ -19,7 +21,6 @@ App::App()
     //_view = View::Instance();
     _model = new GameModel();  //Vagy a view csináljon saját Model-t?
     //_persistence = ?
-
 
 }
 
