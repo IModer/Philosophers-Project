@@ -6,6 +6,15 @@
 #include <string>
 #include <vector>
 
+
+#if __linux__
+#include <bits/types/time_t.h>
+
+#elif _WIN32 | _WIN64
+#include <time.h>
+
+#endif
+
 #define STR(x) std::to_string(x)
 
 
@@ -38,9 +47,21 @@ typedef struct INT_TOUPLE { // ? szerintem sruct erre jobban illik
 
 typedef enum { MENU = 0, GAME } GAME_STATE;
 
-typedef struct {
-    // stuff
-} FinancialState;
+struct finantial_state
+{
+    //lehet egy class update methoddal ahol a rezidensek száma szerint pénzt szed be és adót fizet ki?
+    //will see
+    int total_founds;
+    int loan;
+    //lehet float is és akkor százalék
+    int residential_tax_rate;
+    int industrial_tax_rate;
+    int entertainment_tax_rate;
+    //this change is purely experimental
 
+    std::string toString() {
+        return STR(total_founds) + " " + STR(loan) + " " + STR(residential_tax_rate) + " " + STR(industrial_tax_rate) + " " + STR(entertainment_tax_rate);
+    }
+};
 
 #endif
