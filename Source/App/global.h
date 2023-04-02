@@ -6,7 +6,19 @@
 #include <string>
 #include <vector>
 
-class INT_TOUPLE{
+#define STR(x) std::to_string(x)
+
+
+const int FPS = 60;
+
+typedef struct {
+    int x, y;
+    std::string toString() {
+        return STR(x) + " " + STR(y);
+    }
+} INT_TOUPLE;
+
+/* class INT_TOUPLE{
     private:
         int _x;
         int _y;
@@ -20,8 +32,11 @@ class INT_TOUPLE{
         INT_TOUPLE(int x, int y) : _x(x), _y(y) {}
         int getX() const { return _x; }
         int getY() const { return _y; }
-};
+}; */
 
+
+
+typedef enum { MENU = 0, GAME } GAME_STATE;
 
 typedef struct {
     // stuff

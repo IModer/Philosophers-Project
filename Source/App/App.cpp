@@ -1,4 +1,5 @@
 #include "App.h"
+#include <raylib.h>
 
 App *App::_instance = nullptr;
 
@@ -18,13 +19,18 @@ App::App()
 {
     //View, Model, Persistence példánmyosítása
 
-    //_view = View::Instance();
-    _model = new GameModel();  //Vagy a view csináljon saját Model-t?
-    //_persistence = ?
+    _persistence = new Persistence();
+    _model = new GameModel(_persistence); 
+    _view = new View(_model);
 
+    SetTargetFPS(FPS);
 }
 
 void App::Run()
 {
-    //
+    while (WindowShouldClose())
+    {
+        _view->Update();
+        _view->Render();
+    }
 }

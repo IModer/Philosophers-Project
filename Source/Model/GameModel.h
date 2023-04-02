@@ -3,15 +3,17 @@
 
 #include "../App/global.h"
 #include "../Persistence/persistence.h"
+#include "FloatingWindow.h"
 #include "time_enum.h"
 
 class GameModel
 {
     public:
         Persistence _persistence;
-        std::list<GameObject> _fields;
+        std::list<Field*> _fields;
+        FloatingWindow* _fWindow;
 
-        GameModel() {};
+        GameModel(Persistence* persistence) {};
 
         void NewGame();
         void SaveGame();

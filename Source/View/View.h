@@ -7,10 +7,12 @@
 class View 
 {
     public:
-    View(GameModel* model) {};
+    View(GameModel* model);
+    void Update();
     void Render();
     private:
-    GameModel _model;
+    GameModel* _model;
+    GAME_STATE gameState;
 };
 
 #endif
