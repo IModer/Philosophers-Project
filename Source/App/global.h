@@ -11,7 +11,7 @@
 
 const int FPS = 60;
 
-typedef struct {
+typedef struct INT_TOUPLE {
     int x, y;
     std::string toString() {
         return STR(x) + " " + STR(y);
