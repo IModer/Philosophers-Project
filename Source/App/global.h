@@ -11,7 +11,7 @@
 
 const int FPS = 60;
 
-typedef struct INT_TOUPLE {
+typedef struct INT_TOUPLE { // ? szerintem sruct erre jobban illik
     int x, y;
     std::string toString() {
         return STR(x) + " " + STR(y);
