@@ -11,6 +11,7 @@ struct finantial_state
     int residential_tax_rate;
     int industrial_tax_rate;
     int entertainment_tax_rate;
+    //this change is purely experimental
 };
 
 
