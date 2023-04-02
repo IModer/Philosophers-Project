@@ -9,16 +9,14 @@ class Field : public GameObject
 {
     public:
         Field(int id, INT_TOUPLE location, INT_TOUPLE size): id(id), location(location), size(size) {}
+        std::string toString();
+
+        void Render();
+    
+    protected:
         int id;
         INT_TOUPLE location;
         INT_TOUPLE size;
-        std::string toString();
-    
-    //lehet "privatizálni a metódusokat ha úgy van"
-    private:
-
-        //a pegazus előtt semmi sem privát
-
 };
 
 
