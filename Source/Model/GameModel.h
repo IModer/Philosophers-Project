@@ -2,16 +2,16 @@
 #define MODEL_H_DEFINED
 
 #include "../App/global.h"
-#include "../Persistence/persistence.h"
-#include "time_enum.h"
+#include "../Persistence/Persistence.h"
+#include "enum/time_enum.h"
 
 class GameModel
 {
     public:
-        Persistence _persistence;
+        Persistence* _persistence;
         std::list<GameObject> _fields;
 
-        GameModel() {};
+        GameModel(Persistence* persistence): _persistence(persistence) {};
 
         void NewGame();
         void SaveGame();

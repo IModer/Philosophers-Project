@@ -1,6 +1,6 @@
 #ifndef FOREST_H_DEFINED
 #define FOREST_H_DEFINED
-#include "gameField.h"
+#include "GameField.h"
 
 class Forest : GameField
 {
@@ -9,7 +9,7 @@ public:
     int id;
     INT_TOUPLE location;
     INT_TOUPLE size;
-    Direction direction;
+    //Direction direction; //ez kell?
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;
@@ -22,8 +22,9 @@ public:
            INT_TOUPLE location,
            INT_TOUPLE size,
            int age) : GameField(id, location, size, 10),
-                               age(age) {
-                                // TODO: set hasGrownOut
+                               age(age) 
+                               {
+                                hasGrownOut = false;
                                }
 };
 

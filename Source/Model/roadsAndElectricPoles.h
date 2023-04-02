@@ -1,7 +1,7 @@
 #ifndef ROADS_AND_ELECTRIC_POLES_H_DEFINED
 #define ROADS_AND_ELECTRIC_POLES_H_DEFINED
-#include "../Persistence/field.h"
-#include "direction_enum.h"
+#include "../Persistence/Field.h"
+#include "enum/direction_enum.h"
 
 
 class RoadsAndElectricPoles : Field

@@ -1,6 +1,6 @@
 #ifndef STADION_H_DEFINED
 #define STADION_H_DEFINED
-#include "gameField.h"
+#include "GameField.h"
 
 class Stadion : GameField
 {
@@ -8,7 +8,7 @@ class Stadion : GameField
     int id;
     INT_TOUPLE location;
     INT_TOUPLE size;
-    Direction direction;
+    //Direction direction; //ez kell?
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;
