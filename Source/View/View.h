@@ -7,10 +7,10 @@
 class View 
 {
     public:
-    View(GameModel* model) {};
+    View(GameModel* model): _model(model) {};
     void Render();
     private:
-    GameModel _model;
+    GameModel* _model;
 };
 
 #endif
