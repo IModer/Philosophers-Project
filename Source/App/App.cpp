@@ -18,9 +18,9 @@ App::App()
 {
     //View, Model, Persistence példánmyosítása
 
-    //_view = View::Instance();
-    _model = new GameModel();  //Vagy a view csináljon saját Model-t?
-    //_persistence = ?
+    _persistence = new Persistence();
+    _model = new GameModel(_persistence);
+    _view = new View(_model);
 
 }
 
