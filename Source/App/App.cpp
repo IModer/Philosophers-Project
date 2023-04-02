@@ -12,7 +12,7 @@ void App::DeleteInstance()
     if (_instance != nullptr)
         delete _instance;
     _instance = nullptr;
-};
+}
 
 App::App()
 {

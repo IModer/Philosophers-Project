@@ -6,6 +6,10 @@
 #include <string>
 #include <vector>
 
+#ifdef debug
+#include <iostream>
+#endif
+
 class INT_TOUPLE{
     private:
         int _x;
