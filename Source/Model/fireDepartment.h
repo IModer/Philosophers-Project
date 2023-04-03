@@ -24,11 +24,11 @@ public:
 
     std::string toString() 
     {
-        return  std::to_string(id) + " " +
-                std::to_string(location.getX()) + " " +
-                std::to_string(location.getY()) + " " +
-                std::to_string(size.getX()) + " " +
-                std::to_string(size.getY());
+        return  STR(id) + " " +
+                STR(location.x) + " " +
+                STR(location.y) + " " +
+                STR(size.x) + " " +
+                STR(size.y);
     }
 };
 
