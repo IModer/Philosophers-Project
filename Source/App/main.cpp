@@ -13,6 +13,5 @@ int main()
     // This should be View code
     //  |
     //  V
-    //InitWindow(400, 400, "test");
-    //SetTargetFPS(60);
+
 }

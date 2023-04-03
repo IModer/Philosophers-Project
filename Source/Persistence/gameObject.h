@@ -7,7 +7,7 @@
 class GameObject
 {
     public:
-        std::string toString();
+        virtual std::string toString() = 0;
     private:
 };
 

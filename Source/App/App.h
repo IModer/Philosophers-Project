@@ -10,9 +10,7 @@ class App
     public:
     // fields
 
-    //TODO Should be Model*
     GameModel* _model;
-    // TODO Need view for this
     View* _view;
     Persistence* _persistence;
 

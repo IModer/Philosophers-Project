@@ -1,4 +1,5 @@
 #include "App.h"
+#include <raylib.h>
 
 App *App::_instance = nullptr;
 
@@ -22,9 +23,14 @@ App::App()
     _model = new GameModel(_persistence);
     _view = new View(_model);
 
+    SetTargetFPS(FPS);
 }
 
 void App::Run()
 {
-    //
+    while (!WindowShouldClose())
+    {
+        _view->Update();
+        _view->Render();
+    }
 }
