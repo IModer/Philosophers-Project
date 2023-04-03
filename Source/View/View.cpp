@@ -6,7 +6,7 @@ View::View(GameModel* model)
     _model = model;
     gameState = MENU;
 
-    InitWindow(400, 400, "test");
+    InitWindow(1920, 1080, "test");
     SetTargetFPS(60);
 };
 
