@@ -1,6 +1,6 @@
 #ifndef FIRE_DEPARTMENT_H_DEFINED
 #define FIRE_DEPARTMENT_H_DEFINED
-#include "gameField.h"
+#include "GameField.h"
 
 class FireDepartment : GameField
 {
@@ -8,7 +8,7 @@ public:
     int id;
     INT_TOUPLE location;
     INT_TOUPLE size;
-    Direction direction;
+    //Direction direction;  //ez kell?
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;
@@ -21,6 +21,15 @@ public:
            INT_TOUPLE location,
            INT_TOUPLE size,
            int maintenanceCost) : GameField(id, location, size, maintenanceCost) {}
+
+    std::string toString() 
+    {
+        return  std::to_string(id) + " " +
+                std::to_string(location.getX()) + " " +
+                std::to_string(location.getY()) + " " +
+                std::to_string(size.getX()) + " " +
+                std::to_string(size.getY());
+    }
 };
 
 #endif

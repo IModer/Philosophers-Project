@@ -1,7 +1,7 @@
 #ifndef PERSISTANCE_H_DEFINED
 #define PERSISTANCE_H_DEFINED
 
-#include "gameObject.h"
+#include "GameObject.h"
 #include <list>
 
 class Persistence

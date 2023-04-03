@@ -1,6 +1,6 @@
 #ifndef ZONE_H_DEFINED
 #define ZONE_H_DEFINED
-#include "gameField.h"
+#include "GameField.h"
 
 class Zone : GameField
 {
@@ -10,7 +10,7 @@ public:
     int id;
     INT_TOUPLE location;
     INT_TOUPLE size;
-    Direction direction;
+    //Direction direction; ez kell?
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;

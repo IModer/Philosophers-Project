@@ -6,6 +6,9 @@
 #include <string>
 #include <vector>
 
+#ifdef debug
+#include <iostream>
+#endif
 
 #if __linux__
 #include <bits/types/time_t.h>
@@ -28,6 +31,7 @@ typedef struct INT_TOUPLE { // ? szerintem sruct erre jobban illik
 } INT_TOUPLE;
 
 /* class INT_TOUPLE{
+>>>>>>> Source/App/global.h
     private:
         int _x;
         int _y;

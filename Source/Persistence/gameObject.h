@@ -1,7 +1,7 @@
 #ifndef GAME_OBJECT_H_DEFINED
 #define GAME_OBJECT_H_DEFINED
 
-#include<iostream>
+#include <iostream>
 
 
 class GameObject

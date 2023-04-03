@@ -1,7 +1,7 @@
 #ifndef GAME_FIED_H_DEFINED
 #define GAME_FIED_H_DEFINED
-#include "../Persistence/field.h"
-#include "direction_enum.h"
+#include "../Persistence/Field.h"
+#include "enum/direction_enum.h"
 
 class GameField : Field
 {

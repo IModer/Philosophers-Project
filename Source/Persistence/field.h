@@ -2,8 +2,7 @@
 #define FIELD_H_DEFINED
 
 #include "../App/global.h"
-#include "gameObject.h"
-#include <raylib.h>
+#include "GameObject.h"
 
 
 class Field : public GameObject

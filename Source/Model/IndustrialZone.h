@@ -1,25 +1,27 @@
-#ifndef RESIDENTAL_ZONE_H_DEFINED
-#define RESIDENTAL_ZONE_H_DEFINED
+#ifndef INDUSTRIAL_ZONE_H_DEFINED
+#define INDUSTRIAL_ZONE_H_DEFINED
 
 #include "../Persistence/Field.h"
 
-class ResidentalZone : Field
+class IndustrialZone : Field
 {
     public:
     int id;
     INT_TOUPLE location;
     INT_TOUPLE size;
-    //Direction direction; ez kell?
+    //Direction direction; //ez kell?
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;
     bool isHabitable;
     int maintenanceCost;
-    int residents;
-    bool hasForest;
-    bool hasNeighbouringStadion;
+    int workers;
+    int profit;
+    //int residents;
+    //bool hasForest;
+    //bool hasNeighbouringStadion;
 
-    ResidentalZone(int id,
+    IndustrialZone(int id,
            INT_TOUPLE location,
            INT_TOUPLE size,
            int residents) : Field(id, location, size) {}
