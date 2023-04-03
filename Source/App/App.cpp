@@ -28,7 +28,7 @@ App::App()
 
 void App::Run()
 {
-    while (WindowShouldClose())
+    while (!WindowShouldClose())
     {
         _view->Update();
         _view->Render();

@@ -14,12 +14,12 @@ class Field : public GameObject
         // Get, set
         int GetX()  { return location.x; }
         int GetY() { return location.y; }
-        // INT_TOUPLE GetPos(); // ha kell
+        // INT_TOUPLE GetPos(); // ha kell 
         int GetWidth() { return size.x; }
         int GetHeight() { return size.y; }
         // Functions
         std::string toString();
-        void Render();
+        void Render() {};
     
     protected:
         // Variables

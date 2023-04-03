@@ -18,7 +18,7 @@ class GameModel
         void NewGame();
         void SaveGame();
         void LoadGame();
-        void Update();
+        void Update() {};
         void ChechInfrastructure();
         bool Build(); //ide kell egy buildings enum
         void Demolition(INT_TOUPLE p); 
