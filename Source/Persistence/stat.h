@@ -2,7 +2,7 @@
 #define _STAT_
 
 #include "../App/global.h"
-#include "gameObject.h"
+#include "GameObject.h"
 
 class Stat : public GameObject
 {

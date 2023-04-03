@@ -4,7 +4,7 @@
 #include "../App/global.h"
 #include "../Persistence/persistence.h"
 #include "FloatingWindow.h"
-#include "time_enum.h"
+#include "enum/time_enum.h"
 
 class GameModel
 {
