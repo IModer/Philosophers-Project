@@ -3,7 +3,7 @@
 
 #include "../Persistence/Field.h"
 
-class ResidentalZone : Field
+class ResidentalZone : public Field
 {
     public:
     int id;
@@ -25,6 +25,15 @@ class ResidentalZone : Field
            int residents) : Field(id, location, size) {}
 
     int electricityConsumption();
+
+    std::string toString() 
+    {
+        return  STR(id) + " " +
+                STR(location.x) + " " +
+                STR(location.y) + " " +
+                STR(size.x) + " " +
+                STR(size.y);
+    }
 };
 
 #endif

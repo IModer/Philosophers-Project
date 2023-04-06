@@ -27,6 +27,15 @@ class IndustrialZone : Field
            int residents) : Field(id, location, size) {}
 
     int electricityConsumption();
+
+    std::string toString() 
+    {
+        return  STR(id) + " " +
+                STR(location.x) + " " +
+                STR(location.y) + " " +
+                STR(size.x) + " " +
+                STR(size.y);
+    }
 };
 
 #endif
