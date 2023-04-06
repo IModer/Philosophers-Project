@@ -382,7 +382,7 @@ endif
 
 all:
 #$(info $$OBJS2 is [${OBJS2}])
-	$(MAKE) $(MAKEFILE_PARAMS)
+	$(MAKE) $(MAKEFILE_PARAMS) 2> makee.log
 
 # Project target defined by PROJECT_NAME
 $(PROJECT_NAME): $(OBJS2)
@@ -394,7 +394,7 @@ $(PROJECT_NAME): $(OBJS2)
 #%.o: %.cpp
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(@D)
-	$(CC) -c "$<" -o "$@" $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM)
+	$(CC) -c "$<" -o "$@" $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM) 2> gppe.log
 #$(info $$< is [${<}])
 #$(info $$@ is [${@}])
 
