@@ -10,8 +10,4 @@ int main()
     _app->Run();
     //Here we can handle things that should happen after the game is closed
 
-    // This should be View code
-    //  |
-    //  V
-
 }
