@@ -3,8 +3,8 @@
 #include "rlgl.h"
 #include "raymath.h"
 
-bool View::isMouseOnRect(Rectangle rect) {
-    // TODO
+bool View::isPosOnRect(Vector2 Pos, Rectangle rect) {
+    return Pos.x > rect.x && Pos.x < rect.x + rect.width && Pos.y > rect.y && Pos.y < rect.y + rect.height;
 }
 
 View::View(GameModel *model)
@@ -56,7 +56,7 @@ void View::Render()
 
         ClearBackground(RAYWHITE);
 
-        DrawText("$[game_name]", (screenWidth - MeasureText("$[game_name]", 60)) / 2, screenHeight/2 -80, 60, BLUE);
+        DrawText("$[game_name]", (screenWidth - MeasureText("$[game_name]", 60)) / 2, screenHeight/2 - 80, 60, BLUE);
 
         newGameBtn->Render();
         loadGameBtn->Render();
@@ -75,10 +75,10 @@ void View::Render()
             camera.target = Vector2Add(camera.target, delta);
         }
         float wheel = GetMouseWheelMove();
+        Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
         if (wheel != 0)
         {
-            // Get the world point that is under the mouse
-            Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
+            // Get the world point that is under the mous
 
             // Set the offset to where the mouse is
             camera.offset = GetMousePosition();
@@ -108,7 +108,12 @@ void View::Render()
         rlPopMatrix();
 
         // Draw a reference circle
-        DrawCircle(100, 100, 50, YELLOW);
+        DrawRectangle(100, 100, 50, 50, YELLOW);
+
+        // DrawText("Mouse ur mum", GetMouseX() + 10, GetMouseY() + 10, 20, WHITE);
+        if (isPosOnRect(mouseWorldPos, Rectangle{100, 100, 50, 50})) {
+            DrawText("Mouse ur mum", mouseWorldPos.x + 10, mouseWorldPos.y + 10, 20, WHITE);
+        }
 
         EndMode2D();
 

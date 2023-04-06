@@ -12,7 +12,7 @@ class View
     // STATIC //
     static const int screenWidth = 1920;
     static const int screenHeight = 1080;
-    static bool isMouseOnRect(Rectangle rect);
+    static bool isPosOnRect(Vector2 Pos, Rectangle rect);
 
     View(GameModel* model);
     void Update();
