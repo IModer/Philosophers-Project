@@ -7,8 +7,8 @@
 class Persistence
 {
 public:
-    std::list<GameObject> readGameState(std::string path);
-    bool writeGameState(std::string path, std::list<GameObject> fields);
+    std::list<GameObject*> readGameState(std::string path);
+    bool writeGameState(std::string path, std::list<GameObject*> fields);
 };
 
 #endif
