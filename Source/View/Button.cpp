@@ -4,8 +4,9 @@
 
 bool Button::isClicked()
 {
-    return View::isClickOnRect(_rect);
+    return GetMouseX() > _rect.x && GetMouseX() < _rect.x + _rect.width && GetMouseY() > _rect.y && GetMouseY() < _rect.y + _rect.height;
 }
+
 
 void Button::Render()
 {

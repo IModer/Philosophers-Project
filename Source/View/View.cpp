@@ -3,8 +3,8 @@
 #include "rlgl.h"
 #include "raymath.h"
 
-bool View::isClickOnRect(Rectangle rect) {
-    return GetMouseX() > rect.x && GetMouseX() < rect.x + rect.width && GetMouseY() > rect.y && GetMouseY() < rect.y + rect.height;
+bool View::isMouseOnRect(Rectangle rect) {
+    // TODO
 }
 
 View::View(GameModel *model)
@@ -16,7 +16,7 @@ View::View(GameModel *model)
 
     newGameBtn = new Button("New game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f, 400, 80}, 40);
     loadGameBtn = new Button("Load game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f + 100, 400, 80}, 40);
-    exitBtn = new Button("Exit game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f + 100, 400, 80}, 40);
+    exitBtn = new Button("Exit game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f + 200, 400, 80}, 40);
 
     camera = {0};
     camera.zoom = 1.0f;
