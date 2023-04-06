@@ -3,16 +3,22 @@
 
 #include "../App/global.h"
 #include "../Model/GameModel.h"
+#include "Button.h"
 
 class View 
 {
     public:
+    // STATIC //
+    static bool isClickOnRect(Rectangle rect);
     View(GameModel* model);
     void Update();
     void Render();
     private:
     GameModel* _model;
     GAME_STATE gameState;
+    Button* newGameBtn;
+    Button* loadGameBtn;
+    Button* exitBtn;
 };
 
 #endif

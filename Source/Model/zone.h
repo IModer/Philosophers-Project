@@ -10,7 +10,6 @@ public:
     int id;
     INT_TOUPLE location;
     INT_TOUPLE size;
-    //Direction direction; ez kell?
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;

@@ -20,7 +20,6 @@
 
 #define STR(x) std::to_string(x)
 
-
 const int FPS = 60;
 
 typedef struct INT_TOUPLE { // ? szerintem sruct erre jobban illik
