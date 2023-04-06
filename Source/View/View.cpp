@@ -54,6 +54,14 @@ void View::Update()
 
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {
+            Vector2 delta = GetMouseDelta();
+            delta = Vector2Scale(delta, -1.0f / camera.zoom);
+
+            camera.target = Vector2Add(camera.target, delta);
+        }
+        //left click
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+        {
             if (isPosOnRect(mouseWorldPos, Rectangle{100, 100, 50, 50}))
             {
                 // DrawText("Mouse ur mum", GetMouseX() + 10, GetMouseY() + 10, 20, WHITE);
@@ -62,14 +70,6 @@ void View::Update()
             } else if (_model->GetFWindow() != nullptr) {
                 _model->CloseFWindow();
             }
-        }
-        //left click
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-        {
-            Vector2 delta = GetMouseDelta();
-            delta = Vector2Scale(delta, -1.0f / camera.zoom);
-
-            camera.target = Vector2Add(camera.target, delta);
         }
         //wheel action
         float wheel = GetMouseWheelMove();
