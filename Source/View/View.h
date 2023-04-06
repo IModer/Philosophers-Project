@@ -9,7 +9,10 @@ class View
 {
     public:
     // STATIC //
+    static const int screenWidth = 1920;
+    static const int screenHeight = 1080;
     static bool isClickOnRect(Rectangle rect);
+
     View(GameModel* model);
     void Update();
     void Render();
