@@ -3,7 +3,8 @@
 #include "rlgl.h"
 #include "raymath.h"
 
-bool View::isPosOnRect(Vector2 Pos, Rectangle rect) {
+bool View::isPosOnRect(Vector2 Pos, Rectangle rect)
+{
     return Pos.x > rect.x && Pos.x < rect.x + rect.width && Pos.y > rect.y && Pos.y < rect.y + rect.height;
 }
 
@@ -14,12 +15,14 @@ View::View(GameModel *model)
 
     InitWindow(screenWidth, screenHeight, "$[Game_name]");
 
-    newGameBtn = new Button("New game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f, 400, 80}, 40);
-    loadGameBtn = new Button("Load game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f + 100, 400, 80}, 40);
-    exitBtn = new Button("Exit game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f + 200, 400, 80}, 40);
+    newGameBtn = new Button("New game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f, 400, 80}, 40);
+    loadGameBtn = new Button("Load game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f + 100, 400, 80}, 40);
+    exitBtn = new Button("Exit game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f + 200, 400, 80}, 40);
 
     camera = {0};
     camera.zoom = 1.0f;
+
+    SetTargetFPS(60);
 };
 
 void View::Update()
@@ -27,18 +30,22 @@ void View::Update()
     // TODO: mouse, keyboard input, building, stb
     switch (gameState)
     {
-        case MENU:
-        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
-        if (newGameBtn->isClicked()) {
-            // TODO
-            gameState = GAME;
-        }
-        if (loadGameBtn->isClicked()) {
-            // TODO
-        }
-        if (exitBtn->isClicked()) {
-            CloseWindow();
-        }
+    case MENU:
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+        {
+            if (newGameBtn->isClicked())
+            {
+                // TODO
+                gameState = GAME;
+            }
+            if (loadGameBtn->isClicked())
+            {
+                // TODO
+            }
+            if (exitBtn->isClicked())
+            {
+                CloseWindow();
+            }
         }
         break;
     case GAME:
@@ -56,26 +63,41 @@ void View::Render()
 
         ClearBackground(RAYWHITE);
 
-        DrawText("$[game_name]", (screenWidth - MeasureText("$[game_name]", 60)) / 2, screenHeight/2 - 80, 60, BLUE);
+        DrawText("$[game_name]", (screenWidth - MeasureText("$[game_name]", 60)) / 2, screenHeight / 2 - 80, 60, BLUE);
 
         newGameBtn->Render();
         loadGameBtn->Render();
         exitBtn->Render();
-        
+
         EndDrawing();
         break;
     case GAME:
-        SetTargetFPS(60);
+        //relative position of the mouse related to the camera
+        Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
 
+        BeginDrawing();
+        ClearBackground(BLACK);
+        BeginMode2D(camera);
+        //right click
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+        {
+            // DrawText("Mouse ur mum", GetMouseX() + 10, GetMouseY() + 10, 20, WHITE);
+            if (isPosOnRect(mouseWorldPos, Rectangle{100, 100, 50, 50}))
+            {
+                DrawText("Mouse ur mum", mouseWorldPos.x + 10, mouseWorldPos.y + 10, 20, WHITE);
+            }
+        }
+        //left click
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
         {
             Vector2 delta = GetMouseDelta();
             delta = Vector2Scale(delta, -1.0f / camera.zoom);
 
             camera.target = Vector2Add(camera.target, delta);
         }
+        //wheel action
         float wheel = GetMouseWheelMove();
-        Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
+
         if (wheel != 0)
         {
             // Get the world point that is under the mous
@@ -94,11 +116,6 @@ void View::Render()
             if (camera.zoom < zoomIncrement)
                 camera.zoom = zoomIncrement;
         }
-        BeginDrawing();
-        ClearBackground(BLACK);
-
-        BeginMode2D(camera);
-
         // Draw the 3d grid, rotated 90 degrees and centered around 0,0
         // just so we have something in the XY plane
         rlPushMatrix();
@@ -109,11 +126,6 @@ void View::Render()
 
         // Draw a reference circle
         DrawRectangle(100, 100, 50, 50, YELLOW);
-
-        // DrawText("Mouse ur mum", GetMouseX() + 10, GetMouseY() + 10, 20, WHITE);
-        if (isPosOnRect(mouseWorldPos, Rectangle{100, 100, 50, 50})) {
-            DrawText("Mouse ur mum", mouseWorldPos.x + 10, mouseWorldPos.y + 10, 20, WHITE);
-        }
 
         EndMode2D();
 
