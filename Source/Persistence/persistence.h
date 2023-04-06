@@ -2,7 +2,21 @@
 #define PERSISTANCE_H_DEFINED
 
 #include "GameObject.h"
+#include "Stat.h"
 #include <list>
+
+class IOException : std::exception
+{
+    private: 
+        std::string _w;
+    public:
+        IOException(std::string w): _w(w) {}
+
+        std::string what()
+        {
+            return _w;
+        }
+};
 
 class Persistence
 {

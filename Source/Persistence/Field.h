@@ -3,7 +3,7 @@
 
 #include "../App/global.h"
 #include "GameObject.h"
-
+#include <sstream>
 
 class Field : public GameObject
 {
@@ -19,7 +19,9 @@ class Field : public GameObject
         // Functions
         std::string toString();
         void Render() {};
-    
+
+        static Field* Factory(int id, std::stringstream& ss);
+
     protected:
         // Variables
         int id;
