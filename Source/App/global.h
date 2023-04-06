@@ -4,6 +4,8 @@
 #include "raylib.h"
 
 #include <string>
+//this might be bad
+#include <sstream>
 #include <vector>
 
 #ifdef debug
@@ -53,6 +55,7 @@ typedef enum { MENU = 0, GAME } GAME_STATE;
 
 struct finantial_state
 {
+#include <istream>
     //lehet egy class update methoddal ahol a rezidensek száma szerint pénzt szed be és adót fizet ki?
     //will see
     int total_founds;
@@ -65,6 +68,22 @@ struct finantial_state
 
     std::string toString() {
         return STR(total_founds) + " " + STR(loan) + " " + STR(residential_tax_rate) + " " + STR(industrial_tax_rate) + " " + STR(entertainment_tax_rate);
+    }
+    
+    friend std::ostream & operator>>(std::stringstream& is, finantial_state& f)
+    {
+        //TODO Handle error
+        std::string s_total_founds; std::string s_loan; std::string s_residential_tax_rate;
+        std::string s_industrial_tax_rate; std::string s_entertainment_tax_rate;
+        is >> s_total_founds >> s_loan >> s_residential_tax_rate >> s_industrial_tax_rate >> s_entertainment_tax_rate;
+
+        f.total_founds = std::stoi(s_total_founds);
+        f.loan = std::stoi(s_loan);
+        f.residential_tax_rate = std::stoi(s_residential_tax_rate);
+        f.industrial_tax_rate = std::stoi(s_industrial_tax_rate);
+        f.entertainment_tax_rate = std::stoi(s_entertainment_tax_rate);
+        
+        return is;
     }
 };
 

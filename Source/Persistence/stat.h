@@ -9,6 +9,7 @@ class Stat : public GameObject
     public:
     // Constructor
     Stat(time_t date, finantial_state financialState);
+    ~Stat();
     // Get, set
     std::string GetDate();
     // Functions
@@ -16,8 +17,8 @@ class Stat : public GameObject
 
     private:
     // Variables
-    time_t date; // ? kéne valami jobb
-    finantial_state finState;
+    time_t _date; // ? kéne valami jobb
+    finantial_state _finState;
 };
 
 #endif
