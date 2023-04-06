@@ -2,7 +2,7 @@
 #define FIRE_DEPARTMENT_H_DEFINED
 #include "GameField.h"
 
-class FireDepartment : GameField
+class FireDepartment : public GameField
 {
 public:
     int id;

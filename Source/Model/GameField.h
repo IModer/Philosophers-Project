@@ -3,7 +3,7 @@
 #include "../Persistence/Field.h"
 #include "enum/direction_enum.h"
 
-class GameField : Field
+class GameField : public Field
 {
 public:
     GameField(int id,

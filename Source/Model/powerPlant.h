@@ -2,7 +2,7 @@
 #define POWER_PLANT_H_DEFINED
 #include "GameField.h"
 
-class PowerPlant : GameField
+class PowerPlant : public GameField
 {
 public:
     int id;
@@ -22,6 +22,15 @@ public:
            INT_TOUPLE size) : GameField(id, location, size, 10) {
             capacity = maxCapacity;
            }
+
+    std::string toString() 
+    {
+        return  STR(id) + " " +
+                STR(location.x) + " " +
+                STR(location.y) + " " +
+                STR(size.x) + " " +
+                STR(size.y);
+    }
 };
 
 #endif

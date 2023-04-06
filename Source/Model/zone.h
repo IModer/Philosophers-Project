@@ -6,7 +6,6 @@ class Zone : GameField
 {
 
 public:
-    public:
     int id;
     INT_TOUPLE location;
     INT_TOUPLE size;
@@ -24,6 +23,8 @@ public:
 
 
     int electricityConsumption();
+
+    std::string toString();
 
 };
 
