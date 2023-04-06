@@ -17,6 +17,9 @@ View::View(GameModel *model)
     newGameBtn = new Button("New game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f, 400, 80}, 40);
     loadGameBtn = new Button("Load game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f + 100, 400, 80}, 40);
     exitBtn = new Button("Exit game", Rectangle{screenWidth/2.f - 200, screenHeight/2.f + 100, 400, 80}, 40);
+
+    camera = {0};
+    camera.zoom = 1.0f;
 };
 
 void View::Update()
@@ -62,8 +65,6 @@ void View::Render()
         EndDrawing();
         break;
     case GAME:
-        Camera2D camera = {0};
-        camera.zoom = 1.0f;
         SetTargetFPS(60);
 
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))

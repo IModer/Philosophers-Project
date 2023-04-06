@@ -4,6 +4,7 @@
 #include "../App/global.h"
 #include "../Model/GameModel.h"
 #include "Button.h"
+#include <raylib.h>
 
 class View 
 {
@@ -22,6 +23,7 @@ class View
     Button* newGameBtn;
     Button* loadGameBtn;
     Button* exitBtn;
+    Camera2D camera;
 };
 
 #endif
