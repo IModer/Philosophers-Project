@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include "rlgl.h"
 #include "raymath.h"
+#include "../Model/FloatingWindow.h"
 
 bool View::isPosOnRect(Vector2 Pos, Rectangle rect)
 {
@@ -55,7 +56,11 @@ void View::Update()
         {
             if (isPosOnRect(mouseWorldPos, Rectangle{100, 100, 50, 50}))
             {
-                DrawText("Mouse ur mum", GetMouseX() + 10, GetMouseY() + 10, 20, WHITE);
+                // DrawText("Mouse ur mum", GetMouseX() + 10, GetMouseY() + 10, 20, WHITE);
+                _model->OpenFWindow();
+
+            } else if (_model->GetFWindow() != nullptr) {
+                _model->CloseFWindow();
             }
         }
         //left click
@@ -130,6 +135,9 @@ void View::Render()
         DrawRectangle(100, 100, 50, 50, YELLOW);
 
         EndMode2D();
+
+        if (_model->GetFWindow() != nullptr)
+            _model->GetFWindow()->Render();
 
         DrawText("Mouse right button drag to move, mouse wheel to zoom", 10, 10, 20, WHITE);
 

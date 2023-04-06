@@ -4,7 +4,6 @@
 #include "../App/global.h"
 #include "../Model/GameModel.h"
 #include "Button.h"
-#include <raylib.h>
 
 class View 
 {

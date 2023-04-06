@@ -11,9 +11,12 @@ class GameModel
     public:
         Persistence _persistence;
         std::list<Field*> _fields;
-        FloatingWindow* _fWindow;
 
         GameModel(Persistence* persistence) {};
+
+        void OpenFWindow() { _fWindow = new FloatingWindow(nullptr); }; //TODO ne nullptr 
+        FloatingWindow* GetFWindow() { return _fWindow; }
+        void CloseFWindow() { delete _fWindow; _fWindow = nullptr; }
 
         void NewGame();
         void SaveGame();
@@ -26,6 +29,10 @@ class GameModel
         void ManipulateTime(TIME_ENUM t); // kell egy speed enum
         void SendFireDepartment(INT_TOUPLE p);
         void OnFieldClick(INT_TOUPLE p);
+
+    private:
+    FloatingWindow* _fWindow;
+
 };
 
 #endif

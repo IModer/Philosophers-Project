@@ -3,6 +3,7 @@
 
 #include "../Persistence/Field.h"
 #include "../App/global.h"
+#include <raylib.h>
 
 class FloatingWindow 
 {
@@ -13,7 +14,8 @@ class FloatingWindow
     void Render();
     void OnClick(INT_TOUPLE pos);
     private:
-    Field _filed;
+    Field* _field;
+    Vector2 _pos;
 };
 
 #endif
