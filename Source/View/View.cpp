@@ -49,42 +49,13 @@ void View::Update()
         }
         break;
     case GAME:
-        _model->Update();
-        break;
-    }
-}
-
-void View::Render()
-{
-    switch (gameState)
-    {
-    case MENU:
-        BeginDrawing();
-
-        ClearBackground(RAYWHITE);
-
-        DrawText("$[game_name]", (screenWidth - MeasureText("$[game_name]", 60)) / 2, screenHeight / 2 - 80, 60, BLUE);
-
-        newGameBtn->Render();
-        loadGameBtn->Render();
-        exitBtn->Render();
-
-        EndDrawing();
-        break;
-    case GAME:
-        //relative position of the mouse related to the camera
         Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
 
-        BeginDrawing();
-        ClearBackground(BLACK);
-        BeginMode2D(camera);
-        //right click
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {
-            // DrawText("Mouse ur mum", GetMouseX() + 10, GetMouseY() + 10, 20, WHITE);
             if (isPosOnRect(mouseWorldPos, Rectangle{100, 100, 50, 50}))
             {
-                DrawText("Mouse ur mum", mouseWorldPos.x + 10, mouseWorldPos.y + 10, 20, WHITE);
+                DrawText("Mouse ur mum", GetMouseX() + 10, GetMouseY() + 10, 20, WHITE);
             }
         }
         //left click
@@ -116,6 +87,37 @@ void View::Render()
             if (camera.zoom < zoomIncrement)
                 camera.zoom = zoomIncrement;
         }
+        _model->Update();
+        break;
+    }
+}
+
+void View::Render()
+{
+    switch (gameState)
+    {
+    case MENU:
+        BeginDrawing();
+
+        ClearBackground(RAYWHITE);
+
+        DrawText("$[game_name]", (screenWidth - MeasureText("$[game_name]", 60)) / 2, screenHeight / 2 - 80, 60, BLUE);
+
+        newGameBtn->Render();
+        loadGameBtn->Render();
+        exitBtn->Render();
+
+        EndDrawing();
+        break;
+    case GAME:
+        //relative position of the mouse related to the camera
+        Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
+
+        BeginDrawing();
+        ClearBackground(BLACK);
+        BeginMode2D(camera);
+        //right click
+        
         // Draw the 3d grid, rotated 90 degrees and centered around 0,0
         // just so we have something in the XY plane
         rlPushMatrix();
