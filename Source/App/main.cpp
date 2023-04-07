@@ -1,9 +1,6 @@
 #include "global.h"
 #include "App.h"
 
-//TODO remove this
-#include "../Model/GameModel.h"
-
 int main()
 {
     App* _app = App::Instance();
