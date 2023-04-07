@@ -5,3 +5,4 @@ Source/obj/
 *.out
 *.exe
 *.log
+*.a
