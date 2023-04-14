@@ -29,7 +29,13 @@ public:
                 STR(location.x) + " " +
                 STR(location.y) + " " +
                 STR(size.x) + " " +
-                STR(size.y);
+                STR(size.y) + " " +
+                STR(hasElectricity) + " " +
+                STR(isOnFire) + " " +
+                STR(isConnectedToRoad) + " " +
+                STR(isHabitable) + " " +
+                STR(maintenanceCost) + " " +
+                STR(capacity);
     }
 };
 

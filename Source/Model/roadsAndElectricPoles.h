@@ -19,7 +19,8 @@ class RoadsAndElectricPoles : public Field
                     STR(location.x) + " " +
                     STR(location.y) + " " +
                     STR(size.x) + " " +
-                    STR(size.y);
+                    STR(size.y) + " " +
+                    STR(direction);
         }
 
 };
