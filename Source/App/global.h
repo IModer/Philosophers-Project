@@ -22,6 +22,17 @@
 
 #define STR(x) std::to_string(x)
 
+//Ids for Field types
+#define ROADANDELECTRICPOLE 1
+#define GAMEFIELD 2
+#define FOREST 3
+#define FIREDEPARTMENT 4
+#define POWERPLANT 5
+#define STADIUM 6
+#define SERVICEZONE 7
+#define INDUSTRIALZONE 8
+#define RESIDENTZONE 9
+
 const int FPS = 60;
 
 typedef struct INT_TOUPLE { // ? szerintem struct erre jobban illik

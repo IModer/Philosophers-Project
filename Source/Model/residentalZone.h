@@ -28,11 +28,19 @@ class ResidentalZone : public Field
 
     std::string toString() 
     {
-        return  STR(id) + " " +
+                return  STR(id) + " " +
                 STR(location.x) + " " +
                 STR(location.y) + " " +
                 STR(size.x) + " " +
-                STR(size.y);
+                STR(size.y) + " " +
+                STR(hasElectricity) + " " +
+                STR(isOnFire) + " " +
+                STR(isConnectedToRoad) + " " +
+                STR(isHabitable) + " " +
+                STR(hasForest) + " " +
+                STR(hasNeighbouringStadion) + " " +
+                STR(maintenanceCost) + " " +
+                STR(residents);
     }
 };
 
