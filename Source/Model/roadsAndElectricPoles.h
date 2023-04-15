@@ -4,7 +4,7 @@
 #include "enum/direction_enum.h"
 
 
-class RoadsAndElectricPoles : Field
+class RoadsAndElectricPoles : public Field
 {
     public:
         RoadsAndElectricPoles(int id, INT_TOUPLE location, INT_TOUPLE size): Field(id,location,size) {}
@@ -12,7 +12,16 @@ class RoadsAndElectricPoles : Field
         INT_TOUPLE location;
         INT_TOUPLE size;
         int direction;
-        std::string toString();
+        
+        std::string toString() 
+        {
+            return  STR(id) + " " +
+                    STR(location.x) + " " +
+                    STR(location.y) + " " +
+                    STR(size.x) + " " +
+                    STR(size.y) + " " +
+                    STR(direction);
+        }
 
 };
 

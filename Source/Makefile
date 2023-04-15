@@ -364,8 +364,8 @@ OBJ_DIR = obj
 # Define all object files from source files
 
 #SRC = $(call rwildcard, $(SRC_DIR), *.cpp *.h)		#SLOW but might not work
-SRC2 = $(call rwildcard, $(SRC_DIR), *.cpp)  		#FAST but might not work
 #OBJS ?= $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)		#SLOW but might not work
+SRC2 = $(call rwildcard, $(SRC_DIR), *.cpp)  		#FAST but might not work
 OBJS2 ?= $(SRC2:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o) 	#FAST but might not work
 
 # For Android platform we call a custom Makefile.Android
@@ -382,7 +382,7 @@ endif
 
 all:
 #$(info $$OBJS2 is [${OBJS2}])
-	$(MAKE) $(MAKEFILE_PARAMS)
+	$(MAKE) $(MAKEFILE_PARAMS) 2> makee.log
 
 # Project target defined by PROJECT_NAME
 $(PROJECT_NAME): $(OBJS2)
@@ -394,7 +394,7 @@ $(PROJECT_NAME): $(OBJS2)
 #%.o: %.cpp
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(@D)
-	$(CC) -c "$<" -o "$@" $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM)
+	$(CC) -c "$<" -o "$@" $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM) 2> gppe.log
 #$(info $$< is [${<}])
 #$(info $$@ is [${@}])
 

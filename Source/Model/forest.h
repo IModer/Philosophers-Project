@@ -2,9 +2,10 @@
 #define FOREST_H_DEFINED
 #include "GameField.h"
 
-class Forest : GameField
+class Forest : public GameField
 {
-
+private:
+    typedef GameField base;
 public:
     int id;
     INT_TOUPLE location;
@@ -26,6 +27,22 @@ public:
                                {
                                 hasGrownOut = false;
                                }
+
+    std::string toString() 
+    {
+        return  STR(id) + " " +
+                STR(location.x) + " " +
+                STR(location.y) + " " +
+                STR(size.x) + " " +
+                STR(size.y) + " " +
+                STR(hasElectricity) + " " +
+                STR(isOnFire) + " " +
+                STR(isConnectedToRoad) + " " +
+                STR(isHabitable) + " " +
+                STR(hasGrownOut) + " " +
+                STR(maintenanceCost) + " " +
+                STR(age);
+    }
 };
 
 #endif
