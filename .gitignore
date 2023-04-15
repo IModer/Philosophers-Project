@@ -2,5 +2,7 @@ a.out
 comp.sh
 .vscode/
 Source/obj/
-Source/*.out
-Source/*.exe
+*.out
+*.exe
+*.log
+*.a

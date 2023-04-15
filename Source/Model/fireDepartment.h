@@ -2,7 +2,7 @@
 #define FIRE_DEPARTMENT_H_DEFINED
 #include "GameField.h"
 
-class FireDepartment : GameField
+class FireDepartment : public GameField
 {
 public:
     int id;
@@ -28,7 +28,13 @@ public:
                 STR(location.x) + " " +
                 STR(location.y) + " " +
                 STR(size.x) + " " +
-                STR(size.y);
+                STR(size.y) + " " +
+                STR(hasElectricity) + " " +
+                STR(isOnFire) + " " +
+                STR(isConnectedToRoad) + " " +
+                STR(isHabitable) + " " +
+                STR(hasOpenCapacity) + " " +
+                STR(maintenanceCost);
     }
 };
 
