@@ -22,8 +22,6 @@
 
 #define STR(x) std::to_string(x)
 
-std::string CONCAT(...) {}
-
 //Ids for Field types
 #define ROADANDELECTRICPOLE 1
 #define GAMEFIELD 2
