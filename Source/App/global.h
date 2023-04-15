@@ -80,6 +80,12 @@ struct finantial_state
         return STR(total_founds) + " " + STR(loan) + " " + STR(residential_tax_rate) + " " + STR(industrial_tax_rate) + " " + STR(entertainment_tax_rate);
     }
     
+    friend std::ofstream & operator<<(std::ofstream& is, finantial_state& f)
+    {
+        //TODO
+        return is;
+    }
+
     friend std::ostream & operator>>(std::stringstream& is, finantial_state& f)
     {
         //TODO Handle error
