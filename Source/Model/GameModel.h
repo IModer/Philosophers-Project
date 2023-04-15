@@ -10,7 +10,8 @@ class GameModel
 {
     public:
         Persistence _persistence;
-        std::list<Field*> _fields;
+        std::list<Field*>* _fields;
+        finantial_state fin_state;
 
         GameModel(Persistence* persistence) {};
 
