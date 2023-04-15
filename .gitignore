@@ -4,3 +4,4 @@ comp.sh
 Source/obj/
 Source/*.out
 Source/*.exe
+Source/*.log
