@@ -157,7 +157,7 @@ void View::Render()
             }
             if(!isOverlap) 
             {
-                Rectangle rect = { gridX, gridY, rectWidth, rectHeight };
+                Rectangle rect = { static_cast<float>(gridX), static_cast<float>(gridY), static_cast<float>(rectWidth), static_cast<float>(rectHeight) };
                 rects.push_back(rect);
             }
 
