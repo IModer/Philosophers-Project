@@ -2,7 +2,7 @@
 #define MODEL_H_DEFINED
 
 #include "../App/global.h"
-#include "../Persistence/persistence.h"
+#include "../Persistence/Persistence.h"
 #include "FloatingWindow.h"
 #include "enum/time_enum.h"
 
