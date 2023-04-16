@@ -23,15 +23,17 @@
 #define STR(x) std::to_string(x)
 
 //Ids for Field types
-#define ROADANDELECTRICPOLE 1
-#define GAMEFIELD 2
-#define FOREST 3
-#define FIREDEPARTMENT 4
-#define POWERPLANT 5
-#define STADIUM 6
-#define SERVICEZONE 7
-#define INDUSTRIALZONE 8
-#define RESIDENTZONE 9
+enum FIELD_TYPES {
+    ROADANDELECTRICPOLE = 1,
+    GAMEFIELD = 2,
+    FOREST = 3,
+    FIREDEPARTMENT = 4,
+    POWERPLANT = 5,
+    STADIUM = 6,
+    SERVICEZONE = 7,
+    INDUSTRIALZONE = 8,
+    RESIDENTZONE = 9
+}
 
 const int FPS = 60;
 
@@ -82,7 +84,11 @@ struct finantial_state
     
     friend std::ofstream & operator<<(std::ofstream& is, finantial_state& f)
     {
-        //TODO
+        is  <<  total_founds            << " " <<
+                loan                    << " " << 
+                residential_tax_rate    << " " <<
+                industrial_tax_rate     << " " <<
+                entertainment_tax_rate  << " " << std::endl;
         return is;
     }
 
