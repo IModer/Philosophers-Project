@@ -123,12 +123,23 @@ void View::Render()
         if (IsKeyPressed(KEY_B))
         {
             // Do something when the "B" button is pressed
-            printf("The 'B' button was pressed!\n");
+            
 
             // Round the position to the nearest multiple of 50
             int gridX = static_cast<int>(mouseWorldPos.x / 50) * 50;
-            int gridY = static_cast<int>(mouseWorldPos.y / 50) * 50;
-
+            if(mouseWorldPos.x < 0.0)
+            {
+                printf("insideif\n");
+                gridX -= 50;
+            }
+            int gridY = static_cast<int>(mouseWorldPos.y / 50) * 50; // ez jó
+            if(mouseWorldPos.y < 0.0)
+            {
+                printf("insideif\n");
+                gridY = gridY -50;
+            }
+            printf("%f, %f", mouseWorldPos.x,mouseWorldPos.y );
+            printf("The 'B' button was pressed over coordinates %d %d!\n", gridX, gridY);
             // Create the rectangle
             int rectWidth = 50;
             int rectHeight = 50;
@@ -157,7 +168,17 @@ void View::Render()
             printf("The 'D' button was pressed!\n");
 
             int gridX = static_cast<int>(mouseWorldPos.x / 50) * 50;
+            if(mouseWorldPos.x < 0.0)
+            {
+                printf("insideif\n");
+                gridX -= 50;
+            }
             int gridY = static_cast<int>(mouseWorldPos.y / 50) * 50;
+            if(mouseWorldPos.y < 0.0)
+            {
+                printf("insideif\n");
+                gridY = gridY -50;
+            }
             for(int i = 0; i < rects.size(); i++)
             {
                 if(rects[i].x == gridX && rects[i].y == gridY)
@@ -182,8 +203,8 @@ void View::Render()
         DrawGrid(100, 50);
         rlPopMatrix();
 
-        // Draw a reference circle
-        DrawRectangle(100, 100, 50, 50, YELLOW);
+
+        DrawRectangle(0, 0, 50, 50, YELLOW);
         for (int i = 0; i < rects.size(); i++)
         {
             DrawRectangleRec(rects[i], RED);
