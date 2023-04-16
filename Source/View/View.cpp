@@ -38,6 +38,7 @@ void View::Update()
             {
                 // TODO
                 gameState = GAME;
+                _model->NewGame();
             }
             if (loadGameBtn->isClicked())
             {
