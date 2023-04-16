@@ -1,6 +1,7 @@
 #ifndef MODEL_H_DEFINED
 #define MODEL_H_DEFINED
 
+#include <filesystem>
 #include "../App/global.h"
 #include "../Persistence/persistence.h"
 #include "FloatingWindow.h"
@@ -10,9 +11,25 @@ class GameModel
 {
     public:
         Persistence _persistence;
-        std::list<Field*> _fields;
+        std::list<Field*>* _fields;
+        finantial_state fin_state;
 
-        GameModel(Persistence* persistence) {};
+        int numOfSaves;
+        const std::string savesPath = "./saves/";
+
+        GameModel(Persistence* persistence) 
+        {
+            //numOfSaves beállítása
+            //cpp 17
+            for (const auto & entry : std::filesystem::directory_iterator(savesPath))
+            {
+                if (entry.path().extension() == ".sf")
+                {
+                    numOfSaves++;
+                }
+                //std::cout << "DEBUG: " << numOfSaves << std::endl;
+            }
+        };
 
         void OpenFWindow() 
         {

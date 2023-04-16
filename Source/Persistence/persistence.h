@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "Stat.h"
+#include "Field.h"
 #include <list>
 
 class IOException : std::exception
@@ -21,8 +22,8 @@ class IOException : std::exception
 class Persistence
 {
 public:
-    std::list<GameObject*> readGameState(std::string path);
-    bool writeGameState(std::string path, std::list<GameObject*> fields);
+    std::list<Field*>* readGameState(std::string path);
+    bool writeGameState(std::string path, std::list<Field*>* fields, finantial_state fin_state);
 };
 
 #endif
