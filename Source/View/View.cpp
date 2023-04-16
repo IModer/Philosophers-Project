@@ -140,6 +140,8 @@ void View::Render()
             }
             printf("%f, %f", mouseWorldPos.x,mouseWorldPos.y );
             printf("The 'B' button was pressed over coordinates %d %d!\n", gridX, gridY);
+            //_model->_fields.push_back(Building); itt kell pusholni
+            // ez gondolom megy a build függvénybe
             // Create the rectangle
             int rectWidth = 50;
             int rectHeight = 50;
