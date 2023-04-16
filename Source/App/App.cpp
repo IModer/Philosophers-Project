@@ -20,6 +20,7 @@ App::App()
     //View, Model, Persistence példánmyosítása
 
     _persistence = new Persistence();
+    
     _model = new GameModel(_persistence);
     _view = new View(_model);
 
@@ -30,6 +31,7 @@ void App::Run()
 {
     while (!WindowShouldClose())
     {
+        std::vector<Rectangle> rects;
         _view->Update();
         _view->Render();
     }
