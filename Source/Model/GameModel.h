@@ -12,7 +12,7 @@ class GameModel
     public:
         Persistence _persistence;
         std::list<Field*>* _fields;
-        finantial_state fin_state;
+        finantial_state _fin_state;
 
         int numOfSaves;
         const std::string savesPath = "./saves/";
@@ -27,7 +27,6 @@ class GameModel
                 {
                     numOfSaves++;
                 }
-                //std::cout << "DEBUG: " << numOfSaves << std::endl;
             }
         };
 

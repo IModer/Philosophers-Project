@@ -7,7 +7,7 @@
     **/
 void GameModel::SaveGame()
 {
-    if (_persistence.writeGameState( savesPath + "savefile" + STR(numOfSaves) + ".sf", _fields, fin_state))
+    if (_persistence.writeGameState( savesPath + "savefile" + STR(numOfSaves) + ".sf", _fields, _fin_state))
         numOfSaves++;
 }
 
@@ -22,19 +22,24 @@ void GameModel::SaveGame()
     **/
 void GameModel::LoadGame(int savenum)
 {
+    if (savenum == -1)
+    {
+        _fields= _persistence.readGameState(savesPath + "base");   
+    }
     if (savenum > numOfSaves || savenum <= 0)
     {
         //SHOULD BE UNREACHABLE
         return;
     }
-    _fields= _persistence.readGameState("savefile.sf");
+    _fields= _persistence.readGameState(savesPath + "savefile" + STR(savenum) + ".sf");
 }
 
 void GameModel::NewGame()
 {
     //Fields beállítása és beolvasás
     _fields = new std::list<Field*>;
-    LoadGame(-1); // Alap pálya betöltése
+    _fin_state = finantial_state{0,0,0,0,0};
+    //LoadGame(-1); // Alap pálya betöltése
     
     return;
 }
