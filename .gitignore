@@ -9,3 +9,4 @@ Source/obj/
 Source/*.log
 Source/*.exe
 Source/*.out
+Source/savefile*.*
