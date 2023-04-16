@@ -2,7 +2,7 @@
 #define STADION_H_DEFINED
 #include "GameField.h"
 
-class Stadion : GameField
+class Stadion : public GameField
 {
     public:
     int id;
@@ -19,6 +19,20 @@ class Stadion : GameField
     Stadion(int id,
            INT_TOUPLE location,
            INT_TOUPLE size) : GameField(id, location, size, 10) {}
+
+    std::string toString() 
+    {
+        return  STR(id) + " " +
+                STR(location.x) + " " +
+                STR(location.y) + " " +
+                STR(size.x) + " " +
+                STR(size.y) + " " +
+                STR(hasElectricity) + " " +
+                STR(isOnFire) + " " +
+                STR(isConnectedToRoad) + " " +
+                STR(isHabitable) + " " +
+                STR(maintenanceCost);
+    }
 };
 
 #endif

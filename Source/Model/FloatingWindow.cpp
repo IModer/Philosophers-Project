@@ -10,5 +10,5 @@ FloatingWindow::FloatingWindow(Field* field)
 void FloatingWindow::Render()
 {
     DrawRectangleV(_pos, Vector2{200, 400}, GRAY);
-    DrawText("No Name\nFartin around", _pos.x+4, _pos.y+8, 20, WHITE);
+    DrawText("No Name\nDisplaying data", _pos.x+4, _pos.y+8, 20, WHITE);
 }

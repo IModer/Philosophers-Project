@@ -52,7 +52,17 @@ void View::Update()
     case GAME:
         Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
 
+         
+
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+        {
+            Vector2 delta = GetMouseDelta();
+            delta = Vector2Scale(delta, -1.0f / camera.zoom);
+
+            camera.target = Vector2Add(camera.target, delta);
+        }
+        //left click
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
         {
             if (isPosOnRect(mouseWorldPos, Rectangle{100, 100, 50, 50}))
             {
@@ -63,20 +73,12 @@ void View::Update()
                 _model->CloseFWindow();
             }
         }
-        //left click
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-        {
-            Vector2 delta = GetMouseDelta();
-            delta = Vector2Scale(delta, -1.0f / camera.zoom);
-
-            camera.target = Vector2Add(camera.target, delta);
-        }
         //wheel action
         float wheel = GetMouseWheelMove();
 
         if (wheel != 0)
         {
-            // Get the world point that is under the mous
+            // Get the world point that is under the mouse
 
             // Set the offset to where the mouse is
             camera.offset = GetMousePosition();
@@ -117,10 +119,82 @@ void View::Render()
     case GAME:
         //relative position of the mouse related to the camera
         Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
+        
+        if (IsKeyPressed(KEY_B))
+        {
+            // Do something when the "B" button is pressed
+            
 
+            // Round the position to the nearest multiple of 50
+            int gridX = static_cast<int>(mouseWorldPos.x / 50) * 50;
+            if(mouseWorldPos.x < 0.0)
+            {
+                printf("insideif\n");
+                gridX -= 50;
+            }
+            int gridY = static_cast<int>(mouseWorldPos.y / 50) * 50; // ez jó
+            if(mouseWorldPos.y < 0.0)
+            {
+                printf("insideif\n");
+                gridY = gridY -50;
+            }
+            printf("%f, %f", mouseWorldPos.x,mouseWorldPos.y );
+            printf("The 'B' button was pressed over coordinates %d %d!\n", gridX, gridY);
+            //_model->_fields.push_back(Building); itt kell pusholni
+            // ez gondolom megy a build függvénybe
+            // Create the rectangle
+            int rectWidth = 50;
+            int rectHeight = 50;
+            bool isOverlap = false;
+            for(Rectangle rect : rects)
+            {
+                if(rect.x == gridX && rect.y == gridY)
+                {
+                    isOverlap = true;
+                    printf("There was an overlap\n");
+                    break;
+                }
+            }
+            if(!isOverlap) 
+            {
+                Rectangle rect = { gridX, gridY, rectWidth, rectHeight };
+                rects.push_back(rect);
+            }
+
+            // Add the rectangle to the vector
+            
+            
+        }
+        if (IsKeyPressed(KEY_D))
+        {
+            printf("The 'D' button was pressed!\n");
+
+            int gridX = static_cast<int>(mouseWorldPos.x / 50) * 50;
+            if(mouseWorldPos.x < 0.0)
+            {
+                printf("insideif\n");
+                gridX -= 50;
+            }
+            int gridY = static_cast<int>(mouseWorldPos.y / 50) * 50;
+            if(mouseWorldPos.y < 0.0)
+            {
+                printf("insideif\n");
+                gridY = gridY -50;
+            }
+            for(int i = 0; i < rects.size(); i++)
+            {
+                if(rects[i].x == gridX && rects[i].y == gridY)
+                {
+                    rects.erase(rects.begin() + i);
+                    printf("Rect was deleted\n");
+                    break;
+                }
+            }
+        }
         BeginDrawing();
         ClearBackground(BLACK);
         BeginMode2D(camera);
+        
         //right click
         
         // Draw the 3d grid, rotated 90 degrees and centered around 0,0
@@ -131,9 +205,12 @@ void View::Render()
         DrawGrid(100, 50);
         rlPopMatrix();
 
-        // Draw a reference circle
-        DrawRectangle(100, 100, 50, 50, YELLOW);
 
+        DrawRectangle(0, 0, 50, 50, YELLOW);
+        for (int i = 0; i < rects.size(); i++)
+        {
+            DrawRectangleRec(rects[i], RED);
+        }
         EndMode2D();
 
         if (_model->GetFWindow() != nullptr)

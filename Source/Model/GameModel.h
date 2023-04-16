@@ -14,7 +14,14 @@ class GameModel
 
         GameModel(Persistence* persistence) {};
 
-        void OpenFWindow() { _fWindow = new FloatingWindow(nullptr); }; //TODO ne nullptr 
+        void OpenFWindow() 
+        {
+            if(_fWindow != nullptr)
+            {
+                delete _fWindow;
+            } 
+            _fWindow = new FloatingWindow(nullptr); 
+        }; //TODO ne nullptr 
         FloatingWindow* GetFWindow() { return _fWindow; }
         void CloseFWindow() { delete _fWindow; _fWindow = nullptr; }
 
