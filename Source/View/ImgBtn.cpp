@@ -7,10 +7,10 @@ bool ImgBtn::isClicked()
     return GetMouseX() > _rect.x && GetMouseX() < _rect.x + _rect.width && GetMouseY() > _rect.y && GetMouseY() < _rect.y + _rect.height;
 }
 
-void ImgBtn::Render() 
+void ImgBtn::Render(bool active) 
 {
     // render image
-    DrawRectangleRec(_rect, isClicked()?GREEN:DARKGREEN);
+    DrawRectangleRec(_rect, isClicked()?GREEN:(active?BLUE:DARKGREEN));
     DrawText(_fName.c_str(), _rect.x + (_rect.width - MeasureText(_fName.c_str(), 18)) / 2, _rect.y + (_rect.height - 18) / 2, 18, WHITE);
 
     if (isClicked()) {

@@ -12,7 +12,7 @@ class ImgBtn {
     bool isClicked();
     int GetBuildID() { return aID; }
 
-    void Render();
+    void Render(bool active=false);
     private:
     std::string _fName;
     int aID;

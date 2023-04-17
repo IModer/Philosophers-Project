@@ -25,8 +25,11 @@ View::View(GameModel *model)
     exitBtn = new Button("Exit game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f + 200, 400, 80}, 40);
 
     /* Action Buttons */
-    actionButtons[0] = new ImgBtn("make rect", GAMEFIELD, Rectangle{ 10, 60, 130, 130 }, "Makes a rectangle"); 
-    actionButtons[1] = new ImgBtn("del rect", -1, Rectangle{ 160, 60, 130, 130 }, "Deletes a rectangle"); 
+    actionButtons[0] = new ImgBtn("Road", ROADANDELECTRICPOLE, Rectangle{ 10, 60, 130, 130 }, "Makes a rectangle"); 
+    actionButtons[1] = new ImgBtn("Residential", GAMEFIELD, Rectangle{ 160, 60, 130, 130 }, "Makes a rectangle"); 
+    actionButtons[2] = new ImgBtn("Forest", FOREST, Rectangle{ 10, 210, 130, 130 }, "Makes a rectangle"); 
+    actionButtons[3] = new ImgBtn("Fire department", FIREDEPARTMENT, Rectangle{ 160, 210, 130, 130 }, "Makes a rect"); 
+    actionButtons[4] = new ImgBtn("Bontás", -1, Rectangle{ 160, 360, 130, 130 }, "Deletes a rectangle"); 
 
     camera = {0};
     camera.zoom = 1.0f;
@@ -89,13 +92,21 @@ void View::Update()
                 /* UI */
                 for (int i = 0; i < aBtnN; i++) {
                     if (actionButtons[i]->isClicked()) {
-                        buildID = actionButtons[i]->GetBuildID();
-                        printf("lets build! %d", buildID);
+                        if (actionButtons[i]-> GetBuildID() == buildID) {
+                            buildID = 0;
+                        } else {
+                            buildID = actionButtons[i]->GetBuildID();
+                            printf("lets build! %d", buildID);
+                        }
                     }
                 } 
             } else {
                 if (buildID) {
                     _model->Build(Vector2{static_cast<float>(gridX), static_cast<float>(gridY)}, buildID);
+                    resCounter = 0;
+                    for (Field* f : _model->_fields) {
+                        if (f->GetId() == GAMEFIELD) resCounter++;
+                    }
                 } else {
                     for (Field* f : _model->_fields) {
                         if (isPosOnRect(mouseWorldPos, Rectangle{static_cast<float>(f->GetX()), static_cast<float>(f->GetY()), static_cast<float>(f->GetWidth()), static_cast<float>(f->GetHeight())}))
@@ -105,7 +116,7 @@ void View::Update()
                         }
                     }
                 }
-                buildID = 0;
+                // buildID = 0;
             }
             if (_model->GetFWindow() != nullptr && l) {
                 _model->CloseFWindow();
@@ -183,14 +194,17 @@ void View::Render()
         DrawRectangle(0, 0, screenWidth, 50, RAYWHITE);
         DrawRectangle(0, screenHeight - 50, screenWidth, 50, RAYWHITE);
 
-        for (int i = 0; i < 2; i++) {
-            actionButtons[i]->Render();
+        for (int i = 0; i < aBtnN; i++) {
+            actionButtons[i]->Render(actionButtons[i]->GetBuildID() == buildID);
         }
 
         if (_model->GetFWindow() != nullptr)
             _model->GetFWindow()->Render();
 
-        DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
+        DrawText(("Residental count: " + STR(resCounter)).c_str(), 20, screenHeight-40, 20, BLACK);
+        DrawText(("Money: " + STR(_model->money) + "$").c_str(), 400, screenHeight-40, 20, BLACK);
+
+        // DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
 
         EndDrawing();
 

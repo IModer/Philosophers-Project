@@ -12,6 +12,7 @@ class GameModel
     public:
         Persistence _persistence;
         std::list<Field*> _fields;
+        int money = 10000;
 
         GameModel(Persistence* persistence) {};
 
