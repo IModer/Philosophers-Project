@@ -1,7 +1,7 @@
 #ifndef _GLOBAL_
 #define _GLOBAL_
 
-#include "raylib.h"
+#include "../include/raylib.h"
 
 #include <string>
 //this might be bad
@@ -23,7 +23,7 @@
 #define STR(x) std::to_string(x)
 
 //Ids for Field types
-enum FIELD_TYPES {
+typedef enum {
     ROADANDELECTRICPOLE = 1,
     GAMEFIELD = 2,
     FOREST = 3,
@@ -32,8 +32,8 @@ enum FIELD_TYPES {
     STADIUM = 6,
     SERVICEZONE = 7,
     INDUSTRIALZONE = 8,
-    RESIDENTZONE = 9
-}
+    RESIDENTALZONE = 9
+} FIELD_TYPES;
 
 const int FPS = 60;
 
@@ -82,13 +82,13 @@ struct finantial_state
         return STR(total_founds) + " " + STR(loan) + " " + STR(residential_tax_rate) + " " + STR(industrial_tax_rate) + " " + STR(entertainment_tax_rate);
     }
     
-    friend std::ofstream & operator<<(std::ofstream& is, finantial_state& f)
+    friend std::ostream & operator<<(std::ostream& is, finantial_state& f)
     {
-        is  <<  total_founds            << " " <<
-                loan                    << " " << 
-                residential_tax_rate    << " " <<
-                industrial_tax_rate     << " " <<
-                entertainment_tax_rate  << " " << std::endl;
+        is  <<  f.total_founds            << " " <<
+                f.loan                    << " " << 
+                f.residential_tax_rate    << " " <<
+                f.industrial_tax_rate     << " " <<
+                f.entertainment_tax_rate  << " " << std::endl;
         return is;
     }
 
