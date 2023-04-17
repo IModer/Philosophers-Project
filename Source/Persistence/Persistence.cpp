@@ -12,7 +12,7 @@
     *   \throw IOException
     *   \return List of GameObjects read from a file at path
     **/
-std::list<Field*>* Persistence::readGameState(std::string path) //TODO
+std::list<Field*> Persistence::readGameState(std::string path) //TODO
 {//                                                           , list<Field>& f, financial_state& fs
     auto l = std::list<Field*>();
     //Open file at path
@@ -51,7 +51,7 @@ std::list<Field*>* Persistence::readGameState(std::string path) //TODO
         throw IOException("Failed to open file!");
     }
     
-    return &l;
+    return l;
 }
 
 /**
@@ -64,7 +64,7 @@ std::list<Field*>* Persistence::readGameState(std::string path) //TODO
     *   \param fields list of GameObjects to write
     *   \return True if it was successful
     **/
-bool Persistence::writeGameState(std::string path, std::list<Field*>* fields, finantial_state fin_state)
+bool Persistence::writeGameState(std::string path, std::list<Field*> fields, finantial_state fin_state)
 {
     //Open file at path
     std::ofstream f;
@@ -74,7 +74,7 @@ bool Persistence::writeGameState(std::string path, std::list<Field*>* fields, fi
         //write financial struct
         f << fin_state << std::endl;
         //writing fields to the file
-        for (auto field : (*fields))
+        for (auto field : (fields))
         {
             f << field->toString() << std::endl;
         }

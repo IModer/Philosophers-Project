@@ -12,7 +12,7 @@ class GameModel
 {
     public:
         Persistence _persistence;
-        std::list<Field*>* _fields;
+        std::list<Field*> _fields;
         finantial_state _fin_state;
 
         int numOfSaves;

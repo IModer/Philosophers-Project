@@ -24,7 +24,7 @@ void GameModel::LoadGame(int savenum)
 {
     if (savenum == -1)
     {
-        _fields= _persistence.readGameState(savesPath + "base");   
+        _fields = _persistence.readGameState(savesPath + "base");   
     }
     if (savenum > numOfSaves || savenum <= 0)
     {
@@ -37,7 +37,7 @@ void GameModel::LoadGame(int savenum)
 void GameModel::NewGame()
 {
     //Fields beállítása és beolvasás
-    _fields = new std::list<Field*>;
+    _fields = std::list<Field*>();
     _fin_state = finantial_state{0,0,0,0,0};
     //LoadGame(-1); // Alap pálya betöltése
     
@@ -45,17 +45,17 @@ void GameModel::NewGame()
 }
 
 void GameModel::Build(Vector2 pos, int id) {
-    for(Field* f : (*_fields))
+    for(Field* f : (_fields))
     {
         if(f->GetX() == pos.x && f->GetY() == pos.y)
         {
             printf("There was an overlap\n");
             if (id < 0) {
-                _fields->remove(f);
+                _fields.remove(f);
             }
             return;
         }
     }
     if (id >= 0)
-    _fields->push_back(new Field(id, INT_TOUPLE{static_cast<int>(pos.x), static_cast<int>(pos.y)}, INT_TOUPLE{50, 50})); // factoryval?
+    _fields.push_back(new Field(id, INT_TOUPLE{static_cast<int>(pos.x), static_cast<int>(pos.y)}, INT_TOUPLE{50, 50})); // factoryval?
 } 

@@ -22,8 +22,8 @@ class IOException : std::exception
 class Persistence
 {
 public:
-    std::list<Field*>* readGameState(std::string path);
-    bool writeGameState(std::string path, std::list<Field*>* fields, finantial_state fin_state);
+    std::list<Field*> readGameState(std::string path);
+    bool writeGameState(std::string path, std::list<Field*> fields, finantial_state fin_state);
 };
 
 #endif
