@@ -5,6 +5,7 @@
 #include "../Persistence/Persistence.h"
 #include "FloatingWindow.h"
 #include "enum/time_enum.h"
+#include <raylib.h>
 
 class GameModel
 {
@@ -24,6 +25,8 @@ class GameModel
         }; //TODO ne nullptr 
         FloatingWindow* GetFWindow() { return _fWindow; }
         void CloseFWindow() { delete _fWindow; _fWindow = nullptr; }
+
+        void Build(Vector2 pos, int id);
 
         void NewGame();
         void SaveGame();

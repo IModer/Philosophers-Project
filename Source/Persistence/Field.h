@@ -3,6 +3,7 @@
 
 #include "../App/global.h"
 #include "GameObject.h"
+#include <raylib.h>
 #include <sstream>
 
 class Field : public GameObject
@@ -18,7 +19,7 @@ class Field : public GameObject
         int GetHeight() { return size.y; }
         // Functions
         std::string toString();
-        void Render() {};
+        void Render() { DrawRectangleRec(Rectangle{static_cast<float>(location.x), static_cast<float>(location.y), static_cast<float>(size.x), static_cast<float>(size.y)}, WHITE); };
 
         static Field* Factory(int id, std::stringstream& ss);
 
