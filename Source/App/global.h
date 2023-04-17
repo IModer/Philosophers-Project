@@ -1,7 +1,7 @@
 #ifndef _GLOBAL_
 #define _GLOBAL_
 
-#include "../include/raylib.h"
+#include "raylib.h"
 
 #include <string>
 //this might be bad
