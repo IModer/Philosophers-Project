@@ -84,6 +84,7 @@ void View::Update()
         //left click
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
+            bool l = true;
             if (isPosOnRect(GetMousePosition(), Rectangle{0, 0, 300, screenHeight})) {
                 /* UI */
                 for (int i = 0; i < aBtnN; i++) {
@@ -100,83 +101,18 @@ void View::Update()
                         if (isPosOnRect(mouseWorldPos, Rectangle{static_cast<float>(f->GetX()), static_cast<float>(f->GetY()), static_cast<float>(f->GetWidth()), static_cast<float>(f->GetHeight())}))
                         {
                             _model->OpenFWindow();
-
+                            l = false;
                         }
                     }
                 }
-                if (_model->GetFWindow() != nullptr) {
-                    _model->CloseFWindow();
-                }
-                // buildID = 0;
+                buildID = 0;
             }
-
-
+            if (_model->GetFWindow() != nullptr && l) {
+                _model->CloseFWindow();
+            }
         }
         //wheel action
         float wheel = GetMouseWheelMove();
-
-
-        // Debug rect create-delete
-        if (IsKeyPressed(KEY_B))
-        {
-            // Do something when the "B" button is pressed
-            
-
-
-            printf("%f, %f", mouseWorldPos.x,mouseWorldPos.y );
-            printf("The 'B' button was pressed over coordinates %d %d!\n", gridX, gridY);
-            //_model->_fields.push_back(Building); itt kell pusholni
-            // ez gondolom megy a build függvénybe
-            // Create the rectangle
-            // int rectWidth = 50;
-            // int rectHeight = 50;
-            // bool isOverlap = false;
-            // for(Rectangle rect : rects)
-            // {
-            //     if(rect.x == gridX && rect.y == gridY)
-            //     {
-            //         isOverlap = true;
-            //         printf("There was an overlap\n");
-            //         break;
-            //     }
-            // }
-            // if(!isOverlap) 
-            // {
-            //     Rectangle rect = { static_cast<float>(gridX), static_cast<float>(gridY), static_cast<float>(rectWidth), static_cast<float>(rectHeight) };
-            //     rects.push_back(rect);
-            // }
-
-            // // Add the rectangle to the vector
-            
-            
-            
-        }
-        if (IsKeyPressed(KEY_D))
-        {
-            printf("The 'D' button was pressed!\n");
-
-            int gridX = static_cast<int>(mouseWorldPos.x / 50) * 50;
-            if(mouseWorldPos.x < 0.0)
-            {
-                printf("insideif\n");
-                gridX -= 50;
-            }
-            int gridY = static_cast<int>(mouseWorldPos.y / 50) * 50;
-            if(mouseWorldPos.y < 0.0)
-            {
-                printf("insideif\n");
-                gridY = gridY -50;
-            }
-            for(int i = 0; i < rects.size(); i++)
-            {
-                if(rects[i].x == gridX && rects[i].y == gridY)
-                {
-                    rects.erase(rects.begin() + i);
-                    printf("Rect was deleted\n");
-                    break;
-                }
-            }
-        }
 
         if (wheel != 0)
         {
@@ -225,9 +161,7 @@ void View::Render()
         BeginDrawing();
         ClearBackground(BLACK);
         BeginMode2D(camera);
-        
-        //right click
-        
+                
         // Draw the 3d grid, rotated 90 degrees and centered around 0,0
         // just so we have something in the XY plane
         rlPushMatrix();
@@ -236,12 +170,11 @@ void View::Render()
         DrawGrid(100, 50);
         rlPopMatrix();
 
-
-        DrawRectangle(0, 0, 50, 50, YELLOW);
-        for (int i = 0; i < rects.size(); i++)
+        for (Field *i : _model->_fields)
         {
-            DrawRectangleRec(rects[i], RED);
+            i->Render();
         }
+
         EndMode2D();
 
 
@@ -260,10 +193,7 @@ void View::Render()
         DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
 
         EndDrawing();
-        for (Field *i : _model->_fields)
-        {
-            i->Render();
-        }
+
         break;
     }
 }

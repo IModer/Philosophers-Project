@@ -14,7 +14,6 @@ class View
     static const int screenHeight = 1080;
     
     static bool isPosOnRect(Vector2 Pos, Rectangle rect);
-    std::vector<Rectangle> rects;
     View(GameModel* model);
     void Update();
     void Render();
