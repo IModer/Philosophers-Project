@@ -3,7 +3,7 @@
 
 #include "../View/View.h"
 #include "../Model/GameModel.h"
-#include "../Persistence/persistence.h"
+#include "../Persistence/Persistence.h"
 
 class App
 {
