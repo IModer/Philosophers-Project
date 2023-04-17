@@ -4,6 +4,7 @@
 #include "../App/global.h"
 #include "../Model/GameModel.h"
 #include "Button.h"
+#include "ImgBtn.h"
 
 class View 
 {
@@ -24,6 +25,11 @@ class View
     Button* loadGameBtn;
     Button* exitBtn;
     Camera2D camera;
+
+    private:
+    static const int aBtnN = 2;
+    ImgBtn* actionButtons[aBtnN];
+    int buildID;
 };
 
 #endif
