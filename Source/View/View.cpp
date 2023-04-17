@@ -98,7 +98,7 @@ void View::Update()
                 if (buildID) {
                     _model->Build(Vector2{static_cast<float>(gridX), static_cast<float>(gridY)}, buildID);
                 } else {
-                    for (Field* f : _model->_fields) {
+                    for (Field* f : (*_model->_fields)) {
                         if (isPosOnRect(mouseWorldPos, Rectangle{static_cast<float>(f->GetX()), static_cast<float>(f->GetY()), static_cast<float>(f->GetWidth()), static_cast<float>(f->GetHeight())}))
                         {
                             _model->OpenFWindow();
@@ -171,7 +171,7 @@ void View::Render()
         DrawGrid(100, 50);
         rlPopMatrix();
 
-        for (Field *i : _model->_fields)
+        for (Field *i : (*_model->_fields))
         {
             i->Render();
         }
