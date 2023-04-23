@@ -25,11 +25,12 @@ View::View(GameModel *model)
     exitBtn = new Button("Exit game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f + 200, 400, 80}, 40);
 
     /* Action Buttons */
-    actionButtons[0] = new ImgBtn("Road", ROADANDELECTRICPOLE, Rectangle{ 10, 60, 130, 130 }, "Makes a rectangle"); 
-    actionButtons[1] = new ImgBtn("Residential", RESIDENTALZONE, Rectangle{ 160, 60, 130, 130 }, "Makes a rectangle"); 
-    actionButtons[2] = new ImgBtn("Forest", FOREST, Rectangle{ 10, 210, 130, 130 }, "Makes a rectangle"); 
-    actionButtons[3] = new ImgBtn("Fire department", FIREDEPARTMENT, Rectangle{ 160, 210, 130, 130 }, "Makes a rect"); 
-    actionButtons[4] = new ImgBtn("Bontás", DEMOLISH, Rectangle{ 160, 360, 130, 130 }, "Deletes a rectangle"); 
+    int n = 0;
+    for (std::pair<FIELD_TYPES, std::string> i : buildingNames) {
+        actionButtons[n] = new ImgBtn(i.second, i.first, Rectangle{10+(n%2)*150.f, 60+(n/2)*150.f, 130, 130}, "Builds a new " + i.second);
+        n++;
+    }
+    actionButtons[aBtnN-1] = new ImgBtn("Demolition", DEMOLISH, Rectangle{10+(n%2)*150.f, 60+(n/2)*150.f, 130, 130}, "Demolishes buildings");
 
     camera = {0};
     camera.zoom = 1.0f;

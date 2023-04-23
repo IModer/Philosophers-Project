@@ -56,8 +56,8 @@ const std::map<FIELD_TYPES, int> BuildCosts = {
 };
 
 const std::map<FIELD_TYPES, std::string> buildingNames = {
-    {ROADANDELECTRICPOLE,    "Road"},
-    {FOREST,                "Forest"},
+    {ROADANDELECTRICPOLE,  "Road"},
+    {FOREST,               "Forest"},
     {FIREDEPARTMENT,       "Fire department"},
     {POWERPLANT,           "Powerplant"},
     {STADIUM,              "Stadium"},
