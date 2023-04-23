@@ -13,6 +13,46 @@ std::string Field::toString()
     return STR(id) + " " + location.toString() + " " + size.toString();
 }
 
+
+//This makes Fields with a default constructor;
+Field* Field::Factory(int id)
+{
+    Field* r;
+    switch (id)
+    {
+    case ROADANDELECTRICPOLE:
+        //Make r;
+        break;
+    case GAMEFIELD:
+        //Make r;
+        break;
+    case FOREST:
+        //Make r;
+        break;
+    case FIREDEPARTMENT:
+        //Make r;
+        break;
+    case POWERPLANT:
+        //Make r;
+        break;
+    case STADIUM:
+        //Make r;
+        break;
+    case SERVICEZONE:
+        //Make r;
+        break;
+    case INDUSTRIALZONE:
+        //Make r;
+        break;
+    case RESIDENTALZONE:
+        //Make r;
+        break;
+    default:
+        break;
+    }
+    return r;
+}
+
 Field* Field::Factory(int id, std::stringstream& ss)
 {
     //elágazunk az id alapján

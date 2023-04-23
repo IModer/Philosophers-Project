@@ -21,6 +21,7 @@ class Field : public GameObject
         std::string toString();
         void Render() { DrawRectangleRec(Rectangle{static_cast<float>(location.x), static_cast<float>(location.y), static_cast<float>(size.x), static_cast<float>(size.y)}, WHITE); };
 
+        static Field* Factory(int id);
         static Field* Factory(int id, std::stringstream& ss);
 
     protected:
