@@ -49,6 +49,7 @@ void View::Update()
             {
                 // TODO
                 gameState = GAME;
+                _model->NewGame();
             }
             if (loadGameBtn->isClicked())
             {
@@ -108,7 +109,7 @@ void View::Update()
                         if (f->GetId() == GAMEFIELD) resCounter++;
                     }
                 } else {
-                    for (Field* f : _model->_fields) {
+                    for (Field* f : (_model->_fields)) {
                         if (isPosOnRect(mouseWorldPos, Rectangle{static_cast<float>(f->GetX()), static_cast<float>(f->GetY()), static_cast<float>(f->GetWidth()), static_cast<float>(f->GetHeight())}))
                         {
                             _model->OpenFWindow();
@@ -181,7 +182,7 @@ void View::Render()
         DrawGrid(100, 50);
         rlPopMatrix();
 
-        for (Field *i : _model->_fields)
+        for (Field *i : (_model->_fields))
         {
             i->Render();
         }

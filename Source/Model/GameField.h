@@ -13,7 +13,7 @@ public:
                                      maintenanceCost(maintenanceCost) {}
 
     GameField(Field field) : Field(field) {};
-
+    ~GameField();
     int id;
     INT_TOUPLE location;
     INT_TOUPLE size;

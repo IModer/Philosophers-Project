@@ -23,15 +23,17 @@
 #define STR(x) std::to_string(x)
 
 //Ids for Field types
-#define ROADANDELECTRICPOLE 1
-#define GAMEFIELD 2
-#define FOREST 3
-#define FIREDEPARTMENT 4
-#define POWERPLANT 5
-#define STADIUM 6
-#define SERVICEZONE 7
-#define INDUSTRIALZONE 8
-#define RESIDENTZONE 9
+typedef enum {
+    ROADANDELECTRICPOLE = 1,
+    GAMEFIELD = 2,
+    FOREST = 3,
+    FIREDEPARTMENT = 4,
+    POWERPLANT = 5,
+    STADIUM = 6,
+    SERVICEZONE = 7,
+    INDUSTRIALZONE = 8,
+    RESIDENTALZONE = 9
+} FIELD_TYPES;
 
 const int FPS = 60;
 
@@ -61,6 +63,16 @@ struct finantial_state
         return STR(total_founds) + " " + STR(loan) + " " + STR(residential_tax_rate) + " " + STR(industrial_tax_rate) + " " + STR(entertainment_tax_rate);
     }
     
+    friend std::ostream & operator<<(std::ostream& is, finantial_state& f)
+    {
+        is  <<  f.total_founds            << " " <<
+                f.loan                    << " " << 
+                f.residential_tax_rate    << " " <<
+                f.industrial_tax_rate     << " " <<
+                f.entertainment_tax_rate  << " " << std::endl;
+        return is;
+    }
+
     friend std::ostream & operator>>(std::stringstream& is, finantial_state& f)
     {
         //TODO Handle error

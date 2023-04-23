@@ -3,7 +3,7 @@
 
 #include "../Persistence/Field.h"
 
-class IndustrialZone : Field
+class IndustrialZone : public Field
 {
     public:
     int id;
