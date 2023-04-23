@@ -12,8 +12,8 @@
     *   \throw IOException
     *   \return List of GameObjects read from a file at path
     **/
-std::list<Field*> Persistence::readGameState(std::string path) //TODO
-{//                                                           , list<Field>& f, financial_state& fs
+void Persistence::readGameState(std::string path, std::list<Field*>& fields, finantial_state& fin_state) //TODO
+{
     auto l = std::list<Field*>();
     //Open file at path
     std::ifstream f;
@@ -43,15 +43,21 @@ std::list<Field*> Persistence::readGameState(std::string path) //TODO
             auto a = Field::Factory(id, ss);
             
             //hozzáadni a listához
-            l.push_back(a);
+            l.push_back(a);  
         }
         
     } else 
     {
         throw IOException("Failed to open file!");
     }
-    
-    return l;
+
+    //Copy l -> fields
+    //TODO CHECK IF READING IN WAS SUCCESSFUL
+    fields.clear();
+    for (auto x : l)
+    {
+        fields.push_back(x);
+    }
 }
 
 /**

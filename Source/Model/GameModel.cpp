@@ -24,14 +24,14 @@ void GameModel::LoadGame(int savenum)
 {
     if (savenum == -1)
     {
-        _fields = _persistence.readGameState(savesPath + "base");   
+        _persistence.readGameState(savesPath + "base", _fields, _fin_state);   
     }
     if (savenum > numOfSaves || savenum <= 0)
     {
         //SHOULD BE UNREACHABLE
         return;
     }
-    _fields= _persistence.readGameState(savesPath + "savefile" + STR(savenum) + ".sf");
+    _persistence.readGameState(savesPath + "savefile" + STR(savenum) + ".sf", _fields, _fin_state);
 }
 
 void GameModel::NewGame()
