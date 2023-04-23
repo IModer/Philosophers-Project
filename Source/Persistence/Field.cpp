@@ -14,10 +14,13 @@ std::string Field::toString()
     return STR(id) + " " + location.toString() + " " + size.toString();
 }
 
+//The everything is 0 behaviour should be changed
 /**
     *   \brief Creates a subclass of Fields based on id
     * 
     *   \param id Should FIELD_TYPES
+    *   \warning Some fields of the return Object might not be initialized
+    *   \warning All other fields are 0
     *   \return A Field subclass object with default values
     **/
 Field* Field::Factory(int id)
@@ -26,34 +29,35 @@ Field* Field::Factory(int id)
     switch (id)
     {
     case ROADANDELECTRICPOLE:
-        //Make r;
+        r = new RoadsAndElectricPoles(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0});
         break;
     case GAMEFIELD:
-        //Make r;
+        r = new GameField(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
         break;
     case FOREST:
-        //Make r;
+        r = new Forest(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
         break;
     case FIREDEPARTMENT:
-        //Make r;
+        r = new FireDepartment(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
         break;
     case POWERPLANT:
-        //Make r;
+        r = new PowerPlant(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0});
         break;
     case STADIUM:
-        //Make r;
+        r = new Stadion(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0});
         break;
     case SERVICEZONE:
-        //Make r;
+        r = new ServiceZone(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
         break;
     case INDUSTRIALZONE:
-        //Make r;
+        r = new IndustrialZone(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
         break;
     case RESIDENTALZONE:
-        //Make r;
+        r = new ResidentalZone(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
         break;
     default:
         break;
+        //Should be unreadable
     }
     return r;
 }
