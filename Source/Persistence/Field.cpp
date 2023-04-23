@@ -85,7 +85,7 @@ Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
         {
             ss >> location.x >> location.y >> size.x >> size.y >> direction;
             RoadsAndElectricPoles* a = new RoadsAndElectricPoles(id, location, size);
-            a->direction = direction;
+            // a->direction = direction; // checkInfrastructure dolga
             r = a;
             break;
         }
@@ -97,12 +97,12 @@ Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
         {
             ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> hasGrownOut >> maintenanceCost >> age;
             auto b = new Forest(id, location, size, age);
-            b->hasElectricity = hasElectricity;
-            b->isOnFire = isOnFire;
-            b->isConnectedToRoad = isConnectedToRoad;
-            b->isHabitable = isHabitable;
-            b->hasGrownOut = hasGrownOut;
-            b->maintenanceCost = maintenanceCost;
+            // b->hasElectricity = hasElectricity; // checkInfrastructure dolga
+            // b->isOnFire = isOnFire;
+            // b->isConnectedToRoad = isConnectedToRoad;
+            // b->isHabitable = isHabitable;
+            // b->hasGrownOut = hasGrownOut;
+            // b->maintenanceCost = maintenanceCost;
             r = b;
             break;
         }
@@ -110,11 +110,11 @@ Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
         {
             ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> hasOpenCapacity >> maintenanceCost;
             auto c = new FireDepartment(id, location, size, maintenanceCost);
-            c->hasElectricity = hasElectricity;
+            /*c->hasElectricity = hasElectricity; // checkInfrastructure dolga
             c->isOnFire = isOnFire;
             c->isConnectedToRoad = isConnectedToRoad;
             c->isHabitable = isHabitable;
-            c->hasOpenCapacity = hasOpenCapacity;
+            c->hasOpenCapacity = hasOpenCapacity; */
             r = c;
             break;
         }
@@ -122,12 +122,12 @@ Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
         {
             ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> maintenanceCost >> capacity;
             auto d = new PowerPlant(id, location, size);
-            d->hasElectricity = hasElectricity;
-            d->isOnFire = isOnFire;
-            d->isConnectedToRoad = isConnectedToRoad;
-            d->isHabitable = isHabitable;
-            d->maintenanceCost = maintenanceCost;
-            d->capacity = capacity;
+            // d->hasElectricity = hasElectricity;
+            // d->isOnFire = isOnFire;
+            // d->isConnectedToRoad = isConnectedToRoad;
+            // d->isHabitable = isHabitable;
+            // d->maintenanceCost = maintenanceCost;
+            // d->capacity = capacity;
             r = d;
             break;
         }
@@ -135,11 +135,11 @@ Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
         {
             ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> maintenanceCost;
             auto e = new Stadion(id, location, size);
-            e->hasElectricity = hasElectricity;
-            e->isOnFire = isOnFire;
-            e->isConnectedToRoad = isConnectedToRoad;
-            e->isHabitable = isHabitable;
-            e->maintenanceCost = maintenanceCost;
+            // e->hasElectricity = hasElectricity;
+            // e->isOnFire = isOnFire;
+            // e->isConnectedToRoad = isConnectedToRoad;
+            // e->isHabitable = isHabitable;
+            // e->maintenanceCost = maintenanceCost;
             r = e;
             break;
         }
@@ -147,13 +147,13 @@ Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
         {
             ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> maintenanceCost >> workers >> profit;
             auto f = new ServiceZone(id, location, size, 0);  //???
-            f->hasElectricity = hasElectricity;
-            f->isOnFire = isOnFire;
-            f->isConnectedToRoad = isConnectedToRoad;
-            f->isHabitable = isHabitable;
-            f->maintenanceCost = maintenanceCost;
-            f->workers = workers;
-            f->profit = profit;
+            // f->hasElectricity = hasElectricity;
+            // f->isOnFire = isOnFire;
+            // f->isConnectedToRoad = isConnectedToRoad;
+            // f->isHabitable = isHabitable;
+            // f->maintenanceCost = maintenanceCost;
+            // f->workers = workers;
+            // f->profit = profit;
             r = f;
             break;
         }
@@ -161,13 +161,13 @@ Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
         {
             ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> maintenanceCost >> workers >> profit;
             auto g = new IndustrialZone(id, location, size, 0);  //???
-            g->hasElectricity = hasElectricity;
-            g->isOnFire = isOnFire;
-            g->isConnectedToRoad = isConnectedToRoad;
-            g->isHabitable = isHabitable;
-            g->maintenanceCost = maintenanceCost;
-            g->workers = workers;
-            g->profit = profit;
+            // g->hasElectricity = hasElectricity;
+            // g->isOnFire = isOnFire;
+            // g->isConnectedToRoad = isConnectedToRoad;
+            // g->isHabitable = isHabitable;
+            // g->maintenanceCost = maintenanceCost;
+            // g->workers = workers;
+            // g->profit = profit;
             r = g;
             break;
         }
@@ -175,13 +175,13 @@ Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
         {
             ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> hasForest >> hasNeighbouringStadion >> maintenanceCost >> residents;
             auto i = new ResidentalZone(id, location, size, residents);  //???
-            i->hasElectricity = hasElectricity;
-            i->isOnFire = isOnFire;
-            i->isConnectedToRoad = isConnectedToRoad;
-            i->isHabitable = isHabitable;
-            i->hasForest = hasForest;
-            i->hasNeighbouringStadion = hasNeighbouringStadion;
-            i->maintenanceCost = maintenanceCost;
+            // i->hasElectricity = hasElectricity;
+            // i->isOnFire = isOnFire;
+            // i->isConnectedToRoad = isConnectedToRoad;
+            // i->isHabitable = isHabitable;
+            // i->hasForest = hasForest;
+            // i->hasNeighbouringStadion = hasNeighbouringStadion;
+            // i->maintenanceCost = maintenanceCost;
             r = i;
             break;
         }

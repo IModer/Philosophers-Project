@@ -5,18 +5,6 @@
 class PowerPlant : public GameField
 {
 public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    //Direction direction;  //ez kell?
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;
-    int capacity;
-    static const int maxCapacity = 10; // TODO: ne 10
-
     PowerPlant(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size) : GameField(id, location, size, 10) {
@@ -38,6 +26,9 @@ public:
                 STR(maintenanceCost) + " " +
                 STR(capacity);
     }
+protected:
+    int capacity;
+    static const int maxCapacity = 10; // TODO: ne 10
 };
 
 #endif

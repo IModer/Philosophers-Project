@@ -5,16 +5,6 @@
 class FireDepartment : public GameField
 {
 public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    //Direction direction;  //ez kell?
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;
-    bool hasOpenCapacity;
     static const int radius = 10; // TODO: ne 10
 
     FireDepartment(FIELD_TYPES id,
@@ -37,6 +27,9 @@ public:
                 STR(hasOpenCapacity) + " " +
                 STR(maintenanceCost);*/
     }
+    protected:
+    bool hasOpenCapacity;
+
 };
 
 #endif
