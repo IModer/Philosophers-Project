@@ -38,6 +38,7 @@ void GameModel::NewGame()
 {
     //Fields beállítása és beolvasás
     _fields = std::list<Field*>();
+    _fields.clear();
     _fin_state = finantial_state{0,0,0,0,0};
     //LoadGame(-1); // Alap pálya betöltése
     

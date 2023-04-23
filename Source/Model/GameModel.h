@@ -22,6 +22,7 @@ class GameModel
         {
             //numOfSaves beállítása
             //cpp 17
+            numOfSaves = 0;
             for (const auto & entry : std::filesystem::directory_iterator(savesPath))
             {
                 if (entry.path().extension() == ".sf")
@@ -29,6 +30,7 @@ class GameModel
                     numOfSaves++;
                 }
             }
+            printf("DEBUG: numOfSaves = %i\n", numOfSaves);
         };
 
         void OpenFWindow() 
