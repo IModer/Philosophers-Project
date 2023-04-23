@@ -22,6 +22,7 @@ public:
            INT_TOUPLE size,
            int maintenanceCost) : GameField(id, location, size, maintenanceCost) {}
 
+    // Returns the string representation of a FireDepartment object
     std::string toString() 
     {
         return  STR(id) + " " +

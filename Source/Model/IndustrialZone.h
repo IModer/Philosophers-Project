@@ -28,6 +28,7 @@ class IndustrialZone : public Field
 
     int electricityConsumption();
 
+    // Returns the string representation of a IndustrialZone object
     std::string toString() 
     {
         return  STR(id) + " " +

@@ -60,6 +60,7 @@ class GameModel
             } 
             _fWindow = new FloatingWindow(nullptr); 
         }; //TODO ne nullptr 
+        
         FloatingWindow* GetFWindow() { return _fWindow; }
         void CloseFWindow() { delete _fWindow; _fWindow = nullptr; }
         void NewGame();

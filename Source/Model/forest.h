@@ -28,6 +28,7 @@ public:
                                 hasGrownOut = false;
                                }
 
+    // Returns the string representation of a Forest object
     std::string toString() 
     {
         return  STR(id) + " " +

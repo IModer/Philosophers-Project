@@ -34,6 +34,12 @@ void GameModel::LoadGame(int savenum)
     _persistence.readGameState(savesPath + "savefile" + STR(savenum) + ".sf", _fields, _fin_state);
 }
 
+/**
+    *   \brief Set the fields of a GameObject object so that a new game can start
+    *   Sets _fields, _fin_state to their default values
+    * 
+    *   \return void
+    **/
 void GameModel::NewGame()
 {
     //Fields beállítása és beolvasás
@@ -50,20 +56,30 @@ void GameModel::NewGame()
     
     return;
 }
+
 // Why use Vector2 when we have INT_TOUPLE
+/**
+    *   \brief Tries to Build a building of type field_t to pos
+    * 
+    *   \param field_t The type of building to build
+    *   \param pos where to build it to, should be in some [min, max]
+    *   \return Whether the building was successful or not
+    **/
 bool GameModel::Build(FIELD_TYPES field_t, Vector2 pos) {
     //Building type alapján példányosítjuk
     auto f = Field::Factory(field_t);
     if (f == nullptr)
         return false; //Failed 
-    
+
+    //Check if pos is a valid position in _fields
+
     //TODO
     //if (place is occupied)
     //  return false
 
     _fields.push_back(f); //Build the field
 
-    //Handle the cost and other things we should
+    //Handle the cost
     int cost = 0;
     for (const auto [t, c] : BuildCosts)
     {

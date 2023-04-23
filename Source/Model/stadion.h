@@ -20,6 +20,8 @@ class Stadion : public GameField
            INT_TOUPLE location,
            INT_TOUPLE size) : GameField(id, location, size, 10) {}
 
+
+    // Returns the string representation of a Stadion object
     std::string toString() 
     {
         return  STR(id) + " " +
