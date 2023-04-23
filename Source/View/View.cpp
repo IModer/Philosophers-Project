@@ -203,7 +203,7 @@ void View::Render()
             _model->GetFWindow()->Render();
 
         DrawText(("Residental count: " + STR(resCounter)).c_str(), 20, screenHeight-40, 20, BLACK);
-        DrawText(("Money: " + STR(_model->money) + "$").c_str(), 400, screenHeight-40, 20, BLACK);
+        DrawText(("Money: " + STR(_model->_fin_state.total_founds) + "$").c_str(), 400, screenHeight-40, 20, BLACK);
 
         // DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
 
