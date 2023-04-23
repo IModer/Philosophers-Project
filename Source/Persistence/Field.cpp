@@ -8,13 +8,18 @@
 #include "../Model/ServiceZone.h"
 #include "../Model/IndustrialZone.h"
 
+// Returns the srting representation of a Fields object
 std::string Field::toString()
 {
     return STR(id) + " " + location.toString() + " " + size.toString();
 }
 
-
-//This makes Fields with a default constructor;
+/**
+    *   \brief Creates a subclass of Fields based on id
+    * 
+    *   \param id Should FIELD_TYPES
+    *   \return A Field subclass object with default values
+    **/
 Field* Field::Factory(int id)
 {
     Field* r;
@@ -53,6 +58,13 @@ Field* Field::Factory(int id)
     return r;
 }
 
+/**
+    *   \brief Creates a subclass of Fields based on id and with attributes read from ss
+    * 
+    *   \param id Should FIELD_TYPES
+    *   \param ss The values to be read from
+    *   \return A Field subclass object with values read from ss
+    **/
 Field* Field::Factory(int id, std::stringstream& ss)
 {
     //elágazunk az id alapján
