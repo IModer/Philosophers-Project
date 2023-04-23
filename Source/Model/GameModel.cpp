@@ -85,10 +85,8 @@ bool GameModel::Build(FIELD_TYPES field_t, Vector2 pos) {
 
         //ChechInfrastructure();  //Update the infrastructure
     }  else { // Demolish
-        std::cout << "demolish\n";
         for (Field* i : _fields) {
             if (View::isPosOnRect(pos, i->GetRect())) {
-                std::cout << "Fu\n";
                 _fields.remove(i);
                 return true;
             }

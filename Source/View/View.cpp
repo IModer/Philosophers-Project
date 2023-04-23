@@ -97,7 +97,6 @@ void View::Update()
                             buildID = BT_NULL;
                         } else {
                             buildID = actionButtons[i]->GetBuildID();
-                            printf("lets build! %d", buildID);
                         }
                     }
                 } 
