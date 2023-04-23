@@ -28,7 +28,7 @@ class View
     private:
     static const int aBtnN = 5;
     ImgBtn* actionButtons[aBtnN];
-    int buildID;
+    FIELD_TYPES buildID;
     int resCounter = 0;
 };
 

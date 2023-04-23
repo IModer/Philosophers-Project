@@ -2,6 +2,7 @@
 #define _GLOBAL_
 
 #include "raylib.h"
+#include <map>
 
 #include <string>
 //this might be bad
@@ -21,9 +22,12 @@
 #endif
 
 #define STR(x) std::to_string(x)
+#define V2_TO_IT(v) INT_TOUPLE{static_cast<int>(v.x), static_cast<int>(v.y)}
 
 //Ids for Field types
 typedef enum {
+    DEMOLISH = -1,
+    BT_NULL = 0,
     ROADANDELECTRICPOLE = 1,
     GAMEFIELD = 2,
     FOREST = 3,
@@ -36,6 +40,32 @@ typedef enum {
 } FIELD_TYPES;
 
 const int FPS = 60;
+const int M_UNIT = 50;
+
+//This can be tweaked any time to balace the game, maybe it can even scale with time or money spent, ect...
+//Scaleing wouldnt be that hard, int scale = x; 50*scale, 100*scale ...
+const std::map<FIELD_TYPES, int> BuildCosts = {
+    {ROADANDELECTRICPOLE,    50},
+    {FOREST,                100},
+    {FIREDEPARTMENT,       1000},
+    {POWERPLANT,           2000},
+    {STADIUM,              4000},
+    {SERVICEZONE,          2000},
+    {INDUSTRIALZONE,       3000},
+    {RESIDENTALZONE,       1000}
+};
+
+const std::map<FIELD_TYPES, std::string> buildingNames = {
+    {ROADANDELECTRICPOLE,    "Road"},
+    {FOREST,                "Forest"},
+    {FIREDEPARTMENT,       "Fire department"},
+    {POWERPLANT,           "Powerplant"},
+    {STADIUM,              "Stadium"},
+    {SERVICEZONE,          "Service zone"},
+    {INDUSTRIALZONE,       "Industrial zone"},
+    {RESIDENTALZONE,       "Residental zone"}
+};
+
 
 typedef struct INT_TOUPLE { 
     int x, y;

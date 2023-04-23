@@ -26,10 +26,10 @@ View::View(GameModel *model)
 
     /* Action Buttons */
     actionButtons[0] = new ImgBtn("Road", ROADANDELECTRICPOLE, Rectangle{ 10, 60, 130, 130 }, "Makes a rectangle"); 
-    actionButtons[1] = new ImgBtn("Residential", GAMEFIELD, Rectangle{ 160, 60, 130, 130 }, "Makes a rectangle"); 
+    actionButtons[1] = new ImgBtn("Residential", RESIDENTALZONE, Rectangle{ 160, 60, 130, 130 }, "Makes a rectangle"); 
     actionButtons[2] = new ImgBtn("Forest", FOREST, Rectangle{ 10, 210, 130, 130 }, "Makes a rectangle"); 
     actionButtons[3] = new ImgBtn("Fire department", FIREDEPARTMENT, Rectangle{ 160, 210, 130, 130 }, "Makes a rect"); 
-    actionButtons[4] = new ImgBtn("Bontás", -1, Rectangle{ 160, 360, 130, 130 }, "Deletes a rectangle"); 
+    actionButtons[4] = new ImgBtn("Bontás", DEMOLISH, Rectangle{ 160, 360, 130, 130 }, "Deletes a rectangle"); 
 
     camera = {0};
     camera.zoom = 1.0f;
@@ -94,7 +94,7 @@ void View::Update()
                 for (int i = 0; i < aBtnN; i++) {
                     if (actionButtons[i]->isClicked()) {
                         if (actionButtons[i]-> GetBuildID() == buildID) {
-                            buildID = 0;
+                            buildID = BT_NULL;
                         } else {
                             buildID = actionButtons[i]->GetBuildID();
                             printf("lets build! %d", buildID);
@@ -104,12 +104,12 @@ void View::Update()
             } else {
                 if (buildID) {
                     //Branch on buildID whether to build or demolish
-                    //_model->Build(fieldID, Vector2{static_cast<float>(gridX), static_cast<float>(gridY)});
+                    _model->Build(buildID, Vector2{static_cast<float>(gridX), static_cast<float>(gridY)});
                 } else {
                     for (Field* f : (_model->_fields)) {
-                        if (isPosOnRect(mouseWorldPos, Rectangle{static_cast<float>(f->GetX()), static_cast<float>(f->GetY()), static_cast<float>(f->GetWidth()), static_cast<float>(f->GetHeight())}))
+                        if (isPosOnRect(mouseWorldPos, f->GetRect()))
                         {
-                            _model->OpenFWindow();
+                            _model->OpenFWindow(f);
                             l = false;
                         }
                     }

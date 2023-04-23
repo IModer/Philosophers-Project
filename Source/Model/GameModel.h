@@ -24,19 +24,6 @@ class GameModel
         const int StartingCash = 10000;
         const int StartingTaxRate = 10;
 
-        //This can be tweaked any time to balace the game, maybe it can even scale with time or money spent, ect...
-        //Scaleing wouldnt be that hard, int scale = x; 50*scale, 100*scale ...
-        const list<tuple<FIELD_TYPES,int>> BuildCosts = {
-            {ROADANDELECTRICPOLE,    50},
-            {FOREST,                100},
-            {FIREDEPARTMENT,       1000},
-            {POWERPLANT,           2000},
-            {STADIUM,              4000},
-            {SERVICEZONE,          2000},
-            {INDUSTRIALZONE,       3000},
-            {RESIDENTALZONE,       1000}
-        };
-
         GameModel(Persistence* persistence) 
         {
             //numOfSaves beállítása
@@ -52,13 +39,13 @@ class GameModel
             printf("DEBUG: numOfSaves = %i\n", numOfSaves);
         };
 
-        void OpenFWindow() 
+        void OpenFWindow(Field* f) 
         {
             if(_fWindow != nullptr)
             {
                 delete _fWindow;
             } 
-            _fWindow = new FloatingWindow(nullptr); 
+            _fWindow = new FloatingWindow(f); 
         }; //TODO ne nullptr 
         
         FloatingWindow* GetFWindow() { return _fWindow; }

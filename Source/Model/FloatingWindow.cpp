@@ -16,6 +16,6 @@ FloatingWindow::FloatingWindow(Field* field)
 void FloatingWindow::Render()
 {
     //Maybe we need checks if the render fails somewhere
-    DrawRectangleV(_pos, Vector2{200, 400}, GRAY);
-    DrawText("No Name\nDisplaying data", _pos.x+4, _pos.y+8, 20, WHITE);
+    DrawRectangleV(_pos, Vector2{200.f, 400.f}, GRAY);
+    DrawText((buildingNames.at(_field->GetId()) + "\nPosition: " + STR(_field->GetX()) + " " + STR(_field->GetY())).c_str(), _pos.x+4, _pos.y+8, 20, WHITE);
 }

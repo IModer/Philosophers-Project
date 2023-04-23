@@ -1,4 +1,5 @@
 #include "GameModel.h"
+#include "../View/View.h" // búúúúú
 
 /**
     *   \brief Saves current gamestate
@@ -66,30 +67,33 @@ void GameModel::NewGame()
     *   \return Whether the building was successful or not
     **/
 bool GameModel::Build(FIELD_TYPES field_t, Vector2 pos) {
-    //Building type alapján példányosítjuk
-    auto f = Field::Factory(field_t);
-    if (f == nullptr)
-        return false; //Failed 
+    if (field_t > 0) { // Build
+        //Building type alapján példányosítjuk
+        auto f = Field::Factory(field_t, pos);
+        if (f == nullptr)
+            return false; //Failed 
 
-    //Check if pos is a valid position in _fields
-
-    //TODO
-    //if (place is occupied)
-    //  return false
-
-    _fields.push_back(f); //Build the field
-
-    //Handle the cost
-    int cost = 0;
-    for (const auto [t, c] : BuildCosts)
-    {
-        if (t == field_t)
-        {
-            cost = c; break;
+        //Check if pos is a valid position in _fields
+        for (Field* i : _fields) {
+            if (CheckCollisionRecs(f->GetRect(), i->GetRect()))
+                return false;
         }
+
+        _fields.push_back(f); //Build the field
+        _fin_state.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
+        return true;
+
+        //ChechInfrastructure();  //Update the infrastructure
+    }  else { // Demolish
+        std::cout << "demolish\n";
+        for (Field* i : _fields) {
+            if (View::isPosOnRect(pos, i->GetRect())) {
+                std::cout << "Fu\n";
+                _fields.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
-    _fin_state.total_founds -= cost; //This might not be the best way to do it, we should check if we go into debt
-    
-    //ChechInfrastructure();  //Update the infrastructure
-    //There should be a better way for this im sure 
+
 } 
