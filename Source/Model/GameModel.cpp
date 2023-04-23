@@ -90,6 +90,6 @@ bool GameModel::Build(FIELD_TYPES field_t, Vector2 pos) {
     }
     _fin_state.total_founds -= cost; //This might not be the best way to do it, we should check if we go into debt
     
-    ChechInfrastructure();  //Update the infrastructure
+    //ChechInfrastructure();  //Update the infrastructure
     //There should be a better way for this im sure 
 } 

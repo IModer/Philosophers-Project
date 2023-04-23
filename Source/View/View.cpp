@@ -96,7 +96,8 @@ void View::Update()
                 } 
             } else {
                 if (buildID) {
-                    _model->Build(Vector2{static_cast<float>(gridX), static_cast<float>(gridY)}, buildID);
+                    //Branch on buildID whether to build or demolish
+                    //_model->Build(fieldID, Vector2{static_cast<float>(gridX), static_cast<float>(gridY)});
                 } else {
                     for (Field* f : (_model->_fields)) {
                         if (isPosOnRect(mouseWorldPos, Rectangle{static_cast<float>(f->GetX()), static_cast<float>(f->GetY()), static_cast<float>(f->GetWidth()), static_cast<float>(f->GetHeight())}))
