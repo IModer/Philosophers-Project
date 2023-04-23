@@ -49,6 +49,8 @@ class GameModel
                     numOfSaves++;
                 }
             }
+            //Init FloatingWindow
+            _fWindow = nullptr;
             printf("DEBUG: numOfSaves = %i\n", numOfSaves);
         };
 
