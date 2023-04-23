@@ -6,7 +6,7 @@
 class ResidentalZone : public Field
 {
     public:
-    int id;
+    FIELD_TYPES id;
     INT_TOUPLE location;
     INT_TOUPLE size;
     //Direction direction; ez kell?
@@ -19,7 +19,7 @@ class ResidentalZone : public Field
     bool hasForest;
     bool hasNeighbouringStadion;
 
-    ResidentalZone(int id,
+    ResidentalZone(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
            int residents) : Field(id, location, size) {}

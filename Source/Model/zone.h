@@ -6,7 +6,7 @@ class Zone : GameField
 {
 
 public:
-    int id;
+    FIELD_TYPES id;
     INT_TOUPLE location;
     INT_TOUPLE size;
     bool hasElectricity;
@@ -17,7 +17,7 @@ public:
     int profit;
     int workers;
 
-    Zone(int id,
+    Zone(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size) : GameField(id, location, size, 10) {} // TODO: ne 10
 

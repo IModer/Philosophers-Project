@@ -10,16 +10,16 @@ class Field : public GameObject
 {
     public:
         // Constructor
-        Field(int id, INT_TOUPLE location, INT_TOUPLE size): id(id), location(location), size(size) {}
+        Field(FIELD_TYPES id, INT_TOUPLE location, INT_TOUPLE size): id(id), location(location), size(size) {rect = Rectangle{static_cast<float>(location.x), static_cast<float>(location.y), static_cast<float>(size.x), static_cast<float>(size.y)}; }
         // Get, set
-        int GetId() { return id;}
+        FIELD_TYPES GetId() { return id;}
         int GetX()  { return location.x; }
         int GetY() { return location.y; }
-        // INT_TOUPLE GetPos(); // ha kell 
         int GetWidth() { return size.x; }
         int GetHeight() { return size.y; }
+        Rectangle GetRect() { return rect; }
         // Functions
-        std::string toString();
+        virtual std::string toString();
         void Render() { 
             Color c;
             switch (id) {
@@ -39,17 +39,18 @@ class Field : public GameObject
                 c = BLUE;
                 break;
             }
-            DrawRectangleRec(Rectangle{static_cast<float>(location.x), static_cast<float>(location.y), static_cast<float>(size.x), static_cast<float>(size.y)}, c); 
+            DrawRectangleRec(rect, c); 
             };
 
-        static Field* Factory(int id);
-        static Field* Factory(int id, std::stringstream& ss);
+        static Field* Factory(FIELD_TYPES id, Vector2 pos={0,0});
+        static Field* Factory(FIELD_TYPES id, std::stringstream& ss);
 
     protected:
         // Variables
-        int id;
+        FIELD_TYPES id;
         INT_TOUPLE location;
         INT_TOUPLE size;
+        Rectangle rect;
 };
 
 

@@ -5,7 +5,7 @@
 class FireDepartment : public GameField
 {
 public:
-    int id;
+    FIELD_TYPES id;
     INT_TOUPLE location;
     INT_TOUPLE size;
     //Direction direction;  //ez kell?
@@ -17,7 +17,7 @@ public:
     bool hasOpenCapacity;
     static const int radius = 10; // TODO: ne 10
 
-    FireDepartment(int id,
+    FireDepartment(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
            int maintenanceCost) : GameField(id, location, size, maintenanceCost) {}
@@ -25,7 +25,7 @@ public:
     // Returns the string representation of a FireDepartment object
     std::string toString() 
     {
-        return  STR(id) + " " +
+        return  location.toString();/*STR(id) + " " +
                 STR(location.x) + " " +
                 STR(location.y) + " " +
                 STR(size.x) + " " +
@@ -35,7 +35,7 @@ public:
                 STR(isConnectedToRoad) + " " +
                 STR(isHabitable) + " " +
                 STR(hasOpenCapacity) + " " +
-                STR(maintenanceCost);
+                STR(maintenanceCost);*/
     }
 };
 

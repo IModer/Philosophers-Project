@@ -7,7 +7,7 @@ class Forest : public GameField
 private:
     typedef GameField base;
 public:
-    int id;
+    FIELD_TYPES id;
     INT_TOUPLE location;
     INT_TOUPLE size;
     //Direction direction; //ez kell?
@@ -19,7 +19,7 @@ public:
     int age;
     bool hasGrownOut;
 
-    Forest(int id,
+    Forest(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
            int age) : GameField(id, location, size, 10),

@@ -6,7 +6,7 @@
 class GameField : public Field
 {
 public:
-    GameField(int id,
+    GameField(FIELD_TYPES id,
               INT_TOUPLE location,
               INT_TOUPLE size,
               int maintenanceCost) : Field(id, location, size),
@@ -14,7 +14,7 @@ public:
 
     GameField(Field field) : Field(field) {};
     ~GameField();
-    int id;
+    FIELD_TYPES id;
     INT_TOUPLE location;
     INT_TOUPLE size;
     bool hasElectricity;

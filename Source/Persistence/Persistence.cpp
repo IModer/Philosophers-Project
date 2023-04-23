@@ -42,7 +42,7 @@ void Persistence::readGameState(std::string path, std::list<Field*>& fields, fin
             ss >> id;
 
             //példányosítani
-            auto a = Field::Factory(id, ss);
+            auto a = Field::Factory(static_cast<FIELD_TYPES>(id), ss);
             
             //hozzáadni a listához
             l.push_back(a);  

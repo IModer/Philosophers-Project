@@ -5,7 +5,7 @@
 class PowerPlant : public GameField
 {
 public:
-    int id;
+    FIELD_TYPES id;
     INT_TOUPLE location;
     INT_TOUPLE size;
     //Direction direction;  //ez kell?
@@ -17,7 +17,7 @@ public:
     int capacity;
     static const int maxCapacity = 10; // TODO: ne 10
 
-    PowerPlant(int id,
+    PowerPlant(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size) : GameField(id, location, size, 10) {
             capacity = maxCapacity;

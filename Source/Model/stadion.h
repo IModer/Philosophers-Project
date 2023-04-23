@@ -5,7 +5,7 @@
 class Stadion : public GameField
 {
     public:
-    int id;
+    FIELD_TYPES id;
     INT_TOUPLE location;
     INT_TOUPLE size;
     //Direction direction; //ez kell?
@@ -16,7 +16,7 @@ class Stadion : public GameField
     int maintenanceCost;
     static const int radius = 10; // TODO: ne 10
 
-    Stadion(int id,
+    Stadion(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size) : GameField(id, location, size, 10) {}
 

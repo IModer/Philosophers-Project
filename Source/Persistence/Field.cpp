@@ -7,6 +7,7 @@
 #include "../Model/residentalZone.h"
 #include "../Model/ServiceZone.h"
 #include "../Model/IndustrialZone.h"
+#include <raylib.h>
 
 // Returns the srting representation of a Fields object
 std::string Field::toString()
@@ -23,42 +24,44 @@ std::string Field::toString()
     *   \warning All other fields are 0
     *   \return A Field subclass object with default values
     **/
-Field* Field::Factory(int id)
+Field* Field::Factory(FIELD_TYPES id, Vector2 pos)
 {
     Field* r;
     switch (id)
     {
     case ROADANDELECTRICPOLE:
-        r = new RoadsAndElectricPoles(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0});
+        r = new RoadsAndElectricPoles(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT});
         break;
     case GAMEFIELD:
-        r = new GameField(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        r = new GameField(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT}, 0);
         break;
     case FOREST:
-        r = new Forest(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        r = new Forest(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT}, 0);
         break;
     case FIREDEPARTMENT:
-        r = new FireDepartment(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        r = new FireDepartment(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT*2,M_UNIT*2}, 0);
         break;
     case POWERPLANT:
-        r = new PowerPlant(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0});
+        r = new PowerPlant(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT*2,M_UNIT*2});
         break;
     case STADIUM:
-        r = new Stadion(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0});
+        r = new Stadion(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT});
         break;
     case SERVICEZONE:
-        r = new ServiceZone(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        r = new ServiceZone(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT}, 0);
         break;
     case INDUSTRIALZONE:
-        r = new IndustrialZone(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        r = new IndustrialZone(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT}, 0);
         break;
     case RESIDENTALZONE:
-        r = new ResidentalZone(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        r = new ResidentalZone(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT}, 0);
         break;
     default:
         break;
         //Should be unreadable
     }
+    std::cout << STR(r->GetId()) << " " << r->GetX() << " " << r->GetY() << r->GetRect().width << std::endl;
+    std::cout << r->toString() << std::endl; // ! nem jó
     return r;
 }
 
@@ -69,7 +72,7 @@ Field* Field::Factory(int id)
     *   \param ss The values to be read from
     *   \return A Field subclass object with values read from ss
     **/
-Field* Field::Factory(int id, std::stringstream& ss)
+Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
 {
     //elágazunk az id alapján
     Field* r;
