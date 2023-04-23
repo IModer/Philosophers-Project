@@ -13,7 +13,7 @@ using namespace std;
 class GameModel
 {
     public:
-        Persistence _persistence;
+        Persistence* _persistence;
         list<Field*> _fields;
         finantial_state _fin_state;
 
@@ -26,8 +26,11 @@ class GameModel
 
         GameModel(Persistence* persistence) 
         {
+            //Init _persistance ans _fields
+            _persistence = persistence;
+            _fields = list<Field*>();
+
             //numOfSaves beállítása
-            //cpp 17
             numOfSaves = 0;
             for (const auto & entry : filesystem::directory_iterator(savesPath))
             {
@@ -36,7 +39,9 @@ class GameModel
                     numOfSaves++;
                 }
             }
-            printf("DEBUG: numOfSaves = %i\n", numOfSaves);
+
+            //Init FloatingWindow
+            _fWindow = nullptr;
         };
 
         void OpenFWindow(Field* f) 

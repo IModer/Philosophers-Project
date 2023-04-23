@@ -8,7 +8,7 @@
     **/
 void GameModel::SaveGame()
 {
-    if (_persistence.writeGameState( savesPath + "savefile" + STR(numOfSaves) + ".sf", _fields, _fin_state))
+    if (_persistence->writeGameState( savesPath + "savefile" + STR(numOfSaves) + ".sf", _fields, _fin_state))
         numOfSaves++;
 }
 
@@ -25,14 +25,14 @@ void GameModel::LoadGame(int savenum)
 {
     if (savenum == -1)
     {
-        _persistence.readGameState(savesPath + "base", _fields, _fin_state);   
+        _persistence->readGameState(savesPath + "base", _fields, _fin_state);   
     }
     if (savenum > numOfSaves || savenum <= 0)
     {
         //SHOULD BE UNREACHABLE
         return;
     }
-    _persistence.readGameState(savesPath + "savefile" + STR(savenum) + ".sf", _fields, _fin_state);
+    _persistence->readGameState(savesPath + "savefile" + STR(savenum) + ".sf", _fields, _fin_state);
 }
 
 /**
