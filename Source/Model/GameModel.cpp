@@ -40,23 +40,40 @@ void GameModel::NewGame()
     _fields = std::list<Field*>();
     _fields.clear();
     _fin_state = finantial_state{0,0,0,0,0};
-    //LoadGame(-1); // Alap pálya betöltése
+    _fin_state.total_founds = StartingCash;
+    _fin_state.loan = 0;
+    _fin_state.entertainment_tax_rate,
+    _fin_state.industrial_tax_rate, 
+    _fin_state.residential_tax_rate = StartingTaxRate;
+
+    //LoadGame(-1); // Alap pálya betöltése, még nem megy
     
     return;
 }
+// Why use Vector2 when we have INT_TOUPLE
+bool GameModel::Build(FIELD_TYPES field_t, Vector2 pos) {
+    //Building type alapján példányosítjuk
+    auto f = Field::Factory(field_t);
+    if (f == nullptr)
+        return false; //Failed 
+    
+    //TODO
+    //if (place is occupied)
+    //  return false
 
-void GameModel::Build(Vector2 pos, int id) {
-    for(Field* f : (_fields))
+    _fields.push_back(f); //Build the field
+
+    //Handle the cost and other things we should
+    int cost = 0;
+    for (const auto [t, c] : BuildCosts)
     {
-        if(f->GetX() == pos.x && f->GetY() == pos.y)
+        if (t == field_t)
         {
-            printf("There was an overlap\n");
-            if (id < 0) {
-                _fields.remove(f);
-            }
-            return;
+            cost = c; break;
         }
     }
-    if (id >= 0)
-    _fields.push_back(new Field(id, INT_TOUPLE{static_cast<int>(pos.x), static_cast<int>(pos.y)}, INT_TOUPLE{50, 50})); // factoryval?
+    _fin_state.total_founds -= cost; //This might not be the best way to do it, we should check if we go into debt
+    
+    ChechInfrastructure();  //Update the infrastructure
+    //There should be a better way for this im sure 
 } 
