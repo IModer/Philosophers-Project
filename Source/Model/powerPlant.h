@@ -23,6 +23,7 @@ public:
             capacity = maxCapacity;
            }
 
+    // Returns the string representation of a PowerPlant object
     std::string toString() 
     {
         return  STR(id) + " " +

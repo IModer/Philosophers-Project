@@ -28,6 +28,7 @@ class ServiceZone : public Field
 
     int electricityConsumption();
 
+    // Returns the string representation of a ServiceZone object
     std::string toString() 
     {
         return  STR(id) + " " +

@@ -26,6 +26,7 @@ class ResidentalZone : public Field
 
     int electricityConsumption();
 
+    // Returns the string representation of a ResidentalZone object
     std::string toString() 
     {
                 return  STR(id) + " " +

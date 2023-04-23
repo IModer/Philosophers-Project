@@ -13,6 +13,7 @@ class RoadsAndElectricPoles : public Field
         INT_TOUPLE size;
         int direction;
         
+        // Returns the string representation of a RoadsAndElectricPoles object
         std::string toString() 
         {
             return  STR(id) + " " +

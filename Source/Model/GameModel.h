@@ -2,33 +2,54 @@
 #define MODEL_H_DEFINED
 
 #include <filesystem>
+#include <tuple>
 #include "../App/global.h"
 #include "../Persistence/Persistence.h"
 #include "FloatingWindow.h"
 #include "enum/time_enum.h"
-#include <raylib.h>
+
+using namespace std;
 
 class GameModel
 {
     public:
         Persistence _persistence;
-        std::list<Field*> _fields;
+        list<Field*> _fields;
         finantial_state _fin_state;
 
         int numOfSaves;
-        const std::string savesPath = "./saves/";
+        const string savesPath = "./saves/";
+
+        //Gameplay variables
+        const int StartingCash = 10000;
+        const int StartingTaxRate = 10;
+
+        //This can be tweaked any time to balace the game, maybe it can even scale with time or money spent, ect...
+        //Scaleing wouldnt be that hard, int scale = x; 50*scale, 100*scale ...
+        const list<tuple<FIELD_TYPES,int>> BuildCosts = {
+            {ROADANDELECTRICPOLE,    50},
+            {FOREST,                100},
+            {FIREDEPARTMENT,       1000},
+            {POWERPLANT,           2000},
+            {STADIUM,              4000},
+            {SERVICEZONE,          2000},
+            {INDUSTRIALZONE,       3000},
+            {RESIDENTALZONE,       1000}
+        };
 
         GameModel(Persistence* persistence) 
         {
             //numOfSaves beállítása
             //cpp 17
-            for (const auto & entry : std::filesystem::directory_iterator(savesPath))
+            numOfSaves = 0;
+            for (const auto & entry : filesystem::directory_iterator(savesPath))
             {
                 if (entry.path().extension() == ".sf")
                 {
                     numOfSaves++;
                 }
             }
+            printf("DEBUG: numOfSaves = %i\n", numOfSaves);
         };
 
         void OpenFWindow() 
@@ -39,17 +60,15 @@ class GameModel
             } 
             _fWindow = new FloatingWindow(nullptr); 
         }; //TODO ne nullptr 
+        
         FloatingWindow* GetFWindow() { return _fWindow; }
         void CloseFWindow() { delete _fWindow; _fWindow = nullptr; }
-
-        void Build(Vector2 pos, int id);
-
         void NewGame();
         void SaveGame();
         void LoadGame(int);
         void Update() {};
         void ChechInfrastructure();
-        bool Build(); //ide kell egy buildings enum
+        bool Build(FIELD_TYPES field_t, Vector2 pos); //ide kell egy buildings enum
         void Demolition(INT_TOUPLE p); 
         void CauseCatastrophe();
         void ManipulateTime(TIME_ENUM t); // kell egy speed enum

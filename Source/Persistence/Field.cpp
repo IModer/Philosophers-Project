@@ -8,11 +8,67 @@
 #include "../Model/ServiceZone.h"
 #include "../Model/IndustrialZone.h"
 
+// Returns the srting representation of a Fields object
 std::string Field::toString()
 {
     return STR(id) + " " + location.toString() + " " + size.toString();
 }
 
+//The everything is 0 behaviour should be changed
+/**
+    *   \brief Creates a subclass of Fields based on id
+    * 
+    *   \param id Should FIELD_TYPES
+    *   \warning Some fields of the return Object might not be initialized
+    *   \warning All other fields are 0
+    *   \return A Field subclass object with default values
+    **/
+Field* Field::Factory(int id)
+{
+    Field* r;
+    switch (id)
+    {
+    case ROADANDELECTRICPOLE:
+        r = new RoadsAndElectricPoles(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0});
+        break;
+    case GAMEFIELD:
+        r = new GameField(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        break;
+    case FOREST:
+        r = new Forest(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        break;
+    case FIREDEPARTMENT:
+        r = new FireDepartment(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        break;
+    case POWERPLANT:
+        r = new PowerPlant(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0});
+        break;
+    case STADIUM:
+        r = new Stadion(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0});
+        break;
+    case SERVICEZONE:
+        r = new ServiceZone(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        break;
+    case INDUSTRIALZONE:
+        r = new IndustrialZone(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        break;
+    case RESIDENTALZONE:
+        r = new ResidentalZone(id, INT_TOUPLE{0,0}, INT_TOUPLE{0,0}, 0);
+        break;
+    default:
+        break;
+        //Should be unreadable
+    }
+    return r;
+}
+
+/**
+    *   \brief Creates a subclass of Fields based on id and with attributes read from ss
+    * 
+    *   \param id Should FIELD_TYPES
+    *   \param ss The values to be read from
+    *   \return A Field subclass object with values read from ss
+    **/
 Field* Field::Factory(int id, std::stringstream& ss)
 {
     //elágazunk az id alapján

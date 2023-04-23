@@ -9,11 +9,13 @@
     *   \brief Reads the contents of path and returns it.
     * 
     *   \param path The path to the file to write to
+    *   \param &fields list of Fields to read to
+    *   \param &fin_state FinantialState to read to
     *   \throw IOException
-    *   \return List of GameObjects read from a file at path
+    *   \return void
     **/
-std::list<Field*> Persistence::readGameState(std::string path) //TODO
-{//                                                           , list<Field>& f, financial_state& fs
+void Persistence::readGameState(std::string path, std::list<Field*>& fields, finantial_state& fin_state) //TODO
+{
     auto l = std::list<Field*>();
     //Open file at path
     std::ifstream f;
@@ -43,15 +45,21 @@ std::list<Field*> Persistence::readGameState(std::string path) //TODO
             auto a = Field::Factory(id, ss);
             
             //hozzáadni a listához
-            l.push_back(a);
+            l.push_back(a);  
         }
         
     } else 
     {
         throw IOException("Failed to open file!");
     }
-    
-    return l;
+
+    //Copy l -> fields
+    //TODO CHECK IF READING IN WAS SUCCESSFUL
+    fields.clear();
+    for (auto x : l)
+    {
+        fields.push_back(x);
+    }
 }
 
 /**
@@ -61,8 +69,9 @@ std::list<Field*> Persistence::readGameState(std::string path) //TODO
     *   \warning Overwrites whatever was in path  
     * 
     *   \param path The path to the file to write to
-    *   \param fields list of GameObjects to write
-    *   \return True if it was successful
+    *   \param fields List of Fields to write
+    *   \param fin_state FinantialState to write
+    *   \return Indicated whether the write was successful or not
     **/
 bool Persistence::writeGameState(std::string path, std::list<Field*> fields, finantial_state fin_state)
 {
