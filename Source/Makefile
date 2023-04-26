@@ -47,13 +47,13 @@ PLATFORM           ?= PLATFORM_DESKTOP
 # If there is a libraylib in both EXAMPLE_RUNTIME_PATH and RAYLIB_INSTALL_PATH, at runtime,
 # the library at EXAMPLE_RUNTIME_PATH, if present, will take precedence over the one at RAYLIB_INSTALL_PATH.
 # RAYLIB_INSTALL_PATH should be the desired full path to libraylib. No relative paths.
-DESTDIR ?= /usr/local
+DESTDIR ?= ../../raylib
 RAYLIB_INSTALL_PATH ?= $(DESTDIR)/lib
 # RAYLIB_H_INSTALL_PATH locates the installed raylib header and associated source files.
 RAYLIB_H_INSTALL_PATH ?= $(DESTDIR)/include
 
 # Library type used for raylib: STATIC (.a) or SHARED (.so/.dll)
-RAYLIB_LIBTYPE        ?= STATIC
+RAYLIB_LIBTYPE        ?= SHARED
 
 # Build mode for project: DEBUG or RELEASE
 BUILD_MODE            ?= DEBUG
@@ -209,6 +209,7 @@ endif
 # Additional flags for compiler (if desired)
 #CFLAGS += -Wextra -Wmissing-prototypes -Wstrict-prototypes
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
+    $(info $$PLATFORM_OS is [${PLATFORM_OS}])
 	ifeq ($(PLATFORM_OS),WINDOWS)
 		# resource file contains windows executable icon and properties
 		# -Wl,--subsystem,windows hides the console window
@@ -405,7 +406,8 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 		del *.o *.exe /s
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-	find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
+		rm -f *.o
+		find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
     endif
     ifeq ($(PLATFORM_OS),OSX)
 		find . -type f -perm +ugo+x -delete
