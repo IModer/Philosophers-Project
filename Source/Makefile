@@ -58,6 +58,9 @@ RAYLIB_LIBTYPE        ?= SHARED
 # Build mode for project: DEBUG or RELEASE
 BUILD_MODE            ?= DEBUG
 
+#Test mode
+TEST_MODE 			  ?= TEST
+
 # Use external GLFW library instead of rglfw module
 # TODO: Review usage on Linux. Target version of choice. Switch on -lglfw or -lglfw3
 USE_EXTERNAL_GLFW     ?= FALSE
@@ -204,6 +207,10 @@ ifeq ($(BUILD_MODE),DEBUG)
 	CFLAGS += -g -O0 -D'debug'
 else
 	CFLAGS += -s -O1
+endif
+
+ifeq ($(TEST_MODE),TEST)
+	CFLAGS += -D'TEST' -Icatch.hpp
 endif
 
 # Additional flags for compiler (if desired)
@@ -406,8 +413,10 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 		del *.o *.exe /s
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-		rm -f *.o
-		find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
+		sudo rm *.o $(OBJS2) game
+# TODO SOLVE THIS
+#rm -f *.o
+#find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
     endif
     ifeq ($(PLATFORM_OS),OSX)
 		find . -type f -perm +ugo+x -delete
