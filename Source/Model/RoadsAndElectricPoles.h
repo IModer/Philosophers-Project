@@ -7,7 +7,7 @@
 class RoadsAndElectricPoles : public Field
 {
     public:
-        RoadsAndElectricPoles(FIELD_TYPES id, INT_TOUPLE location, INT_TOUPLE size): Field(id,location,size) {}
+        RoadsAndElectricPoles(FIELD_TYPES id, INT_TOUPLE location, INT_TOUPLE size): id(id), location(location), size(size), Field(id,location,size) {}
         FIELD_TYPES id;
         INT_TOUPLE location;
         INT_TOUPLE size;

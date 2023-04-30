@@ -22,7 +22,7 @@ public:
     Forest(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
-           int age) : GameField(id, location, size, 10),
+           int age) : id(id), location(location), size(size), GameField(id, location, size, 10),
                                age(age) 
                                {
                                 hasGrownOut = false;

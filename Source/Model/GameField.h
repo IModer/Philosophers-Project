@@ -9,7 +9,7 @@ public:
     GameField(FIELD_TYPES id,
               INT_TOUPLE location,
               INT_TOUPLE size,
-              int maintenanceCost) : Field(id, location, size),
+              int maintenanceCost) : id(id), location(location), size(size), Field(id, location, size),
                                      maintenanceCost(maintenanceCost) {}
 
     GameField(Field field) : Field(field) {};

@@ -29,6 +29,7 @@ class GameModel
             //Init _persistance ans _fields
             _persistence = persistence;
             _fields = list<Field*>();
+            _fin_state = finantial_state{0,0,0,0,0};
 
             //numOfSaves beállítása
             numOfSaves = 0;

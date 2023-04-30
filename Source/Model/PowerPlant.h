@@ -1,8 +1,8 @@
-#ifndef FIRE_DEPARTMENT_H_DEFINED
-#define FIRE_DEPARTMENT_H_DEFINED
+#ifndef POWER_PLANT_H_DEFINED
+#define POWER_PLANT_H_DEFINED
 #include "GameField.h"
 
-class FireDepartment : public GameField
+class PowerPlant : public GameField
 {
 public:
     FIELD_TYPES id;
@@ -14,18 +14,19 @@ public:
     bool isConnectedToRoad;
     bool isHabitable;
     int maintenanceCost;
-    bool hasOpenCapacity;
-    static const int radius = 10; // TODO: ne 10
+    int capacity;
+    static const int maxCapacity = 10; // TODO: ne 10
 
-    FireDepartment(FIELD_TYPES id,
+    PowerPlant(FIELD_TYPES id,
            INT_TOUPLE location,
-           INT_TOUPLE size,
-           int maintenanceCost) : GameField(id, location, size, maintenanceCost) {}
+           INT_TOUPLE size) : id(id), location(location), size(size), GameField(id, location, size, 10) {
+            capacity = maxCapacity;
+           }
 
-    // Returns the string representation of a FireDepartment object
+    // Returns the string representation of a PowerPlant object
     std::string toString() 
     {
-        return  location.toString();/*STR(id) + " " +
+        return  STR(id) + " " +
                 STR(location.x) + " " +
                 STR(location.y) + " " +
                 STR(size.x) + " " +
@@ -34,8 +35,8 @@ public:
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +
                 STR(isHabitable) + " " +
-                STR(hasOpenCapacity) + " " +
-                STR(maintenanceCost);*/
+                STR(maintenanceCost) + " " +
+                STR(capacity);
     }
 };
 

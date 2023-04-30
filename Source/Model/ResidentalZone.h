@@ -22,7 +22,7 @@ class ResidentalZone : public Field
     ResidentalZone(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
-           int residents) : Field(id, location, size) {}
+           int residents) : id(id), location(location), size(size), residents(residents), Field(id, location, size) {}
 
     int electricityConsumption();
 

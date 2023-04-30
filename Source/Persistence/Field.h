@@ -10,13 +10,21 @@ class Field : public GameObject
 {
     public:
         // Constructor
-        Field(FIELD_TYPES id, INT_TOUPLE location, INT_TOUPLE size): id(id), location(location), size(size) {rect = Rectangle{static_cast<float>(location.x), static_cast<float>(location.y), static_cast<float>(size.x), static_cast<float>(size.y)}; }
+        Field(FIELD_TYPES id, INT_TOUPLE location, INT_TOUPLE size): id(id), location(location), size(size)
+        {
+            rect = Rectangle{
+                static_cast<float>(location.x),
+                static_cast<float>(location.y),
+                static_cast<float>(size.x),
+                static_cast<float>(size.y)
+                };
+        }
         // Get, set
         FIELD_TYPES GetId() { return id;}
         int GetX()  { return location.x; }
         int GetY() { return location.y; }
-        int GetWidth() { return size.x; }
-        int GetHeight() { return size.y; }
+        //int GetWidth() { return size.x; }
+        //int GetHeight() { return size.y; }
         Rectangle GetRect() { return rect; }
         // Functions
         virtual std::string toString();

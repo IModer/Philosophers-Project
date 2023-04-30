@@ -1,27 +1,28 @@
-#ifndef STADION_H_DEFINED
-#define STADION_H_DEFINED
+#ifndef FIRE_DEPARTMENT_H_DEFINED
+#define FIRE_DEPARTMENT_H_DEFINED
 #include "GameField.h"
 
-class Stadion : public GameField
+class FireDepartment : public GameField
 {
-    public:
+public:
     FIELD_TYPES id;
     INT_TOUPLE location;
     INT_TOUPLE size;
-    //Direction direction; //ez kell?
+    //Direction direction;  //ez kell?
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;
     bool isHabitable;
-    int maintenanceCost;
+    int maintenanceCost;  // Lehet ezt is ki lehet emelni LUT-ba
+    bool hasOpenCapacity;
     static const int radius = 10; // TODO: ne 10
 
-    Stadion(FIELD_TYPES id,
+    FireDepartment(FIELD_TYPES id,
            INT_TOUPLE location,
-           INT_TOUPLE size) : GameField(id, location, size, 10) {}
+           INT_TOUPLE size,
+           int maintenanceCost) : id(id), location(location), size(size), maintenanceCost(maintenanceCost), GameField(id, location, size, maintenanceCost) {}
 
-
-    // Returns the string representation of a Stadion object
+    // Returns the string representation of a FireDepartment object
     std::string toString() 
     {
         return  STR(id) + " " +
@@ -33,6 +34,7 @@ class Stadion : public GameField
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +
                 STR(isHabitable) + " " +
+                STR(hasOpenCapacity) + " " +
                 STR(maintenanceCost);
     }
 };
