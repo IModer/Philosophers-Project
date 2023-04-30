@@ -12,3 +12,4 @@ Source/*.out
 Source/saves
 Source/libraylib.so.450
 Source/game
+*.sh
