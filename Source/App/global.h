@@ -24,6 +24,13 @@
 #define STR(x) std::to_string(x)
 #define V2_TO_IT(v) INT_TOUPLE{static_cast<int>(v.x), static_cast<int>(v.y)}
 
+typedef struct INT_TOUPLE { 
+    int x, y;
+    std::string toString() {
+        return STR(x) + " " + STR(y);
+    }
+} INT_TOUPLE;
+
 //Ids for Field types
 typedef enum {
     DEMOLISH = -1,
@@ -66,13 +73,19 @@ const std::map<FIELD_TYPES, std::string> buildingNames = {
     {RESIDENTALZONE,       "Residental zone"}
 };
 
+// I think we should use this, but this needs refactoring
+/* const std::map<FIELD_TYPES, INT_TOUPLE> buildingSizes = {
+    {ROADANDELECTRICPOLE,  INT_TOUPLE{1,1}},
+    {FOREST,               INT_TOUPLE{1,1}},
+    {FIREDEPARTMENT,       INT_TOUPLE{2,2}},
+    {POWERPLANT,           INT_TOUPLE{2,2}},
+    {STADIUM,              INT_TOUPLE{2,2}},  //Could be 3x3
+    {SERVICEZONE,          INT_TOUPLE{1,1}},
+    {INDUSTRIALZONE,       INT_TOUPLE{1,1}},
+    {RESIDENTALZONE,       INT_TOUPLE{1,1}}
+}; */
 
-typedef struct INT_TOUPLE { 
-    int x, y;
-    std::string toString() {
-        return STR(x) + " " + STR(y);
-    }
-} INT_TOUPLE;
+
 
 typedef enum { MENU = 0, GAME } GAME_STATE;
 
