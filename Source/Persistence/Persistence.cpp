@@ -17,6 +17,7 @@
 void Persistence::readGameState(std::string path, std::list<Field*>& fields, finantial_state& fin_state) //TODO
 {
     auto l = std::list<Field*>();
+    time_t d; finantial_state fS;
     //Open file at path
     std::ifstream f;
     f.open(path, std::ios::in);
@@ -30,16 +31,22 @@ void Persistence::readGameState(std::string path, std::list<Field*>& fields, fin
         std::getline(f, line);
         ss << line;
 
-        time_t d; finantial_state fS;
         ss >> d; ss >> fS;
         Stat* s = new Stat(d, fS); 
 
+        //std::cout << "DEBUG d : " << d << " fS : " << fS.toString() << std::endl;
+        
         //Fieldek beolvasása
         while (std::getline(f, line))
         {
+            //Reset ss
+            ss.str("");
+            ss.clear();
             ss << line;
             int id;
             ss >> id;
+
+            //std::cout << "DEBUG id: " << id << std::endl;
 
             //példányosítani
             auto a = Field::Factory(static_cast<FIELD_TYPES>(id), ss);
@@ -58,8 +65,12 @@ void Persistence::readGameState(std::string path, std::list<Field*>& fields, fin
     fields.clear();
     for (auto x : l)
     {
+        //std::cout << "DEBUG x: " << buildingNames.at(x->GetId()) << " = " << x->toString() << std::endl;
         fields.push_back(x);
     }
+
+    //Set _fin_state
+    fin_state = fS;
 }
 
 /**
