@@ -54,7 +54,7 @@ class GameModel
                 delete _fWindow;
             } 
             _fWindow = new FloatingWindow(f); 
-        }; //TODO ne nullptr 
+        };
         
         FloatingWindow* GetFWindow() { return _fWindow; }
         void CloseFWindow() { delete _fWindow; _fWindow = nullptr; }
@@ -63,7 +63,7 @@ class GameModel
         void LoadGame(int);
         void Update() {};
         void ChechInfrastructure();
-        bool Build(FIELD_TYPES field_t, INT_TOUPLE pos); //ide kell egy buildings enum
+        bool Build(FIELD_TYPES field_t, INT_TOUPLE pos);
         bool Demolition(INT_TOUPLE p); 
         void CauseCatastrophe();
         void ManipulateTime(TIME_ENUM t); // kell egy speed enum

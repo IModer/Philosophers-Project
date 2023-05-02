@@ -82,16 +82,6 @@ bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
         return true;
 
         //ChechInfrastructure();  //Update the infrastructure
-    // }  else { // Demolish
-    //     for (Field* i : _fields) {
-    //         if (View::isPosOnRect(pos, i->GetRect())) {
-    //             _fields.remove(i);
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
 } 
 
 bool GameModel::Demolition(INT_TOUPLE pos) 
