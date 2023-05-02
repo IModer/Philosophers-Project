@@ -27,10 +27,10 @@ View::View(GameModel *model)
     /* Action Buttons */
     int n = 0;
     for (std::pair<FIELD_TYPES, std::string> i : buildingNames) {
-        actionButtons[n] = new ImgBtn(i.second, i.first, Rectangle{10+(n%2)*150.f, 60+(n/2)*150.f, 130, 130}, "Builds a new " + i.second);
+        actionButtons[n] = new ImgBtn(i.second, static_cast<BUILD_TYPES>(i.first), Rectangle{10+(n%2)*150.f, 60+(n/2)*150.f, 130, 130}, "Builds a new " + i.second);
         n++;
     }
-    actionButtons[aBtnN-1] = new ImgBtn("Demolition", DEMOLISH, Rectangle{10+(n%2)*150.f, 60+(n/2)*150.f, 130, 130}, "Demolishes buildings");
+    actionButtons[aBtnN-1] = new ImgBtn("Demolition", BT_DEMOLISH, Rectangle{10+(n%2)*150.f, 60+(n/2)*150.f, 130, 130}, "Demolishes buildings");
 
     camera = {0};
     camera.zoom = 1.0f;
@@ -104,7 +104,7 @@ void View::Update()
             } else {
                 if (buildID) {
                     //Branch on buildID whether to build or demolish
-                    _model->Build(buildID, INT_TOUPLE{gridX, gridY});
+                    _model->Build(static_cast<FIELD_TYPES>(buildID), INT_TOUPLE{gridX, gridY});
                 } else {
                     for (Field* f : (_model->_fields)) {
                         if (isPosOnRect(mouseWorldPos, f->GetRect()))

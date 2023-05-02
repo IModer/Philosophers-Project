@@ -33,8 +33,6 @@ typedef struct INT_TOUPLE {
 
 //Ids for Field types
 typedef enum {
-    DEMOLISH = -1,
-    BT_NULL = 0,
     ROADANDELECTRICPOLE = 1,
     GAMEFIELD = 2,
     FOREST = 3,
@@ -45,6 +43,20 @@ typedef enum {
     INDUSTRIALZONE = 8,
     RESIDENTALZONE = 9
 } FIELD_TYPES;
+
+typedef enum {
+    BT_DEMOLISH = -1,
+    BT_NULL = 0,
+    BT_ROADANDELECTRICPOLE = 1,
+    BT_GAMEFIELD = 2,
+    BT_FOREST = 3,
+    BT_FIREDEPARTMENT = 4,
+    BT_POWERPLANT = 5,
+    BT_STADIUM = 6,
+    BT_SERVICEZONE = 7,
+    BT_INDUSTRIALZONE = 8,
+    BT_RESIDENTALZONE = 9
+} BUILD_TYPES;
 
 const int FPS = 60;
 const int M_UNIT = 50;
