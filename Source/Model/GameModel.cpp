@@ -66,32 +66,48 @@ void GameModel::NewGame()
     *   \param pos where to build it to, should be in some [min, max]
     *   \return Whether the building was successful or not
     **/
-bool GameModel::Build(FIELD_TYPES field_t, Vector2 pos) {
-    if (field_t > 0) { // Build
+bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
+    // if (field_t > 0) { // Build
         //Building type alapján példányosítjuk
         auto f = Field::Factory(field_t, pos);
         if (f == nullptr)
             return false; //Failed 
 
         //Check if pos is a valid position in _fields
-        for (Field* i : _fields) {
-            if (CheckCollisionRecs(f->GetRect(), i->GetRect()))
-                return false;
-        }
+        if (pos.x > _fields_dim.x || pos.x < 0 || pos.y < 0 || pos.y > _fields_dim.y )
+            return false; //Failed
 
         _fields.push_back(f); //Build the field
         _fin_state.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
         return true;
 
         //ChechInfrastructure();  //Update the infrastructure
-    }  else { // Demolish
-        for (Field* i : _fields) {
-            if (View::isPosOnRect(pos, i->GetRect())) {
-                _fields.remove(i);
-                return true;
-            }
-        }
-        return false;
-    }
+    // }  else { // Demolish
+    //     for (Field* i : _fields) {
+    //         if (View::isPosOnRect(pos, i->GetRect())) {
+    //             _fields.remove(i);
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
 } 
+
+bool GameModel::Demolition(INT_TOUPLE pos) 
+{
+    //Check if pos is a valid position in _fields
+    if (pos.x > _fields_dim.x || pos.x < 0 || pos.y < 0 || pos.y > _fields_dim.y )
+        return false; //Failed
+    //Find the buildinf at pos and delete it
+    for (Field* f : _fields)
+    {
+        if (f->GetX() == pos.x && f->GetY() == pos.y)
+        {
+            _fields.remove(f);
+            //TODO: Some check should go here
+            return true;  //Demolished successfully
+        }
+    }
+    return false; //Indicate that we didnt demolish 
+}

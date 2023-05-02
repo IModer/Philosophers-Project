@@ -50,7 +50,7 @@ class Field : public GameObject
             DrawRectangleRec(rect, c); 
             };
 
-        static Field* Factory(FIELD_TYPES id, Vector2 pos={0,0});
+        static Field* Factory(FIELD_TYPES id, INT_TOUPLE pos={0,0});
         static Field* Factory(FIELD_TYPES id, std::stringstream& ss);
 
     protected:

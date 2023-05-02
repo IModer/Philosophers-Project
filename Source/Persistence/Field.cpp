@@ -1,10 +1,10 @@
 #include "Field.h"
-#include "../Model/roadsAndElectricPoles.h"
-#include "../Model/forest.h"
-#include "../Model/fireDepartment.h"
-#include "../Model/powerPlant.h"
-#include "../Model/stadion.h"
-#include "../Model/residentalZone.h"
+#include "../Model/RoadsAndElectricPoles.h"
+#include "../Model/Forest.h"
+#include "../Model/FireDepartment.h"
+#include "../Model/PowerPlant.h"
+#include "../Model/Stadion.h"
+#include "../Model/ResidentalZone.h"
 #include "../Model/ServiceZone.h"
 #include "../Model/IndustrialZone.h"
 #include <raylib.h>
@@ -24,13 +24,13 @@ std::string Field::toString()
     *   \warning All other fields are 0
     *   \return A Field subclass object with default values
     **/
-Field* Field::Factory(FIELD_TYPES id, Vector2 pos)
+Field* Field::Factory(FIELD_TYPES id, INT_TOUPLE pos)
 {
     Field* r;
     switch (id)
     {
     case ROADANDELECTRICPOLE:
-        r = new RoadsAndElectricPoles(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT});
+        r = new RoadsAndElectricPoles(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT}, 0);
         break;
     case GAMEFIELD:
         r = new GameField(id, V2_TO_IT(pos), INT_TOUPLE{M_UNIT,M_UNIT}, 0);
@@ -84,8 +84,7 @@ Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
     case ROADANDELECTRICPOLE:
         {
             ss >> location.x >> location.y >> size.x >> size.y >> direction;
-            RoadsAndElectricPoles* a = new RoadsAndElectricPoles(id, location, size);
-            a->direction = direction;
+            RoadsAndElectricPoles* a = new RoadsAndElectricPoles(id, location, size, direction);
             r = a;
             break;
         }

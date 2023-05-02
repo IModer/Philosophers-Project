@@ -24,6 +24,8 @@ class GameModel
         const int StartingCash = 10000;
         const int StartingTaxRate = 10;
 
+        INT_TOUPLE _fields_dim = INT_TOUPLE{100,100};
+
         GameModel(Persistence* persistence) 
         {
             //Init _persistance ans _fields
@@ -61,8 +63,8 @@ class GameModel
         void LoadGame(int);
         void Update() {};
         void ChechInfrastructure();
-        bool Build(FIELD_TYPES field_t, Vector2 pos); //ide kell egy buildings enum
-        void Demolition(INT_TOUPLE p); 
+        bool Build(FIELD_TYPES field_t, INT_TOUPLE pos); //ide kell egy buildings enum
+        bool Demolition(INT_TOUPLE p); 
         void CauseCatastrophe();
         void ManipulateTime(TIME_ENUM t); // kell egy speed enum
         void SendFireDepartment(INT_TOUPLE p);
