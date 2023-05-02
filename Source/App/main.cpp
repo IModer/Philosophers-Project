@@ -1,7 +1,7 @@
 #include "global.h"
 #include "App.h"
 
-#define TEST //FOR CODING
+//#define TEST //FOR CODING
 #ifdef TEST
 
 #define CATCH_CONFIG_MAIN
