@@ -5,9 +5,9 @@ std::string Stat::toString()
     return "stat";
 }
 
-Stat::Stat(time_t date, finantial_state financialState)
+Stat::Stat(time_t time, finantial_state financialState)
 {
-    _date = date;
+    _time = time;
     _finState = financialState;
 }
 

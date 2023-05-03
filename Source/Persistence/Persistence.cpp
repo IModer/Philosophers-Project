@@ -14,11 +14,11 @@
     *   \throw IOException
     *   \return void
     **/
-void Persistence::readGameState(std::string path, std::list<Field*>& fields, finantial_state& fin_state) //TODO
+void Persistence::readGameState(std::string path, std::list<Field*>& fields, Stat& stat) //TODO
 {
     //printf("Reading Game State\n");
 
-    auto l = std::list<Field*>();
+    auto l = std::list<Field*>(); Stat s;
     time_t d; finantial_state fS;
     //Open file at path
     std::ifstream f;
@@ -34,7 +34,7 @@ void Persistence::readGameState(std::string path, std::list<Field*>& fields, fin
         ss << line;
 
         ss >> d; ss >> fS;
-        Stat* s = new Stat(d, fS); 
+        s = Stat(d, fS);
 
         //std::cout << "DEBUG d : " << d << " fS : " << fS.toString() << std::endl;
         
@@ -71,8 +71,8 @@ void Persistence::readGameState(std::string path, std::list<Field*>& fields, fin
         fields.push_back(x);
     }
 
-    //Set _fin_state
-    fin_state = fS;
+    //Set stat
+    stat = s;
 }
 
 /**
@@ -86,7 +86,7 @@ void Persistence::readGameState(std::string path, std::list<Field*>& fields, fin
     *   \param fin_state FinantialState to write
     *   \return Indicated whether the write was successful or not
     **/
-bool Persistence::writeGameState(std::string path, std::list<Field*> fields, finantial_state fin_state)
+bool Persistence::writeGameState(std::string path, std::list<Field*> fields, Stat stat)
 {
     //Open file at path
     std::ofstream f;
@@ -94,9 +94,9 @@ bool Persistence::writeGameState(std::string path, std::list<Field*> fields, fin
     if (f.is_open())
     {
         //write the time
-        //f << some kind of time
+        f << stat._time;
         //write financial struct
-        f << fin_state << std::endl;
+        f << stat._finState << std::endl;
         //writing fields to the file
         for (auto field : (fields))
         {
