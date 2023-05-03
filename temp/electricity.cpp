@@ -8,10 +8,12 @@ void dfs(vector<vector<int>>& grid, int i, int j) {
     int m = grid.size();
     int n = grid[0].size();
     //akkor működik ha az id >= 2 vagyis minden ami nem út és nem üres
+    //ez lehet komplikáltabb is, ha csak erőműveket akarunk vagy villanypóznákat akkor
+    //grid[i][j] != erőmű.id || pózna.id || whatever
     if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] < 2) {
         return;
     }
-    //ekkor -1re állítja mert ilyen id biztos, hogy nincs
+    //ekkor -1re állítja mert ilyen id biztos, hogy nincs, de ez lehet bármilyen más konstans
     grid[i][j] = -1;
     dfs(grid, i + 1, j);
     dfs(grid, i - 1, j);
