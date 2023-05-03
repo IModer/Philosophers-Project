@@ -14,8 +14,10 @@ class GameModel
     public:
         Persistence* _persistence;
         list<Field*> _fields;
-        finantial_state _fin_state;
-        //Stat* stat;
+        //finantial_state _fin_state;
+        Stat stat;
+
+        TIME_ENUM speedOfTime;
 
         int numOfSaves;
         const string savesPath = "./saves/";
@@ -31,7 +33,8 @@ class GameModel
             //Init _persistance ans _fields
             _persistence = persistence;
             _fields = list<Field*>();
-            _fin_state = finantial_state{0,0,0,0,0};
+            stat._finState = finantial_state{0,0,0,0,0};
+            speedOfTime = NORMAL;
             
             //numOfSaves beállítása
             numOfSaves = 0;
@@ -60,7 +63,7 @@ class GameModel
         void CloseFWindow() { delete _fWindow; _fWindow = nullptr; }
         void NewGame();
         void SaveGame();
-        void LoadGame(int);
+        void LoadGame(int savenum);
         void Update() {};
         void ChechInfrastructure();
         bool Build(FIELD_TYPES field_t, INT_TOUPLE pos);
@@ -71,6 +74,7 @@ class GameModel
         void OnFieldClick(INT_TOUPLE p);
 
         bool checkCoordsInPlayField(INT_TOUPLE pos);
+        void TickTock();
 
     private:
     FloatingWindow* _fWindow;

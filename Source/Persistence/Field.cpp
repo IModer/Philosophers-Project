@@ -61,7 +61,7 @@ Field* Field::Factory(FIELD_TYPES id, INT_TOUPLE pos)
         //Should be unreadable
     }
     //std::cout << STR(r->GetId()) << " " << r->GetX() << " " << r->GetY() << r->GetRect().width << std::endl;
-    std::cout << "Factory created: " << r->toString() << std::endl; // ! nem jó
+    //std::cout << "Factory created: " << r->toString() << std::endl; // ! nem jó
     return r;
 }
 
