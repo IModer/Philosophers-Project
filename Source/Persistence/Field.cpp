@@ -60,8 +60,8 @@ Field* Field::Factory(FIELD_TYPES id, INT_TOUPLE pos)
         break;
         //Should be unreadable
     }
-    std::cout << STR(r->GetId()) << " " << r->GetX() << " " << r->GetY() << r->GetRect().width << std::endl;
-    std::cout << r->toString() << std::endl; // ! nem jó
+    //std::cout << STR(r->GetId()) << " " << r->GetX() << " " << r->GetY() << r->GetRect().width << std::endl;
+    std::cout << "Factory created: " << r->toString() << std::endl; // ! nem jó
     return r;
 }
 

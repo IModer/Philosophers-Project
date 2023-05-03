@@ -2,7 +2,6 @@
 #define MODEL_H_DEFINED
 
 #include <filesystem>
-#include <tuple>
 #include "../App/global.h"
 #include "../Persistence/Persistence.h"
 #include "FloatingWindow.h"
@@ -16,6 +15,7 @@ class GameModel
         Persistence* _persistence;
         list<Field*> _fields;
         finantial_state _fin_state;
+        //Stat* stat;
 
         int numOfSaves;
         const string savesPath = "./saves/";
@@ -32,7 +32,7 @@ class GameModel
             _persistence = persistence;
             _fields = list<Field*>();
             _fin_state = finantial_state{0,0,0,0,0};
-
+            
             //numOfSaves beállítása
             numOfSaves = 0;
             for (const auto & entry : filesystem::directory_iterator(savesPath))
@@ -69,6 +69,8 @@ class GameModel
         void ManipulateTime(TIME_ENUM t); // kell egy speed enum
         void SendFireDepartment(INT_TOUPLE p);
         void OnFieldClick(INT_TOUPLE p);
+
+        bool checkCoordsInPlayField(INT_TOUPLE pos);
 
     private:
     FloatingWindow* _fWindow;

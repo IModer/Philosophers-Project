@@ -16,6 +16,8 @@
     **/
 void Persistence::readGameState(std::string path, std::list<Field*>& fields, finantial_state& fin_state) //TODO
 {
+    //printf("Reading Game State\n");
+
     auto l = std::list<Field*>();
     time_t d; finantial_state fS;
     //Open file at path
@@ -91,6 +93,8 @@ bool Persistence::writeGameState(std::string path, std::list<Field*> fields, fin
     f.open(path, std::ios::out | std::ios::trunc);
     if (f.is_open())
     {
+        //write the time
+        //f << some kind of time
         //write financial struct
         f << fin_state << std::endl;
         //writing fields to the file
