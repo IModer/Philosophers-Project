@@ -24,7 +24,7 @@ class IndustrialZone : public Field
     IndustrialZone(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
-           int workers) : id(id), location(location), size(size), workers(workers), Field(id, location, size) {}
+           int workers) : Field(id, location, size), id(id), location(location), size(size), workers(workers) {}
 
     int electricityConsumption();
 

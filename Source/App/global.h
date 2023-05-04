@@ -97,6 +97,19 @@ const std::map<FIELD_TYPES, std::string> buildingNames = {
     {RESIDENTALZONE,       INT_TOUPLE{1,1}}
 }; */
 
+// I think we should also use this, but this also needs refactoring
+// ApoliceStation nek is van költsége
+/*const std::map<FIELD_TYPES, int> buildingMaintenanceCost= {
+    {ROADANDELECTRICPOLE,  100},
+    {FOREST,               100},
+    {FIREDEPARTMENT,       0},
+    {POWERPLANT,           0},
+    {STADIUM,              100},  
+    {SERVICEZONE,          0},
+    {INDUSTRIALZONE,       0},
+    {RESIDENTALZONE,       0}
+};*/
+
 
 
 typedef enum { MENU = 0, GAME } GAME_STATE;
@@ -104,18 +117,46 @@ typedef enum { MENU = 0, GAME } GAME_STATE;
 struct finantial_state
 {
 #include <istream>
-    //lehet egy class update methoddal ahol a rezidensek száma szerint pénzt szed be és adót fizet ki?
-    //will see
+private:
+    //float 0-1 között
+    float residential_tax_rate;
+    float industrial_tax_rate;
+    float service_tax_rate;
+
+public:
     int total_founds;
-    int loan;
-    //lehet float is és akkor százalék
-    int residential_tax_rate;
-    int industrial_tax_rate;
-    int entertainment_tax_rate;
-    //this change is purely experimental
+    int loan; //Ez nem tudom hogy kell-e
+
+    float GetResidentialTaxRate() {return residential_tax_rate;}
+    float GetIndustrialTaxRate() {return industrial_tax_rate;}
+    float GetServiceTaxRate() {return service_tax_rate;}
+
+    void SetResidentialTaxRate(int num)
+    {
+        if (num > 1 && num < 0)
+            throw invalid_argument("Invalid argument passed to SetResidentialTaxRate. num should be in range [0,1]");
+        
+        residential_tax_rate = num;
+    }
+
+    void SetIndustrialTaxRate(int num)
+    {
+        if (num > 1 && num < 0)
+            throw invalid_argument("Invalid argument passed to SetIndustrialTaxRate. num should be in range [0,1]");
+        
+        industrial_tax_rate = num;
+    }
+
+    void SetServiceTaxRate(int num)
+    {
+        if (num > 1 && num < 0)
+            throw invalid_argument("Invalid argument passed to SetServiceTaxRate. num should be in range [0,1]");
+        
+        service_tax_rate = num;
+    }
 
     std::string toString() {
-        return STR(total_founds) + " " + STR(loan) + " " + STR(residential_tax_rate) + " " + STR(industrial_tax_rate) + " " + STR(entertainment_tax_rate);
+        return STR(total_founds) + " " + STR(loan) + " " + STR(residential_tax_rate) + " " + STR(industrial_tax_rate) + " " + STR(service_tax_rate);
     }
     
     friend std::ostream & operator<<(std::ostream& is, finantial_state& f)
@@ -124,13 +165,13 @@ struct finantial_state
                 f.loan                    << " " << 
                 f.residential_tax_rate    << " " <<
                 f.industrial_tax_rate     << " " <<
-                f.entertainment_tax_rate  << " " << std::endl;
+                f.service_tax_rate  << " " << std::endl;
         return is;
     }
 
     friend std::ostream & operator>>(std::stringstream& is, finantial_state& f)
     {
-        //TODO Handle error
+        //TODO Handle error, also maybe we could use the setter
         std::string s_total_founds; std::string s_loan; std::string s_residential_tax_rate;
         std::string s_industrial_tax_rate; std::string s_entertainment_tax_rate;
         is >> s_total_founds >> s_loan >> s_residential_tax_rate >> s_industrial_tax_rate >> s_entertainment_tax_rate;
@@ -139,7 +180,7 @@ struct finantial_state
         f.loan = std::stoi(s_loan);
         f.residential_tax_rate = std::stoi(s_residential_tax_rate);
         f.industrial_tax_rate = std::stoi(s_industrial_tax_rate);
-        f.entertainment_tax_rate = std::stoi(s_entertainment_tax_rate);
+        f.service_tax_rate = std::stoi(s_entertainment_tax_rate);
         
         return is;
     }
