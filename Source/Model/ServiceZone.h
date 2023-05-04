@@ -1,26 +1,11 @@
 #ifndef SERVICE_ZONE_H_DEFINED
 #define SERVICE_ZONE_H_DEFINED
 
-#include "../Persistence/Field.h"
+#include "GameField.h"
 
-class ServiceZone : public Field
+class ServiceZone : public GameField
 {
-    public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    //Direction direction; //ez kell?
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;
-    int workers;
-    int profit;
-    //int residents;
-    //bool hasForest;
-    //bool hasNeighbouringStadion;
-
+public:
     ServiceZone(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
@@ -44,6 +29,12 @@ class ServiceZone : public Field
                 STR(workers) + " " +
                 STR(profit);
     }
+protected:
+    int workers;
+    int profit;
+    //int residents;
+    //bool hasForest;
+    //bool hasNeighbouringStadion;
 };
 
 #endif

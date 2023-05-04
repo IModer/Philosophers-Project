@@ -38,5 +38,3 @@ public:
                 STR(maintenanceCost);
     }
 };
-
-#endif

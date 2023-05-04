@@ -45,5 +45,3 @@ public:
                 STR(age);
     }
 };
-
-#endif

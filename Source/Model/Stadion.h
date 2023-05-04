@@ -4,16 +4,7 @@
 
 class Stadion : public GameField
 {
-    public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    //Direction direction; //ez kell?
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;
+public:
     static const int radius = 10; // TODO: ne 10
 
     Stadion(FIELD_TYPES id,

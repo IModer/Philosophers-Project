@@ -14,15 +14,13 @@ public:
 
     GameField(Field field) : Field(field) {};
     ~GameField();
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
+    std::string toString();
+    protected: 
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;
     bool isHabitable;
     int maintenanceCost;
-    std::string toString();
 };
 
 #endif

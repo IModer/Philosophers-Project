@@ -44,5 +44,3 @@ class ResidentalZone : public Field
                 STR(residents);
     }
 };
-
-#endif

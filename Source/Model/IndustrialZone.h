@@ -1,26 +1,11 @@
 #ifndef INDUSTRIAL_ZONE_H_DEFINED
 #define INDUSTRIAL_ZONE_H_DEFINED
 
-#include "../Persistence/Field.h"
+#include "GameField.h"
 
-class IndustrialZone : public Field
+class IndustrialZone : public GameField
 {
     public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    //Direction direction; //ez kell?
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;
-    int workers;
-    int profit;
-    //int residents;
-    //bool hasForest;
-    //bool hasNeighbouringStadion;
-
     IndustrialZone(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
@@ -44,6 +29,12 @@ class IndustrialZone : public Field
                 STR(workers) + " " +
                 STR(profit);
     }
+protected:
+    int workers;
+    int profit;
+    //int residents;
+    //bool hasForest;
+    //bool hasNeighbouringStadion;
 };
 
 #endif
