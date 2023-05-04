@@ -41,7 +41,8 @@ typedef enum {
     STADIUM = 6,
     SERVICEZONE = 7,
     INDUSTRIALZONE = 8,
-    RESIDENTALZONE = 9
+    RESIDENTALZONE = 9,
+    POLICESTATION = 10
 } FIELD_TYPES;
 
 typedef enum {
@@ -55,7 +56,8 @@ typedef enum {
     BT_STADIUM = 6,
     BT_SERVICEZONE = 7,
     BT_INDUSTRIALZONE = 8,
-    BT_RESIDENTALZONE = 9
+    BT_RESIDENTALZONE = 9,
+    BT_POLICESTATION = 10
 } BUILD_TYPES;
 
 const int FPS = 60;
