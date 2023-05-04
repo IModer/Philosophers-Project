@@ -5,22 +5,11 @@
 class FireDepartment : public GameField
 {
 public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    //Direction direction;  //ez kell?
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;  // Lehet ezt is ki lehet emelni LUT-ba
-    bool hasOpenCapacity;
-    static const int radius = 10; // TODO: ne 10
+
 
     FireDepartment(FIELD_TYPES id,
            INT_TOUPLE location,
-           INT_TOUPLE size,
-           int maintenanceCost) : id(id), location(location), size(size), maintenanceCost(maintenanceCost), GameField(id, location, size, maintenanceCost) {}
+           INT_TOUPLE size) : GameField(id, location, size) {}
 
     // Returns the string representation of a FireDepartment object
     std::string toString() 
@@ -34,7 +23,15 @@ public:
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +
                 STR(isHabitable) + " " +
-                STR(hasOpenCapacity) + " " +
-                STR(maintenanceCost);
+                STR(hasOpenCapacity);
     }
+protected:
+    bool hasElectricity;
+    bool isOnFire;
+    bool isConnectedToRoad;
+    bool isHabitable;
+    bool hasOpenCapacity;
+    static const int radius = 10; // TODO: ne 10
 };
+
+#endif

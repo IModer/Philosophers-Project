@@ -8,6 +8,8 @@
 //this might be bad
 #include <sstream>
 #include <vector>
+#include <istream>
+#include <stdexcept>
 
 #ifdef debug
 #include <iostream>
@@ -118,7 +120,6 @@ typedef enum { MENU = 0, GAME } GAME_STATE;
 
 struct finantial_state
 {
-#include <istream>
 private:
     //float 0-1 között
     float residential_tax_rate;
@@ -136,7 +137,7 @@ public:
     void SetResidentialTaxRate(int num)
     {
         if (num > 1 && num < 0)
-            throw invalid_argument("Invalid argument passed to SetResidentialTaxRate. num should be in range [0,1]");
+            throw std::invalid_argument("Invalid argument passed to SetResidentialTaxRate. num should be in range [0,1]");
         
         residential_tax_rate = num;
     }
@@ -144,7 +145,7 @@ public:
     void SetIndustrialTaxRate(int num)
     {
         if (num > 1 && num < 0)
-            throw invalid_argument("Invalid argument passed to SetIndustrialTaxRate. num should be in range [0,1]");
+            throw std::invalid_argument("Invalid argument passed to SetIndustrialTaxRate. num should be in range [0,1]");
         
         industrial_tax_rate = num;
     }
@@ -152,7 +153,7 @@ public:
     void SetServiceTaxRate(int num)
     {
         if (num > 1 && num < 0)
-            throw invalid_argument("Invalid argument passed to SetServiceTaxRate. num should be in range [0,1]");
+            throw std::invalid_argument("Invalid argument passed to SetServiceTaxRate. num should be in range [0,1]");
         
         service_tax_rate = num;
     }

@@ -181,13 +181,13 @@ void GameModel::Update()
             switch ((FIELD_TYPES)f->GetId())
             {
             case INDUSTRIALZONE:
-                tax += dynamic_cast<IndustrialZone*>(f)->workers * stat._finState.GetIndustrialTaxRate();
+                //tax += dynamic_cast<IndustrialZone*>(f)->workers * stat._finState.GetIndustrialTaxRate();
                 break;
             case SERVICEZONE:
-                tax += dynamic_cast<ServiceZone*>(f)->workers * stat._finState.GetServiceTaxRate();
+                //tax += dynamic_cast<ServiceZone*>(f)->workers * stat._finState.GetServiceTaxRate();
                 break;
             case RESIDENTALZONE:
-                tax += dynamic_cast<ResidentalZone*>(f)->residents * stat._finState.GetResidentialTaxRate();
+                //tax += dynamic_cast<ResidentalZone*>(f)->residents * stat._finState.GetResidentialTaxRate();
                 break;
             default:
                 //Unreachable

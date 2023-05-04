@@ -9,7 +9,7 @@ public:
     ServiceZone(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
-           int workers) : id(id), location(location), size(size), workers(workers), Field(id, location, size) {}
+           int workers) : GameField(id, location, size) {}
 
     int electricityConsumption();
 
@@ -25,7 +25,6 @@ public:
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +
                 STR(isHabitable) + " " +
-                STR(maintenanceCost) + " " +
                 STR(workers) + " " +
                 STR(profit);
     }

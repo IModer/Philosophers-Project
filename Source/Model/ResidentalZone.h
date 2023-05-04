@@ -1,28 +1,17 @@
 #ifndef RESIDENTAL_ZONE_H_DEFINED
 #define RESIDENTAL_ZONE_H_DEFINED
 
-#include "../Persistence/Field.h"
+#include "GameField.h"
 
-class ResidentalZone : public Field
+class ResidentalZone : public GameField
 {
-    public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    //Direction direction; ez kell?
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;
-    int residents;
-    bool hasForest;
-    bool hasNeighbouringStadion;
+
+public:
 
     ResidentalZone(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
-           int residents) : id(id), location(location), size(size), residents(residents), Field(id, location, size) {}
+           int residents) : GameField(id, location, size) {}
 
     int electricityConsumption();
 
@@ -40,7 +29,16 @@ class ResidentalZone : public Field
                 STR(isHabitable) + " " +
                 STR(hasForest) + " " +
                 STR(hasNeighbouringStadion) + " " +
-                STR(maintenanceCost) + " " +
                 STR(residents);
     }
+protected:
+    int residents;
+    bool hasElectricity;
+    bool isOnFire;
+    bool isConnectedToRoad;
+    bool isHabitable;
+    bool hasForest;
+    bool hasNeighbouringStadion;
 };
+
+#endif

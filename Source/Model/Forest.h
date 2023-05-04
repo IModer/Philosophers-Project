@@ -4,26 +4,11 @@
 
 class Forest : public GameField
 {
-private:
-    typedef GameField base;
 public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    //Direction direction; //ez kell?
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;
-    int age;
-    bool hasGrownOut;
 
     Forest(FIELD_TYPES id,
            INT_TOUPLE location,
-           INT_TOUPLE size,
-           int age) : id(id), location(location), size(size), GameField(id, location, size, 10),
-                               age(age) 
+           INT_TOUPLE size) : GameField(id, location, size)
                                {
                                 hasGrownOut = false;
                                }
@@ -41,7 +26,15 @@ public:
                 STR(isConnectedToRoad) + " " +
                 STR(isHabitable) + " " +
                 STR(hasGrownOut) + " " +
-                STR(maintenanceCost) + " " +
                 STR(age);
     }
+protected:
+    int age;
+    bool hasElectricity;
+    bool isOnFire;
+    bool isConnectedToRoad;
+    bool isHabitable;
+    bool hasGrownOut;
 };
+
+#endif

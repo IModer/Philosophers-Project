@@ -91,7 +91,7 @@ class GameModel
     private:
     FloatingWindow* _fWindow;
 
-    void GameModel::Causality();
+    void Causality();
 
 };
 

@@ -5,11 +5,11 @@
 
 class IndustrialZone : public GameField
 {
-    public:
+public:
     IndustrialZone(FIELD_TYPES id,
            INT_TOUPLE location,
            INT_TOUPLE size,
-           int workers) : Field(id, location, size), id(id), location(location), size(size), workers(workers) {}
+           int workers) : GameField(id, location, size) {}
 
     int electricityConsumption();
 
@@ -25,16 +25,13 @@ class IndustrialZone : public GameField
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +
                 STR(isHabitable) + " " +
-                STR(maintenanceCost) + " " +
                 STR(workers) + " " +
                 STR(profit);
     }
 protected:
     int workers;
     int profit;
-    //int residents;
-    //bool hasForest;
-    //bool hasNeighbouringStadion;
+    bool hasNeighbouringStadion;
 };
 
 #endif

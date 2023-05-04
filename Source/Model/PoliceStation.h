@@ -4,21 +4,13 @@
 
 class PoliceStation : public GameField
 {
-    public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    //Direction direction; //ez kell?
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;
-    //static const int radius = 10; // TODO: ne 10
+public:
+
+    
 
     PoliceStation(FIELD_TYPES id,
            INT_TOUPLE location,
-           INT_TOUPLE size) : GameField(id, location, size, 10), id(id), location(location), size(size) {}
+           INT_TOUPLE size) : GameField(id, location, size) {}
 
     // Returns the string representation of a Stadion object
     std::string toString() 
@@ -31,9 +23,15 @@ class PoliceStation : public GameField
                 STR(hasElectricity) + " " +
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +
-                STR(isHabitable) + " " +
-                STR(maintenanceCost);
+                STR(isHabitable);
     }
+
+protected:
+    bool hasElectricity;
+    bool isOnFire;
+    bool isConnectedToRoad;
+    bool isHabitable;
+    static const int radius = 10; // TODO: ne 10
 };
 
 #endif

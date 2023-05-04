@@ -7,7 +7,7 @@ class PowerPlant : public GameField
 public:
     PowerPlant(FIELD_TYPES id,
            INT_TOUPLE location,
-           INT_TOUPLE size) : id(id), location(location), size(size), GameField(id, location, size, 10) {
+           INT_TOUPLE size) : GameField(id, location, size) {
             capacity = maxCapacity;
            }
 
@@ -23,7 +23,6 @@ public:
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +
                 STR(isHabitable) + " " +
-                STR(maintenanceCost) + " " +
                 STR(capacity);
     }
 protected:
