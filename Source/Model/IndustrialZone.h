@@ -25,6 +25,10 @@ public:
                 STR(workers) + " " +
                 STR(profit);
     }
+
+    //getter/setter
+    int GetProfit() {return profit;}
+    void SetProfit(int p) {profit = p;}
 protected:
     int workers;
     int profit;

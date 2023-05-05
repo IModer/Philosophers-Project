@@ -6,6 +6,8 @@
 #include "../Persistence/Persistence.h"
 #include "FloatingWindow.h"
 #include "enum/time_enum.h"
+#include "IndustrialZone.h"
+#include "ServiceZone.h"
 
 using namespace std;
 
@@ -89,10 +91,37 @@ class GameModel
         int GetBuildingCost(Field* f) {return BuildCosts.at((FIELD_TYPES)(f->GetId()));}
         int GetBuildingMaintenanceCost(Field* f) {return BuildingMaintenanceCost.at((FIELD_TYPES)(f->GetId()));}
 
-        //Öltségvetéses oldalhoz, kérdés hogy értelmezük
+        //Költségvetéses oldalhoz
 
-        int GetTotalIncame() {};
-        int GetTotalSpending() {};
+        int GetTotalIncame() 
+        {
+            int total = 0;
+            for (auto  f : _fields)
+            {
+                switch (f->GetId())
+                {
+                case INDUSTRIALZONE:
+                    total += (dynamic_cast<IndustrialZone*>(f))->GetProfit();
+                    break;
+                case SERVICEZONE:
+                    total += dynamic_cast<ServiceZone*>(f)->GetProfit();
+                    break;
+                default:
+                    // Nothing
+                    break;
+                }
+            }
+            return total;
+        };
+        int GetTotalSpending()
+        {
+            int total = 0;
+            for (auto  f : _fields)
+            {
+                total += GetBuildingMaintenanceCost(f);
+            }
+            return total;
+        };
 
     private:
     FloatingWindow* _fWindow;
