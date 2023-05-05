@@ -8,16 +8,16 @@ class Stat : public GameObject
 {
     public:
     // Constructor
-    Stat(time_t date, finantial_state financialState);
+    Stat() {};
+    Stat(time_t time, finantial_state financialState);
     ~Stat();
+    void TickTock();
     // Get, set
-    std::string GetDate();
+    std::string GetDate();  //fancy getter?
     // Functions
     std::string toString();
 
-    private:
-    // Variables
-    time_t _date; // ? kéne valami jobb
+    time_t _time;
     finantial_state _finState;
 };
 

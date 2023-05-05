@@ -2,7 +2,6 @@
 #define MODEL_H_DEFINED
 
 #include <filesystem>
-#include <tuple>
 #include "../App/global.h"
 #include "../Persistence/Persistence.h"
 #include "FloatingWindow.h"
@@ -15,7 +14,10 @@ class GameModel
     public:
         Persistence* _persistence;
         list<Field*> _fields;
-        finantial_state _fin_state;
+        //finantial_state _fin_state;
+        Stat stat;
+
+        TIME_ENUM speedOfTime;
 
         int numOfSaves;
         const string savesPath = "./saves/";
@@ -31,8 +33,9 @@ class GameModel
             //Init _persistance ans _fields
             _persistence = persistence;
             _fields = list<Field*>();
-            _fin_state = finantial_state{0,0,0,0,0};
-
+            stat._finState = finantial_state();
+            speedOfTime = NORMAL;
+            
             //numOfSaves beállítása
             numOfSaves = 0;
             for (const auto & entry : filesystem::directory_iterator(savesPath))
@@ -60,18 +63,35 @@ class GameModel
         void CloseFWindow() { delete _fWindow; _fWindow = nullptr; }
         void NewGame();
         void SaveGame();
-        void LoadGame(int);
-        void Update() {};
+        void LoadGame(int savenum);
+        void Update();
         void ChechInfrastructure();
         bool Build(FIELD_TYPES field_t, INT_TOUPLE pos);
         bool Demolition(INT_TOUPLE p); 
         void CauseCatastrophe();
-        void ManipulateTime(TIME_ENUM t); // kell egy speed enum
+        void ManipulateTime(TIME_ENUM t);
         void SendFireDepartment(INT_TOUPLE p);
         void OnFieldClick(INT_TOUPLE p);
 
+        bool checkCoordsInPlayField(INT_TOUPLE pos);
+        void TickTock();
+
+        //Setters for Tax rates
+        void SetResidentialTaxRate(int num) {stat._finState.SetResidentialTaxRate(num);}
+        void SetIndustrialTaxRate(int num) {stat._finState.SetIndustrialTaxRate(num);}
+        void SetServiceTaxRate(int num) {stat._finState.SetServiceTaxRate(num);}
+        //Maybe also getter?
+
+        //A kiadási oldalhoz
+        int GetBuildingCost(Field* f) {return BuildCosts.at((FIELD_TYPES)(f->GetId()));}
+        //int GetBuildingMaintenanceCost {return buildingMaintenanceCost.at((FIELD_TYPES)(f->GetId()));}
+
+        //Öltségvetéses oldalhoz, kérdés hogy értelmezük
+
     private:
     FloatingWindow* _fWindow;
+
+    void Causality();
 
 };
 

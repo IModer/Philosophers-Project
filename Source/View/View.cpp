@@ -69,13 +69,13 @@ void View::Update()
         int gridX = static_cast<int>(mouseWorldPos.x / 50) * 50;
         if(mouseWorldPos.x < 0.0)
         {
-            printf("insideif\n");
+            //printf("insideif\n");
             gridX -= 50;
         }
         int gridY = static_cast<int>(mouseWorldPos.y / 50) * 50; // ez jó
         if(mouseWorldPos.y < 0.0)
         {
-            printf("insideif\n");
+            //printf("insideif\n");
             gridY = gridY -50;
         }
 
@@ -104,6 +104,7 @@ void View::Update()
             } else {
                 if (buildID) {
                     if (buildID > 0) {
+                        //This is not good!
                         _model->Build(static_cast<FIELD_TYPES>(buildID), INT_TOUPLE{gridX, gridY});
                     } else _model->Demolition(INT_TOUPLE{gridX, gridY});
                 } else {
@@ -201,7 +202,7 @@ void View::Render()
             _model->GetFWindow()->Render();
 
         DrawText(("Residental count: " + STR(resCounter)).c_str(), 20, screenHeight-40, 20, BLACK);
-        DrawText(("Money: " + STR(_model->_fin_state.total_founds) + "$").c_str(), 400, screenHeight-40, 20, BLACK);
+        DrawText(("Money: " + STR(_model->stat._finState.total_founds) + "$").c_str(), 400, screenHeight-40, 20, BLACK);
 
         // DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
 

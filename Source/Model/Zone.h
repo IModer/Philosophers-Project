@@ -2,30 +2,29 @@
 #define ZONE_H_DEFINED
 #include "GameField.h"
 
+
+//THIS IS PROBABLY NOT NEEDED
 class Zone : GameField
 {
 
 public:
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
-    int maintenanceCost;
-    int profit;
-    int workers;
 
     Zone(FIELD_TYPES id,
            INT_TOUPLE location,
-           INT_TOUPLE size) : id(id), location(location), size(size), GameField(id, location, size, 10) {} // TODO: ne 10
+           INT_TOUPLE size) : GameField(id, location, size) {} // TODO: ne 10
 
 
     int electricityConsumption();
 
     std::string toString();
-
+    
+protected:
+    bool hasElectricity;
+    bool isOnFire;
+    bool isConnectedToRoad;
+    bool isHabitable;
+    int profit;
+    int workers;
 };
 
 #endif

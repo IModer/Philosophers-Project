@@ -8,21 +8,19 @@ class GameField : public Field
 public:
     GameField(FIELD_TYPES id,
               INT_TOUPLE location,
-              INT_TOUPLE size,
-              int maintenanceCost) : id(id), location(location), size(size), Field(id, location, size),
-                                     maintenanceCost(maintenanceCost) {}
+              INT_TOUPLE size) : Field(id, location, size) {}
 
     GameField(Field field) : Field(field) {};
     ~GameField();
-    FIELD_TYPES id;
-    INT_TOUPLE location;
-    INT_TOUPLE size;
+    std::string toString();
+    
+    //getterek/setterek ide
+
+protected: 
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;
     bool isHabitable;
-    int maintenanceCost;
-    std::string toString();
 };
 
 #endif
