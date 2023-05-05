@@ -134,7 +134,7 @@ class GameModel
         int GetTotalSpending()
         {
             int total = 0;
-            for (auto  f : _fields)
+            for (auto f : _fields)
             {
                 total += GetBuildingMaintenanceCost(f);
             }

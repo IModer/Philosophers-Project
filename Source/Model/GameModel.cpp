@@ -220,13 +220,13 @@ void GameModel::Update()
             switch ((FIELD_TYPES)f->GetId())
             {
             case INDUSTRIALZONE:
-                tax += dynamic_cast<IndustrialZone*>(f)->GetWorkers() * stat._finState.GetIndustrialTaxRate();
+                tax += dynamic_cast<IndustrialZone*>(f)->GetWorkers() * stat._finState.GetIndustrialTaxRate() / 12;
                 break;
             case SERVICEZONE:
-                tax += dynamic_cast<ServiceZone*>(f)->GetWorkers() * stat._finState.GetServiceTaxRate();
+                tax += dynamic_cast<ServiceZone*>(f)->GetWorkers() * stat._finState.GetServiceTaxRate() / 12;
                 break;
             case RESIDENTALZONE:
-                tax += dynamic_cast<ResidentalZone*>(f)->GetResidents() * stat._finState.GetResidentialTaxRate();
+                tax += dynamic_cast<ResidentalZone*>(f)->GetResidents() * stat._finState.GetResidentialTaxRate() / 12;
                 break;
             default:
                 //Unreachable
@@ -343,6 +343,7 @@ void GameModel::Update()
         int foundWorkplace = 0;
         int leftToPutToWork = totalResidents;
         //Megnézzük van e munkahely ahova tudna menni
+        //TODO lenullázni minden industrial/service mező worker-jét
         for (auto f : _fields)
         {
             //residental vagy service és be van kötve 
@@ -372,19 +373,20 @@ void GameModel::Update()
                     }
                 }
             }
-        } 
+        }
 
         //Those who didnt find any workplace leave the city :(
+        int haveToMoveOut = leftToPutToWork;
         for (auto f : _fields)
         {
-            if (leftToPutToWork > 0 && f->GetId() == RESIDENTALZONE && dynamic_cast<GameField*>(f)->GetIsConnectedToRoad())
+            if (haveToMoveOut > 0 && f->GetId() == RESIDENTALZONE && dynamic_cast<GameField*>(f)->GetIsConnectedToRoad())
             {
                 auto cf = dynamic_cast<ResidentalZone*>(f);
-                int res = min(leftToPutToWork,cf->GetResidents());
+                int res = min(haveToMoveOut,cf->GetResidents());
                 if (res > 0)
                 {
                     cf->MoveResidentsOut(res);
-                    leftToPutToWork -= res;
+                    haveToMoveOut -= res;
                 }
             }
         }

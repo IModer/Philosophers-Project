@@ -31,7 +31,11 @@ public:
     void SetProfit(int p) {profit = p;}
 
     int GetWorkers() {return workers;}
+    
     void SetWorker(int p) {workers = p;}
+    void MoveWorkerIn(int p) {workers += p;}
+    void MoveWorkerOut(int p) {workers -= p;}
+
     
     int GetMaxWorkers() {return maxworkers;}
 

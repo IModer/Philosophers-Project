@@ -31,7 +31,7 @@ public:
     
     int GetResidents() {return residents;}
     void MoveResidentsIn(int p) { residents += p; }
-    void MoveResidentsOut(int p) {residents -= p; }
+    void MoveResidentsOut(int p) { residents -= p; }
     int GetMaxresidents() { return  maxresidents; }
 
 protected:
