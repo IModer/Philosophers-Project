@@ -28,6 +28,10 @@ public:
                 STR(hasNeighbouringStadion) + " " +
                 STR(residents);
     }
+    
+    int GetResidents() {return residents;}
+    void SetResidents(int p) {residents = p;}
+
 protected:
     int residents;
     bool hasElectricity;

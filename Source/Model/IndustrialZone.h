@@ -29,6 +29,8 @@ public:
     //getter/setter
     int GetProfit() {return profit;}
     void SetProfit(int p) {profit = p;}
+    int GetWorkers() {return workers;}
+    void SetWorkers(int p) {workers = p;}
 protected:
     int workers;
     int profit;
