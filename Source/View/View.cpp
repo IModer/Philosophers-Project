@@ -186,6 +186,19 @@ void View::Render()
             i->Render();
         }
 
+        // Build place
+        Vector2 MouseGridPos = Vector2{floor(mouseWorldPos.x / 50) * 50, floor(mouseWorldPos.y / 50) * 50};
+        if(mouseWorldPos.x < 0.0)
+            MouseGridPos.x -= 50;
+        if(mouseWorldPos.y < 0.0)
+            MouseGridPos.y = MouseGridPos.y -50;
+
+        if (buildID > 0) {
+            DrawRectangleV(MouseGridPos, Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, Color{100, 200, 0, 100});
+        } else if (buildID == BT_DEMOLISH) {
+            DrawRectangleV(MouseGridPos, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
+        }
+
         EndMode2D();
 
 
