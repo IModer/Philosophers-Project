@@ -241,6 +241,7 @@ void GameModel::Update()
 
     int new_sat = 10; //starting satisfaction
     //Adók ha 0.5 alatt vannak + 1, amúgy -1
+    //TODO súlyozni kell total_residents el
     if (stat._finState.GetIndustrialTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
     if (stat._finState.GetResidentialTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
     if (stat._finState.GetServiceTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
@@ -250,7 +251,8 @@ void GameModel::Update()
     //Ha a lakóhelyhez nincs közel ipari épület (industrial) +1, -1 residental zone mezönkéne * residents
     //Van e a közelben rendőrség, +1, -1 residental zone mezönkéne * residents
     //TODO + Erdő.age * 0.1, mezönként
-    int numOfIndustrial = 0, numOfService = 0;
+    int numOfIndustrial = 0;
+    int numOfService = 0;
     for (auto f : _fields)
     {
         switch (f->GetId())
@@ -277,12 +279,14 @@ void GameModel::Update()
 
     //Csak negítív
     //Ha total_funds < 0, (total_funds / 1000), vagyis ha hitel van
+    //TODO súlyozni kell total_residents el
     if (stat._finState.total_founds < 0)
     {
         new_sat += (stat._finState.total_founds / 1000); // jó a += mert az érték negatív
     }
     // (|servicezone| - |industrialzone| / X) * -1    //X = 2
     // Ha kiegyensúlyozatlan a szone, izone arány
+    //TODO súlyozni kell total_residents el
     new_sat -= abs(numOfIndustrial - numOfService)/2;
     satisfaction = new_sat;
 
