@@ -3,6 +3,7 @@
 #include "ServiceZone.h"
 #include "ResidentalZone.h"
 #include "Zone.h"
+#include <raylib.h>
 
 //#include "../View/View.h" // búúúúú
 
@@ -84,8 +85,16 @@ bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
 
     //Check if pos is a valid position in _fields
     if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
-        std::cout << "oh shet\n";
+        delete f;
         return false; //Failed
+    }
+
+    // Check all other buildings
+    for(Field* i : _fields) {
+        if (CheckCollisionRecs(f->GetRect(), i->GetRect())) {
+            delete f;
+            return false;
+        }
     }
 
     _fields.push_back(f); //Build the field

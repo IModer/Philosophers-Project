@@ -15,8 +15,8 @@ class Field : public GameObject
             rect = Rectangle{
                 static_cast<float>(location.x),
                 static_cast<float>(location.y),
-                //static_cast<float>(size.x),
-                //static_cast<float>(size.y)  TODOSIZE
+                static_cast<float>(BuildingSizes.at(id).x*M_UNIT),
+                static_cast<float>(BuildingSizes.at(id).y*M_UNIT)
                 };
         }
         // Get, set
