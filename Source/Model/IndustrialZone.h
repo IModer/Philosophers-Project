@@ -29,11 +29,15 @@ public:
     //getter/setter
     int GetProfit() {return profit;}
     void SetProfit(int p) {profit = p;}
+    
     int GetWorkers() {return workers;}
-    void SetWorkers(int p) {workers = p;}
+    void SetWorker(int p) {workers = p;}
+
+    int GetMaxWorkers() {return maxworkers;}
 protected:
     int workers;
     int profit;
+    int maxworkers = 10;
     bool hasNeighbouringStadion;
 };
 
