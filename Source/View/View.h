@@ -26,7 +26,7 @@ class View
     Camera2D camera;
 
     private:
-    static const int aBtnN = 9;
+    static const int aBtnN = 10;
     ImgBtn* actionButtons[aBtnN];
     BUILD_TYPES buildID;
     int resCounter = 0;

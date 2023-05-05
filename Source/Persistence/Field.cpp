@@ -7,6 +7,7 @@
 #include "../Model/ResidentalZone.h"
 #include "../Model/ServiceZone.h"
 #include "../Model/IndustrialZone.h"
+#include "../Model/PoliceStation.h"
 #include <raylib.h>
 
 // Returns the string representation of a Fields object
@@ -56,6 +57,8 @@ Field* Field::Factory(FIELD_TYPES id, INT_TOUPLE pos)
     case RESIDENTALZONE:
         r = new ResidentalZone(id, V2_TO_IT(pos), 0);
         break;
+    case POLICESTATION:
+        r = new PoliceStation(id, V2_TO_IT(pos));
     default:
         break;
         //Should be unreadable
