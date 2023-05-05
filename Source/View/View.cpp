@@ -143,7 +143,8 @@ void View::Update()
             if (camera.zoom < zoomIncrement)
                 camera.zoom = zoomIncrement;
         }
-        _model->Update();
+        //_model->Update();
+        _model->TickTock();
         break;
     }
 }

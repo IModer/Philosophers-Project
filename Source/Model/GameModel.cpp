@@ -60,6 +60,8 @@ void GameModel::NewGame()
     stat._finState.SetServiceTaxRate(StartingTaxRate);
     stat._finState.SetResidentialTaxRate(StartingTaxRate);
     speedOfTime = NORMAL;
+    satisfaction = 10; //idk
+    Gameover = false;
 
     // LoadGame(-1); // Alap pálya betöltése
     
@@ -75,63 +77,69 @@ void GameModel::NewGame()
     *   \return Whether the buil_fin_stateding was successful or not
     **/
 bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
-    //Building type alapján példányosítjuk
-    auto f = Field::Factory(field_t, pos);
-    if (f == nullptr)
+    if (!Gameover)
     {
-        printf("DEBUG");
-        return false; //Failed 
-    }
-
-    //Check if pos is a valid position in _fields
-    if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
-        delete f;
-        return false; //Failed
-    }
-
-    // Check all other buildings
-    for(Field* i : _fields) {
-        if (CheckCollisionRecs(f->GetRect(), i->GetRect())) {
-            delete f;
-            return false;
+        //Building type alapján példányosítjuk
+        auto f = Field::Factory(field_t, pos);
+        if (f == nullptr)
+        {
+            printf("DEBUG");
+            return false; //Failed 
         }
+
+        //Check if pos is a valid position in _fields
+        if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
+            delete f;
+            return false; //Failed
+        }
+
+        // Check all other buildings
+        for(Field* i : _fields) {
+            if (CheckCollisionRecs(f->GetRect(), i->GetRect())) {
+                delete f;
+                return false;
+            }
+        }
+
+        _fields.push_back(f); //Build the field
+        stat._finState.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
+        return true;
+
+        //ChechInfrastructure();  //Update the infrastructure
     }
-
-    _fields.push_back(f); //Build the field
-    stat._finState.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
-    return true;
-
-    //ChechInfrastructure();  //Update the infrastructure
 } 
 
 bool GameModel::Demolition(INT_TOUPLE pos) 
 {
-    //Check if pos is a valid position in _fields
-    //its commented cos size in View and model are not compatible yet
-    //if (checkCoordsInPlayField(pos))
-    //    return false; //Failed
-
-    //Find the building at pos and delete it
-    for (Field* f : _fields)
+    if (!Gameover)
     {
-        if (CheckCollisionPointRec(IT_TO_V2(pos), f->GetRect()))
+        //Check if pos is a valid position in _fields
+        //its commented cos size in View and model are not compatible yet
+        //if (checkCoordsInPlayField(pos))
+        //    return false; //Failed
+
+        //Find the building at pos and delete it
+        for (Field* f : _fields)
         {
-            //Check for conflicting demolish
+            if (CheckCollisionPointRec(IT_TO_V2(pos), f->GetRect()))
+            {
+                //Check for conflicting demolish
 
-            //Is it a road 
-                //Will it disconnect from the main road?
-                    //If yes then resident should switch workplaces or leave the city
+                //Is it a road 
+                    //Will it disconnect from the main road?
+                        //If yes then resident should switch workplaces or leave the city
 
-            //Is it a Residental Zone
-                //If yes then we
+                //Is it a Residental Zone
+                    //If yes then we
 
-            _fields.remove(f);
-            //Bonus: we can give back some small money like:
-            //_fin_state.total_founds -= 0.2 * BuildCosts.at(f->GetId());
-            return true;  //Demolished successfully
+                _fields.remove(f);
+                //Bonus: we can give back some small money like:
+                //_fin_state.total_founds -= 0.2 * BuildCosts.at(f->GetId());
+                return true;  //Demolished successfully
+            }
         }
+        return false; //Indicate that we didnt demolish 
     }
-    return false; //Indicate that we didnt demolish 
 }
 
 //Check if a pos is in the playing fields or not
@@ -149,30 +157,36 @@ void GameModel::Causality()
 //View should call this every time it want time to move
 void GameModel::TickTock()
 {
-    switch (speedOfTime)
+    if (!Gameover)
     {
-    case PAUSE:
-        //Nothing
-        break;
-    case NORMAL:
-        Causality();
-        break;
-    case FAST:
-        Causality();Causality();
-        break;
-    case FASTER:
-        Causality();Causality();Causality();
-        break;
-    default:
-        //Unreachable
-        break;
+        switch (speedOfTime)
+        {
+        case PAUSE:
+            //Nothing
+            break;
+        case NORMAL:
+            Causality();
+            break;
+        case FAST:
+            Causality();Causality();
+            break;
+        case FASTER:
+            Causality();Causality();Causality();
+            break;
+        default:
+            //Unreachable
+            break;
+        }
     }
 }
 
 void GameModel::ManipulateTime(TIME_ENUM t)
 {
     //WE probably dont need any checks
-    speedOfTime = t;
+    if (!Gameover)
+    {
+        speedOfTime = t;
+    }
 }
 
 //Is called every gametick by Causality
@@ -180,6 +194,11 @@ void GameModel::ManipulateTime(TIME_ENUM t)
 //         [here be more thing]
 void GameModel::Update()
 {
+    //Check if we game over
+    if (satisfaction < -10)
+    {
+        Gameover = true;
+    }
     //Tax
 
     //We tax every month
@@ -193,13 +212,13 @@ void GameModel::Update()
             switch ((FIELD_TYPES)f->GetId())
             {
             case INDUSTRIALZONE:
-                //tax += dynamic_cast<IndustrialZone*>(f)->workers * stat._finState.GetIndustrialTaxRate();
+                tax += dynamic_cast<IndustrialZone*>(f)->GetWorkers() * stat._finState.GetIndustrialTaxRate();
                 break;
             case SERVICEZONE:
-                //tax += dynamic_cast<ServiceZone*>(f)->workers * stat._finState.GetServiceTaxRate();
+                tax += dynamic_cast<ServiceZone*>(f)->GetWorkers() * stat._finState.GetServiceTaxRate();
                 break;
             case RESIDENTALZONE:
-                //tax += dynamic_cast<ResidentalZone*>(f)->residents * stat._finState.GetResidentialTaxRate();
+                tax += dynamic_cast<ResidentalZone*>(f)->GetResidents() * stat._finState.GetResidentialTaxRate();
                 break;
             default:
                 //Unreachable
@@ -208,4 +227,51 @@ void GameModel::Update()
         }
         stat._finState.total_founds -= tax;
     }
+
+    //Calculate satisfaction
+    int new_sat = 10; //starting satisfaction
+    //Adók ha 0.5 alatt vannak + 1, amúgy -1
+    if (stat._finState.GetIndustrialTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
+    if (stat._finState.GetResidentialTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
+    if (stat._finState.GetServiceTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
+
+    //közel := x (mondjuk 3) távolságon belüli DFSs-ben mérve
+    //Ha a lakóhelyhez van közel munkahely (industrial, service) +1, -1 residental zone mezönkéne * residents
+    //Ha a lakóhelyhez nincs közel ipari épület (industrial) +1, -1 residental zone mezönkéne * residents
+    //Van e a közelben rendőrség, +1, -1 residental zone mezönkéne * residents
+    //TODO +Erdő.age * 0.1, mezönként
+    int numOfIndustrial = 0, numOfService = 0;
+    for (auto f : _fields)
+    {
+        switch (f->GetId())
+        {
+            case INDUSTRIALZONE:
+                numOfIndustrial++;
+                break;
+            case SERVICEZONE:
+                numOfService++;
+                break;
+            case RESIDENTALZONE:
+                //közeli munkahely
+                //közeli ipari épület
+                //van e rendőrség
+                //erdő
+                break;
+            default:
+                //nothing
+                //it lehetne csalni hogy nem nézünk távolságokat csak hogy hány erdő, rendérség van az alapján +
+                break;
+        }
+    }
+
+    //Csak negítív
+    //Ha total_funds < 0, (total_funds / 1000), vagyis ha hitel van
+    if (stat._finState.total_founds < 0)
+    {
+        new_sat += (stat._finState.total_founds / 1000); // jó a += mert az érték negatív
+    }
+    // (|servicezone| - |industrialzone| / X) * -1    //X = 2
+    // Ha kiegyensúlyozatlan a szone, izone arány
+    new_sat -= abs(numOfIndustrial - numOfService)/2;
+    satisfaction = new_sat;
 }

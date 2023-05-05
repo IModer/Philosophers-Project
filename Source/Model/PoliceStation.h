@@ -6,8 +6,6 @@ class PoliceStation : public GameField
 {
 public:
 
-    
-
     PoliceStation(FIELD_TYPES id,
            INT_TOUPLE location) : GameField(id, location) {}
 

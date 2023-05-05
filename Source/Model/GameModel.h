@@ -21,12 +21,16 @@ class GameModel
 
         TIME_ENUM speedOfTime;
 
+        bool Gameover;
+
+        int satisfaction = 10;
+
         int numOfSaves;
         const string savesPath = "./saves/";
 
         //Gameplay variables
         const int StartingCash = 10000;
-        const int StartingTaxRate = 10;
+        const int StartingTaxRate = 0.3;
 
         INT_TOUPLE _fields_dim = INT_TOUPLE{100,50};
 
@@ -37,6 +41,7 @@ class GameModel
             _fields = list<Field*>();
             stat._finState = finantial_state();
             speedOfTime = NORMAL;
+            Gameover = false;
             
             //numOfSaves beállítása
             numOfSaves = 0;
@@ -66,19 +71,22 @@ class GameModel
         void NewGame();
         void SaveGame();
         void LoadGame(int savenum);
+        //Ö checkeli hogy gameover van-e 
         void Update();
         void ChechInfrastructure();
+
+        //Ezek csak akkor mennek ha nem gameover
         bool Build(FIELD_TYPES field_t, INT_TOUPLE pos);
         bool Demolition(INT_TOUPLE p); 
         void CauseCatastrophe();
         void ManipulateTime(TIME_ENUM t);
         void SendFireDepartment(INT_TOUPLE p);
+        void TickTock();
+        
         void OnFieldClick(INT_TOUPLE p);
 
         bool checkCoordsInPlayField(INT_TOUPLE pos);
-        void TickTock();
 
-        //
         INT_TOUPLE GetBuildingSize(Field* f) {return BuildingSizes.at((FIELD_TYPES)(f->GetId()));}
 
         //Setters for Tax rates
