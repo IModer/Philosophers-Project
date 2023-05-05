@@ -83,7 +83,10 @@ bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
     //Building type alapján példányosítjuk
     auto f = Field::Factory(field_t, pos);
     if (f == nullptr)
+    {
+        printf("DEBUG");
         return false; //Failed 
+    }
 
     _fields.push_back(f); //Build the field
     stat._finState.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt

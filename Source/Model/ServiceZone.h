@@ -8,8 +8,7 @@ class ServiceZone : public GameField
 public:
     ServiceZone(FIELD_TYPES id,
            INT_TOUPLE location,
-           INT_TOUPLE size,
-           int workers) : GameField(id, location, size) {}
+           int workers) : GameField(id, location) {}
 
     int electricityConsumption();
 
@@ -19,8 +18,6 @@ public:
         return  STR(id) + " " +
                 STR(location.x) + " " +
                 STR(location.y) + " " +
-                STR(size.x) + " " +
-                STR(size.y) + " " +
                 STR(hasElectricity) + " " +
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +

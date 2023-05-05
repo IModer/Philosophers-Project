@@ -7,8 +7,7 @@ class Forest : public GameField
 public:
 
     Forest(FIELD_TYPES id,
-           INT_TOUPLE location,
-           INT_TOUPLE size) : GameField(id, location, size)
+           INT_TOUPLE location) : GameField(id, location)
                                {
                                 hasGrownOut = false;
                                }
@@ -19,8 +18,6 @@ public:
         return  STR(id) + " " +
                 STR(location.x) + " " +
                 STR(location.y) + " " +
-                STR(size.x) + " " +
-                STR(size.y) + " " +
                 STR(hasElectricity) + " " +
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +

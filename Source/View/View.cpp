@@ -26,7 +26,7 @@ View::View(GameModel *model)
 
     /* Action Buttons */
     int n = 0;
-    for (std::pair<FIELD_TYPES, std::string> i : buildingNames) {
+    for (std::pair<FIELD_TYPES, std::string> i : BuildingNames) {
         actionButtons[n] = new ImgBtn(i.second, static_cast<BUILD_TYPES>(i.first), Rectangle{10+(n%2)*150.f, 60+(n/2)*150.f, 130, 130}, "Builds a new " + i.second);
         n++;
     }
