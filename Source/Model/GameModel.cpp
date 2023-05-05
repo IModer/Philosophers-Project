@@ -3,6 +3,8 @@
 #include "ServiceZone.h"
 #include "ResidentalZone.h"
 #include "Zone.h"
+#include <stdlib.h>
+#include <time.h>
 #include <raylib.h>
 
 //#include "../View/View.h" // búúúúú
@@ -39,6 +41,7 @@ void GameModel::LoadGame(int savenum)
         return;
     }
     _persistence->readGameState(savesPath + "savefile" + STR(savenum) + ".sf", _fields, stat);
+    CheckInfrastructure();
 }
 
 /**
@@ -62,7 +65,7 @@ void GameModel::NewGame()
     speedOfTime = NORMAL;
     satisfaction = 10; //idk
     Gameover = false;
-
+    //ChechInfrastructure();
     // LoadGame(-1); // Alap pálya betöltése
     
     return;
@@ -105,7 +108,7 @@ bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
         stat._finState.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
         return true;
 
-        //ChechInfrastructure();  //Update the infrastructure
+        CheckInfrastructure();  //Update the infrastructure
     }
 } 
 
@@ -135,6 +138,7 @@ bool GameModel::Demolition(INT_TOUPLE pos)
                 _fields.remove(f);
                 //Bonus: we can give back some small money like:
                 //_fin_state.total_founds -= 0.2 * BuildCosts.at(f->GetId());
+                CheckInfrastructure();
                 return true;  //Demolished successfully
             }
         }
@@ -151,7 +155,11 @@ bool GameModel::checkCoordsInPlayField(INT_TOUPLE pos)
 void GameModel::Causality()
 {
     stat._time++;   //Move time by one unit
-    Update();       //Check if we need to do thing 
+    //Maybe only check every 60 calls, roughly every second
+    if (stat._time % 60 == 0)
+        Update();       //Check if we need to do thing 
+
+    //printf("%s\n", GetCurrentDate().c_str());
 }
 
 //View should call this every time it want time to move
@@ -190,20 +198,20 @@ void GameModel::ManipulateTime(TIME_ENUM t)
 }
 
 //Is called every gametick by Causality
-//Handles: tax
-//         [here be more thing]
+//Handles:  tax
+//          satisfaction
+//          residents and workers
 void GameModel::Update()
 {
-    //Check if we game over
+    ////Check if we game over
     if (satisfaction < -10)
     {
         Gameover = true;
     }
-    //Tax
-
+    
+    ////Tax
     //We tax every month
-    auto ONE_MONTH_IN_TICKS = 1; //Choose a number
-    if (stat._time % ONE_MONTH_IN_TICKS == 0)
+    if ((stat._time / 60) % 30 == 0)
     {
         //Go through every field, tax according to the num of residents/workers
         auto tax = 0;
@@ -228,7 +236,9 @@ void GameModel::Update()
         stat._finState.total_founds -= tax;
     }
 
-    //Calculate satisfaction
+    ////Calculate satisfaction
+    // ez lehetne csak naponta
+
     int new_sat = 10; //starting satisfaction
     //Adók ha 0.5 alatt vannak + 1, amúgy -1
     if (stat._finState.GetIndustrialTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
@@ -239,7 +249,7 @@ void GameModel::Update()
     //Ha a lakóhelyhez van közel munkahely (industrial, service) +1, -1 residental zone mezönkéne * residents
     //Ha a lakóhelyhez nincs közel ipari épület (industrial) +1, -1 residental zone mezönkéne * residents
     //Van e a közelben rendőrség, +1, -1 residental zone mezönkéne * residents
-    //TODO +Erdő.age * 0.1, mezönként
+    //TODO + Erdő.age * 0.1, mezönként
     int numOfIndustrial = 0, numOfService = 0;
     for (auto f : _fields)
     {
@@ -252,6 +262,7 @@ void GameModel::Update()
                 numOfService++;
                 break;
             case RESIDENTALZONE:
+                //TODO_DFS
                 //közeli munkahely
                 //közeli ipari épület
                 //van e rendőrség
@@ -274,4 +285,104 @@ void GameModel::Update()
     // Ha kiegyensúlyozatlan a szone, izone arány
     new_sat -= abs(numOfIndustrial - numOfService)/2;
     satisfaction = new_sat;
+
+    ////New people coming to the city
+
+    //Megnézzük mennyi hely van
+    int freeSpace = 0;
+    auto freeSpaceFields = list<ResidentalZone*>();
+    for (auto f : _fields)
+    {
+        //Residental zone és be van kötve az utakhoz
+        if (f->GetId() == RESIDENTALZONE && dynamic_cast<GameField*>(f)->GetIsConnectedToRoad()) 
+        {
+            auto cf = dynamic_cast<ResidentalZone*>(f);
+            freeSpace += cf->GetMaxresidents() - cf->GetResidents();
+            freeSpaceFields.push_back(cf);
+        }
+    }
+    
+    //Ha van hely
+    if (freeSpace > 0)
+    {
+        srand(time(NULL));
+        //Valamennyi valószinűséggel jön valaki minden házba
+        for (auto f : freeSpaceFields)
+        {
+            int chanceOfMovingIn = 50;
+            //TODO_DFS if (VAN KÖZELBE FA) {chanceOfMovingIn += 10}
+            //TODO_DFS van e közelben szabad munkahely, nincs közelben ipari hely
+            chanceOfMovingIn += satisfaction*2;
+            if ((rand() % 100) >= chanceOfMovingIn) //50% valószinűség az alap
+            {
+                f->MoveResidentsIn(1);
+            }
+        }
+    }
+
+    ////Munkába menetel
+    //hetente
+    if ((stat._time / 60) % 7 == 0)
+    {
+        //Minden emberhez próbálunk munkát osztani hetente aki nem tud munkába menni elköltözik
+        int totalResidents;
+
+        for (auto f : _fields)
+        {
+            if (f->GetId() == RESIDENTALZONE && dynamic_cast<GameField*>(f)->GetIsConnectedToRoad()) 
+            {
+                auto cf = dynamic_cast<ResidentalZone*>(f);
+                totalResidents += cf->GetResidents();
+            }
+        }
+
+        int foundWorkplace = 0;
+        int leftToPutToWork = totalResidents;
+        //Megnézzük van e munkahely ahova tudna menni
+        for (auto f : _fields)
+        {
+            //residental vagy service és be van kötve 
+            if (leftToPutToWork > 0 && (f->GetId() == INDUSTRIALZONE || f->GetId() == SERVICEZONE) && dynamic_cast<GameField*>(f)->GetIsConnectedToRoad()) 
+            {
+                int space = 0;
+                if (f->GetId() == INDUSTRIALZONE)
+                {
+                    auto cf = dynamic_cast<IndustrialZone*>(f);
+                    space = min(leftToPutToWork, cf->GetMaxWorkers() - cf->GetWorkers());
+                    if (space > 0)
+                    {
+                        //Annyit beosztunk amennyit lehet
+                        cf->SetWorker(space);
+                        leftToPutToWork -= space;
+                    }
+
+                } else if (f->GetId() == SERVICEZONE)
+                {
+                    auto cf = dynamic_cast<ServiceZone*>(f);
+                    space = min(leftToPutToWork, cf->GetMaxWorkers() - cf->GetWorkers());
+                    if (space > 0)
+                    {
+                        //Annyit beosztunk amennyit lehet
+                        cf->SetWorker(space);
+                        leftToPutToWork -= space;
+                    }
+                }
+            }
+        } 
+
+        //Those who didnt find any workplace leave the city :(
+        for (auto f : _fields)
+        {
+            if (leftToPutToWork > 0 && f->GetId() == RESIDENTALZONE && dynamic_cast<GameField*>(f)->GetIsConnectedToRoad())
+            {
+                auto cf = dynamic_cast<ResidentalZone*>(f);
+                int res = min(leftToPutToWork,cf->GetResidents());
+                if (res > 0)
+                {
+                    cf->MoveResidentsOut(res);
+                    leftToPutToWork -= res;
+                }
+            }
+        }
+    }
 }

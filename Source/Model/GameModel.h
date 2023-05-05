@@ -73,7 +73,7 @@ class GameModel
         void LoadGame(int savenum);
         //Ö checkeli hogy gameover van-e 
         void Update();
-        void ChechInfrastructure();
+        void CheckInfrastructure() {};
 
         //Ezek csak akkor mennek ha nem gameover
         bool Build(FIELD_TYPES field_t, INT_TOUPLE pos);
@@ -88,6 +88,16 @@ class GameModel
         bool checkCoordsInPlayField(INT_TOUPLE pos);
 
         INT_TOUPLE GetBuildingSize(Field* f) {return BuildingSizes.at((FIELD_TYPES)(f->GetId()));}
+
+        //fancy getter for date
+        string GetCurrentDate()
+        {
+            //60 ticktock egy nap
+            int days = (stat._time / 60) % 30;
+            int months = ((stat._time / 60) / 30) % 12; 
+            int years = ((stat._time / 60) / 30) / 12;
+            return STR(1990 + years) + ". " + STR(1 + months) + ". " +  STR(1 + days);
+        };
 
         //Setters for Tax rates
         void SetResidentialTaxRate(int num) {stat._finState.SetResidentialTaxRate(num);}
