@@ -10,13 +10,13 @@ class Field : public GameObject
 {
     public:
         // Constructor
-        Field(FIELD_TYPES id, INT_TOUPLE location, INT_TOUPLE size): id(id), location(location), size(size)
+        Field(FIELD_TYPES id, INT_TOUPLE location): id(id), location(location)
         {
             rect = Rectangle{
                 static_cast<float>(location.x),
                 static_cast<float>(location.y),
-                static_cast<float>(size.x),
-                static_cast<float>(size.y)
+                //static_cast<float>(size.x),
+                //static_cast<float>(size.y)  TODOSIZE
                 };
         }
         // Get, set

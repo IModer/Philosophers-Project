@@ -10,8 +10,7 @@ class Zone : GameField
 public:
 
     Zone(FIELD_TYPES id,
-           INT_TOUPLE location,
-           INT_TOUPLE size) : GameField(id, location, size) {} // TODO: ne 10
+           INT_TOUPLE location) : GameField(id, location) {}
 
 
     int electricityConsumption();

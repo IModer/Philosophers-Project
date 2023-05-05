@@ -76,6 +76,9 @@ class GameModel
         bool checkCoordsInPlayField(INT_TOUPLE pos);
         void TickTock();
 
+        //
+        INT_TOUPLE GetBuildingSize(Field* f) {return BuildingSizes.at((FIELD_TYPES)(f->GetId()));}
+
         //Setters for Tax rates
         void SetResidentialTaxRate(int num) {stat._finState.SetResidentialTaxRate(num);}
         void SetIndustrialTaxRate(int num) {stat._finState.SetIndustrialTaxRate(num);}
@@ -84,9 +87,12 @@ class GameModel
 
         //A kiadási oldalhoz
         int GetBuildingCost(Field* f) {return BuildCosts.at((FIELD_TYPES)(f->GetId()));}
-        //int GetBuildingMaintenanceCost {return buildingMaintenanceCost.at((FIELD_TYPES)(f->GetId()));}
+        int GetBuildingMaintenanceCost(Field* f) {return BuildingMaintenanceCost.at((FIELD_TYPES)(f->GetId()));}
 
         //Öltségvetéses oldalhoz, kérdés hogy értelmezük
+
+        int GetTotalIncame() {};
+        int GetTotalSpending() {};
 
     private:
     FloatingWindow* _fWindow;

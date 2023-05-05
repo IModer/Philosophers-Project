@@ -77,7 +77,10 @@ bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
     //Building type alapján példányosítjuk
     auto f = Field::Factory(field_t, pos);
     if (f == nullptr)
+    {
+        printf("DEBUG");
         return false; //Failed 
+    }
 
     //Check if pos is a valid position in _fields
     if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
