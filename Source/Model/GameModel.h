@@ -24,7 +24,7 @@ class GameModel
         const int StartingCash = 10000;
         const int StartingTaxRate = 10;
 
-        INT_TOUPLE _fields_dim = INT_TOUPLE{100,100};
+        INT_TOUPLE _fields_dim = INT_TOUPLE{100,50};
 
         GameModel(Persistence* persistence) 
         {

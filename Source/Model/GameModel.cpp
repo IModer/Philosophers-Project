@@ -67,21 +67,22 @@ void GameModel::NewGame()
     *   \return Whether the building was successful or not
     **/
 bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
-    // if (field_t > 0) { // Build
-        //Building type alapján példányosítjuk
-        auto f = Field::Factory(field_t, pos);
-        if (f == nullptr)
-            return false; //Failed 
+    //Building type alapján példányosítjuk
+    auto f = Field::Factory(field_t, pos);
+    if (f == nullptr)
+        return false; //Failed 
 
-        //Check if pos is a valid position in _fields
-        if (pos.x > _fields_dim.x || pos.x < 0 || pos.y < 0 || pos.y > _fields_dim.y )
-            return false; //Failed
+    //Check if pos is a valid position in _fields
+    if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
+        std::cout << "oh shet\n";
+        return false; //Failed
+    }
 
-        _fields.push_back(f); //Build the field
-        _fin_state.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
-        return true;
+    _fields.push_back(f); //Build the field
+    _fin_state.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
+    return true;
 
-        //ChechInfrastructure();  //Update the infrastructure
+    //ChechInfrastructure();  //Update the infrastructure
 } 
 
 bool GameModel::Demolition(INT_TOUPLE pos) 
