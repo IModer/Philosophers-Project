@@ -25,6 +25,7 @@
 
 #define STR(x) std::to_string(x)
 #define V2_TO_IT(v) INT_TOUPLE{static_cast<int>(v.x), static_cast<int>(v.y)}
+#define IT_TO_V2(it) Vector2{static_cast<float>(it.x), static_cast<float>(it.y)}
 
 typedef struct INT_TOUPLE { 
     int x, y;

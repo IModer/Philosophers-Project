@@ -114,7 +114,7 @@ bool GameModel::Demolition(INT_TOUPLE pos)
     //Find the building at pos and delete it
     for (Field* f : _fields)
     {
-        if (f->GetX() == pos.x && f->GetY() == pos.y)
+        if (CheckCollisionPointRec(IT_TO_V2(pos), f->GetRect()))
         {
             //Check for conflicting demolish
 
