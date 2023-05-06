@@ -5,7 +5,9 @@
 #include "Zone.h"
 #include <stdlib.h>
 #include <time.h>
-#include <raylib.h>
+#include <queue>
+#include <set>
+//#include <raylib.h>
 
 //#include "../View/View.h" // búúúúú
 
@@ -285,7 +287,7 @@ void GameModel::Update()
         new_sat += (stat._finState.total_founds / 1000); // jó a += mert az érték negatív
     }
     // (|servicezone| - |industrialzone| / X) * -1    //X = 2
-    // Ha kiegyensúlyozatlan a szone, izone arány
+    // Ha kiegyensúlyozatlan a s-zone, i-zone arány
     //TODO súlyozni kell total_residents el
     new_sat -= abs(numOfIndustrial - numOfService)/2;
     satisfaction = new_sat;
@@ -342,8 +344,24 @@ void GameModel::Update()
 
         int foundWorkplace = 0;
         int leftToPutToWork = totalResidents;
+        //lenullázni minden industrial/service mező worker-jét
+        for (auto f : _fields)
+        {
+            if (f->GetId() == INDUSTRIALZONE || f->GetId() == SERVICEZONE)
+            {
+                if (f->GetId() == INDUSTRIALZONE)
+                {
+                    auto cf = dynamic_cast<IndustrialZone*>(f);
+                    cf->SetWorker(0);
+
+                } else if (f->GetId() == SERVICEZONE)
+                {
+                    auto cf = dynamic_cast<ServiceZone*>(f);
+                    cf->SetWorker(0);
+                }
+            }
+        }
         //Megnézzük van e munkahely ahova tudna menni
-        //TODO lenullázni minden industrial/service mező worker-jét
         for (auto f : _fields)
         {
             //residental vagy service és be van kötve 
@@ -392,3 +410,67 @@ void GameModel::Update()
         }
     }
 }
+
+//Kéne asszem:
+//Megnészi van e egy X hosszú körben van e erdő (végtelen norma)
+//CheckIsForrestInRange(GameField* f)
+
+//Megnézi hogy van t tipusú mezű az f r sugarú környezetében
+//CheckIsFIELD_TYPEInRange(GameField* f, FIELD_TYPE t, int r)
+
+//
+
+void GameModel::CheckInfrastructure() 
+{
+    ////Utak megnézése
+    
+    //Először mindenkit false ra rakunk
+    for (auto f : _fields)
+    {
+        auto cf = dynamic_cast<GameField*>(f);
+        cf->SetIsConnectedToRoad(false);
+    }
+    
+    //Kiindulunk a kezdő ütból ami pályán kívül van
+    auto queue = std::queue<INT_TOUPLE>();
+    auto visited = std::set<INT_TOUPLE>();
+    queue.push(StartingRoadCoords);
+    while (!queue.empty())
+    {
+        auto v = queue.front(); queue.pop();
+        if (visited.count(v) == 0)
+        {
+            //Visit
+            visited.insert(v);
+            //v minden út szomszédják berakjuk a queue-ba
+            //Ha a szomszéd nem út akkor beálltjuk hogy isConnectedToRoads
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if (checkCoordsInPlayField(INT_TOUPLE{v.x+i, v.y+j}))
+                    {
+                        //itt lehetne az egyszer kifejtett mártix szerint menni csak akkor elötte ki kell fejteni a mátrixba a _fields-t
+                        for (auto f : _fields)
+                        {
+                            if (f->GetX() == v.x+i && f->GetY() == v.y+j)
+                            {
+                                //Itt amúgy csak a road lenne jó, de electric pole még nincs úgy se 
+                                if (f->GetId() == ROADANDELECTRICPOLE)
+                                {
+                                    //Ha út akkor megyünk a mentén
+                                    queue.push(INT_TOUPLE{f->GetX(), f->GetY()});
+                                } else if (f->GetId() != GAMEFIELD && f->GetId() != FOREST) {
+                                    auto cf = dynamic_cast<GameField*>(f);
+                                    cf->SetIsConnectedToRoad(true);
+                                }
+                            }
+                        }
+                        
+                    }
+                }   
+            }
+
+        }
+    }
+};

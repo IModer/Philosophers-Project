@@ -32,6 +32,8 @@ class GameModel
         const int StartingCash = 10000;
         const int StartingTaxRate = 0.3;
 
+        INT_TOUPLE StartingRoadCoords = INT_TOUPLE{0,25};
+
         INT_TOUPLE _fields_dim = INT_TOUPLE{100,50};
 
         GameModel(Persistence* persistence) 
@@ -73,7 +75,7 @@ class GameModel
         void LoadGame(int savenum);
         //Ö checkeli hogy gameover van-e 
         void Update();
-        void CheckInfrastructure() {};
+        void CheckInfrastructure();
 
         //Ezek csak akkor mennek ha nem gameover
         bool Build(FIELD_TYPES field_t, INT_TOUPLE pos);
