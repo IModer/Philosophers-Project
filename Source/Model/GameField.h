@@ -14,6 +14,8 @@ public:
     std::string toString();
     
     //getterek/setterek ide
+    bool GetIsConnectedToRoad() {return isConnectedToRoad;}
+    void SetIsConnectedToRoad(bool b) {isConnectedToRoad = b;}
 
 protected: 
     bool hasElectricity;

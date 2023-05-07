@@ -25,9 +25,24 @@ public:
                 STR(workers) + " " +
                 STR(profit);
     }
+
+    //getter/setter
+    int GetProfit() {return profit;}
+    void SetProfit(int p) {profit = p;}
+
+    int GetWorkers() {return workers;}
+    
+    void SetWorker(int p) {workers = p;}
+    void MoveWorkerIn(int p) {workers += p;}
+    void MoveWorkerOut(int p) {workers -= p;}
+
+    
+    int GetMaxWorkers() {return maxworkers;}
+
 protected:
     int workers;
     int profit;
+    int maxworkers = 10;
     //int residents;
     //bool hasForest;
     //bool hasNeighbouringStadion;
