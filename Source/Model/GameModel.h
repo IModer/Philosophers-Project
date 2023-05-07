@@ -30,7 +30,7 @@ class GameModel
 
         //Gameplay variables
         const int StartingCash = 10000;
-        const int StartingTaxRate = 0.3;
+        const double StartingTaxRate = 0.3;
 
         INT_TOUPLE StartingRoadCoords = INT_TOUPLE{0,25};
 
@@ -78,8 +78,8 @@ class GameModel
         void CheckInfrastructure();
 
         //Ezek csak akkor mennek ha nem gameover
-        bool Build(FIELD_TYPES field_t, INT_TOUPLE pos);
-        bool Demolition(INT_TOUPLE p); 
+        bool Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses);
+        bool Demolition(Vector2 p); 
         void CauseCatastrophe();
         void ManipulateTime(TIME_ENUM t);
         void SendFireDepartment(INT_TOUPLE p);
