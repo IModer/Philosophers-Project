@@ -27,6 +27,10 @@ class Field : public GameObject
         int GetWidth() { return BuildingSizes.at(this->GetId()).x*M_UNIT; }
         int GetHeight() { return BuildingSizes.at(this->GetId()).y*M_UNIT; }
         Rectangle GetRect() { return rect; }
+        Rectangle GetDrawRect() {
+            int w = BuildingSizes.at(GetId()).y;
+            return Rectangle{rect.x, rect.y-10*w, rect.width, rect.height+10*w};
+        }
         virtual std::string GetDescription();
         // Functions
         virtual std::string toString();
@@ -55,7 +59,6 @@ class Field : public GameObject
 
         static Field* Factory(FIELD_TYPES id, INT_TOUPLE pos={0,0});
         static Field* Factory(FIELD_TYPES id, std::stringstream& ss);
-
     protected:
         // Variables
         FIELD_TYPES id;

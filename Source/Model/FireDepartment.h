@@ -27,10 +27,6 @@ public:
                 STR(hasOpenCapacity);
     }
 protected:
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
     bool hasOpenCapacity;
     static const int radius = 10; // TODO: ne 10
 };

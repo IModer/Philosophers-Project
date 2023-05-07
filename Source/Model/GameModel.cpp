@@ -9,6 +9,7 @@
 #include <time.h>
 #include <queue>
 #include <unordered_set>
+#include <algorithm>
 //#include <raylib.h>
 
 //#include "../View/View.h" // búúúúú
@@ -117,6 +118,10 @@ bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
                 stat._finState.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
             }
         }
+
+        _fields.sort([](Field* f1, Field* f2){
+            return f1->GetY() < f2->GetY();
+        });
         CheckInfrastructure();  //Update the infrastructure
     }
     // does not recognise it. Does not work
@@ -331,12 +336,44 @@ void GameModel::Update()
     {
         srand(time(NULL));
         //Valamennyi valószinűséggel jön valaki minden házba
+        //van-e a közelben fa?
         for (auto f : freeSpaceFields)
         {
             int chanceOfMovingIn = 50;
-            //TODO_DFS if (VAN KÖZELBE FA) {chanceOfMovingIn += 10}
-            //TODO_DFS van e közelben szabad munkahely, nincs közelben ipari hely
-            chanceOfMovingIn += satisfaction*2;
+            
+            for(int i = f->GetPos().x - 150; i< f->GetPos().x + 150; i+=50)
+            {
+                for (int j = f->GetPos().y - 150; j< f->GetPos().y + 150; j+=50)
+                {
+                    for(auto g: _fields)
+                    {
+                        if (g->GetX() == i && g->GetY() == j)
+                        {
+                            if (g->GetId() == FOREST)
+                            {
+                                chanceOfMovingIn -= 10;
+                            }
+                            else if (g->GetId() == INDUSTRIALZONE)
+                            {
+                                chanceOfMovingIn += 1; //arbitrary, have no reason behind it whatsoever
+                                if (dynamic_cast<IndustrialZone*>(g)->GetWorkers() < dynamic_cast<IndustrialZone*>(g)->GetMaxWorkers())
+                                {
+                                    chanceOfMovingIn -= 5;
+                                }
+                            }
+                            else if (g->GetId() == SERVICEZONE)
+                            {
+                                chanceOfMovingIn += 1; //arbitrary, have no reason behind it whatsoever
+                                if (dynamic_cast<ServiceZone*>(g)->GetWorkers() < dynamic_cast<ServiceZone*>(g)->GetMaxWorkers())
+                                {
+                                    chanceOfMovingIn -= 5;
+                                }
+                            }      
+                        }    
+                    }    
+                }    
+            }
+            chanceOfMovingIn -= satisfaction*2;
             if ((rand() % 100) >= chanceOfMovingIn) //50% valószinűség az alap
             {
                 f->MoveResidentsIn(1);

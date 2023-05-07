@@ -7,6 +7,8 @@
 #include <ctime>
 #include <raylib.h>
 
+Texture2D View::images;
+
 bool View::isPosOnRect(Vector2 Pos, Rectangle rect)
 {
     return Pos.x > rect.x && Pos.x < rect.x + rect.width && Pos.y > rect.y && Pos.y < rect.y + rect.height;
@@ -43,6 +45,8 @@ View::View(GameModel *model)
     camera.zoom = 1.0f;
 
     SetTargetFPS(60);
+
+    images = LoadTexture("Assets/tiles.png");
 };
 
 void View::Update()
@@ -221,7 +225,12 @@ void View::Render()
 
         for (Field *i : (_model->_fields))
         {
-            i->Render();
+            // i->Render();
+            if (i->GetId() == ROADANDELECTRICPOLE) {
+                i->Render();
+            } else {
+                DrawTexturePro(images, SourceRects.at(i->GetId()), i->GetDrawRect(), {0,0}, 0.f, WHITE);
+            }
         }
 
         // Build place
@@ -316,12 +325,12 @@ void View::Render()
         DrawText(("Money: " + STR(_model->stat._finState.total_founds) + "$").c_str(), 20, screenHeight-32, 20, BLACK);
         DrawText(_model->GetCurrentDate().c_str(), 600, screenHeight-40, 20, BLACK);
         char snum[10];
-        itoa(_model->satisfaction, snum, 10);
+        // itoa(_model->satisfaction, snum, 10);
         DrawText(snum, 1000, screenHeight-40, 20, BLACK);
         DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
         if (_model->Gameover == true)
         {
-            DrawText("YOU FUCKED UP BIG TIME\n GAME OVER", screenWidth/2-500, screenHeight/2, 100, WHITE);
+            DrawText("YOU FUCKED UP BIG TIME\nGAME OVER", screenWidth/2-500, screenHeight/2, 100, WHITE);
         }
         
 

@@ -30,9 +30,9 @@ App::App()
 void App::Run()
 {
     while (!WindowShouldClose())
-    {
-        std::vector<Rectangle> rects;
+    { 
         _view->Update();
-        _view->Render();
+        _view->Render();  
+        //_model->CheckInfrastructure();   
     }
 }
