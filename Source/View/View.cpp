@@ -30,11 +30,12 @@ View::View(GameModel *model)
 
     /* Action Buttons */
     int n = 0;
-    for (std::pair<FIELD_TYPES, std::string> i : BuildingNames) {
-        actionButtons[n] = new ImgBtn(i.second, static_cast<BUILD_TYPES>(i.first), Rectangle{10+(n%2)*150.f, 60+(n/2)*150.f, 130, 130}, "Builds a new " + i.second);
+    for (std::pair<FIELD_TYPES, std::string> i : BuildingNames)
+    {
+        actionButtons[n] = new ImgBtn(i.second, static_cast<BUILD_TYPES>(i.first), Rectangle{10 + (n % 2) * 150.f, 60 + (n / 2) * 150.f, 130, 130}, "Builds a new " + i.second);
         n++;
     }
-    actionButtons[aBtnN-1] = new ImgBtn("Demolition", BT_DEMOLISH, Rectangle{10+(n%2)*150.f, 60+(n/2)*150.f, 130, 130}, "Demolishes buildings");
+    actionButtons[aBtnN - 1] = new ImgBtn("Demolition", BT_DEMOLISH, Rectangle{10 + (n % 2) * 150.f, 60 + (n / 2) * 150.f, 130, 130}, "Demolishes buildings");
 
     timeButtons[0] = new TimeButton("Pause", PAUSE, Rectangle{10, 880, 130, 60}, "Pauses the game.");
     timeButtons[1] = new TimeButton("Normal", NORMAL, Rectangle{160, 880, 130, 60}, "Normal speed (1 sec = 1 day)");
@@ -43,6 +44,8 @@ View::View(GameModel *model)
 
     camera = {0};
     camera.zoom = 1.0f;
+
+    SetExitKey(KEY_NULL); // Disable KEY_ESCAPE to close window, X-button still works
 
     SetTargetFPS(60);
 
@@ -75,18 +78,18 @@ void View::Update()
     case GAME:
         Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
 
-                    // Round the position to the nearest multiple of 50
+        // Round the position to the nearest multiple of 50
         int gridX = static_cast<int>(mouseWorldPos.x / 50) * 50;
-        if(mouseWorldPos.x < 0.0)
+        if (mouseWorldPos.x < 0.0)
         {
-            //printf("insideif\n");
+            // printf("insideif\n");
             gridX -= 50;
         }
         int gridY = static_cast<int>(mouseWorldPos.y / 50) * 50; // ez jó
-        if(mouseWorldPos.y < 0.0)
+        if (mouseWorldPos.y < 0.0)
         {
-            //printf("insideif\n");
-            gridY = gridY -50;
+            // printf("insideif\n");
+            gridY = gridY - 50;
         }
 
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
@@ -96,57 +99,82 @@ void View::Update()
 
             camera.target = Vector2Add(camera.target, delta);
         }
-        //left click
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && buildID > 0) {
+        // left click
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && buildID > 0)
+        {
             INT_TOUPLE pos = INT_TOUPLE{gridX, gridY};
             bool l = true;
-            for (INT_TOUPLE i : buildPos) {
-                if (CheckCollisionRecs(Rectangle{static_cast<float>(pos.x), static_cast<float>(pos.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f},
-                    Rectangle{static_cast<float>(i.x), static_cast<float>(i.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f})) {
+            for (INT_TOUPLE i : buildPos)
+            {
+                if (CheckCollisionRecs(Rectangle{static_cast<float>(pos.x), static_cast<float>(pos.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x * M_UNIT * 1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y * M_UNIT * 1.f},
+                                       Rectangle{static_cast<float>(i.x), static_cast<float>(i.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x * M_UNIT * 1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y * M_UNIT * 1.f}))
+                {
                     l = false;
                     break;
                 }
             }
-            if (l) buildPos.push_back(pos);
+            if (l)
+                buildPos.push_back(pos);
         }
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && buildID > 0) {
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && buildID > 0)
+        {
             INT_TOUPLE pos = INT_TOUPLE{gridX, gridY};
             bool l = true;
-            for (INT_TOUPLE i : buildPos) {
-                if (CheckCollisionRecs(Rectangle{static_cast<float>(pos.x), static_cast<float>(pos.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f},
-                    Rectangle{static_cast<float>(i.x), static_cast<float>(i.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f})) {
+            for (INT_TOUPLE i : buildPos)
+            {
+                if (CheckCollisionRecs(Rectangle{static_cast<float>(pos.x), static_cast<float>(pos.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x * M_UNIT * 1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y * M_UNIT * 1.f},
+                                       Rectangle{static_cast<float>(i.x), static_cast<float>(i.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x * M_UNIT * 1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y * M_UNIT * 1.f}))
+                {
                     l = false;
                     break;
                 }
             }
-            if (l) buildPos.push_back(pos);
+            if (l)
+                buildPos.push_back(pos);
         }
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
             bool l = true;
-            if (isPosOnRect(GetMousePosition(), Rectangle{0, 0, 300, screenHeight})) {
+            if (isPosOnRect(GetMousePosition(), Rectangle{0, 0, 300, screenHeight}))
+            {
                 /* UI */
-                for (int i = 0; i < aBtnN; i++) {
-                    if (actionButtons[i]->isClicked()) {
-                        if (actionButtons[i]-> GetBuildID() == buildID) {
+                for (int i = 0; i < aBtnN; i++)
+                {
+                    if (actionButtons[i]->isClicked())
+                    {
+                        if (actionButtons[i]->GetBuildID() == buildID)
+                        {
                             buildID = BT_NULL;
-                        } else {
+                        }
+                        else
+                        {
                             buildID = actionButtons[i]->GetBuildID();
                         }
                     }
-                } 
-                for (int i = 0; i < 4; i++) {
-                    if (timeButtons[i]->isClicked()) {
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (timeButtons[i]->isClicked())
+                    {
                         _model->speedOfTime = timeButtons[i]->getTime();
                     }
                 }
-            } else {
-                if (buildID) {
-                    if (buildID > 0) {
+            }
+            else
+            {
+                if (buildID)
+                {
+                    if (buildID > 0)
+                    {
                         _model->Build(static_cast<FIELD_TYPES>(buildID), &buildPos);
-                    } else _model->Demolition(mouseWorldPos);
-                } else {
-                    for (Field* f : (_model->_fields)) {
+                    }
+                    else
+                        _model->Demolition(mouseWorldPos);
+                }
+                else
+                {
+                    for (Field *f : (_model->_fields))
+                    {
                         if (isPosOnRect(mouseWorldPos, f->GetRect()))
                         {
                             _model->OpenFWindow(f);
@@ -156,13 +184,16 @@ void View::Update()
                 }
                 // buildID = 0;
             }
-            if (_model->GetFWindow() != nullptr && l) {
+            if (_model->GetFWindow() != nullptr && l)
+            {
                 _model->CloseFWindow();
             }
-            if (!buildPos.empty()) buildPos.clear();
-            if (!buildPos.empty()) buildPos.clear();
+            if (!buildPos.empty())
+                buildPos.clear();
+            if (!buildPos.empty())
+                buildPos.clear();
         }
-        //wheel action
+        // wheel action
         float wheel = GetMouseWheelMove();
 
         if (wheel != 0)
@@ -207,14 +238,14 @@ void View::Render()
         EndDrawing();
         break;
     case GAME:
-        //relative position of the mouse related to the camera
+        // relative position of the mouse related to the camera
         Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
-        
+
         BeginDrawing();
         ClearBackground(BLUE);
         BeginMode2D(camera);
-        DrawRectangle(-50*M_UNIT, -25*M_UNIT, 100*M_UNIT, 50*M_UNIT, DARKGREEN);
-                
+        DrawRectangle(-50 * M_UNIT, -25 * M_UNIT, 100 * M_UNIT, 50 * M_UNIT, DARKGREEN);
+
         // Draw the 3d grid, rotated 90 degrees and centered around 0,0
         // just so we have something in the XY plane
         rlPushMatrix();
@@ -226,112 +257,135 @@ void View::Render()
         for (Field *i : (_model->_fields))
         {
             // i->Render();
-            if (i->GetId() == ROADANDELECTRICPOLE) {
+            if (i->GetId() == ROADANDELECTRICPOLE)
+            {
                 i->Render();
-            } else {
-                DrawTexturePro(images, SourceRects.at(i->GetId()), i->GetDrawRect(), {0,0}, 0.f, WHITE);
+            }
+            else
+            {
+                DrawTexturePro(images, SourceRects.at(i->GetId()), i->GetDrawRect(), {0, 0}, 0.f, WHITE);
             }
         }
 
         // Build place
         Vector2 MouseGridPos = Vector2{floor(mouseWorldPos.x / 50) * 50, floor(mouseWorldPos.y / 50) * 50};
-        if(mouseWorldPos.x < 0.0)
+        if (mouseWorldPos.x < 0.0)
             MouseGridPos.x -= 50;
-        if(mouseWorldPos.y < 0.0)
-            MouseGridPos.y = MouseGridPos.y -50;
+        if (mouseWorldPos.y < 0.0)
+            MouseGridPos.y = MouseGridPos.y - 50;
 
-        if (buildID > 0) {
-            if(MouseGridPos.x >= 0 && MouseGridPos.y >= 0)
+        if (buildID > 0)
+        {
+            if (MouseGridPos.x >= 0 && MouseGridPos.y >= 0)
             {
-                DrawRectangleV(MouseGridPos, 
-                        Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, 
-                        BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, 
-                        Color{255, 255, 255, 100});
+                DrawRectangleV(MouseGridPos,
+                               Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x * M_UNIT * 1.f,
+                                       BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y * M_UNIT * 1.f},
+                               Color{255, 255, 255, 100});
             }
-            else if(MouseGridPos.x < 0 && MouseGridPos.y < 0)
+            else if (MouseGridPos.x < 0 && MouseGridPos.y < 0)
             {
-                DrawRectangleV(Vector2{MouseGridPos.x+50, MouseGridPos.y + 50}, 
-                        Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, 
-                        BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, 
-                        Color{255, 255, 255, 100});
+                DrawRectangleV(Vector2{MouseGridPos.x + 50, MouseGridPos.y + 50},
+                               Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x * M_UNIT * 1.f,
+                                       BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y * M_UNIT * 1.f},
+                               Color{255, 255, 255, 100});
             }
-            else if(MouseGridPos.x >= 0 && MouseGridPos.y < 0)
+            else if (MouseGridPos.x >= 0 && MouseGridPos.y < 0)
             {
-                DrawRectangleV(Vector2{MouseGridPos.x, MouseGridPos.y + 50}, 
-                        Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, 
-                        BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, 
-                        Color{255, 255, 255, 100});
+                DrawRectangleV(Vector2{MouseGridPos.x, MouseGridPos.y + 50},
+                               Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x * M_UNIT * 1.f,
+                                       BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y * M_UNIT * 1.f},
+                               Color{255, 255, 255, 100});
             }
-            else if(MouseGridPos.x < 0 && MouseGridPos.y >= 0)
+            else if (MouseGridPos.x < 0 && MouseGridPos.y >= 0)
             {
-                DrawRectangleV(Vector2{MouseGridPos.x + 50, MouseGridPos.y}, 
-                        Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, 
-                        BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, 
-                        Color{255, 255, 255, 100});
+                DrawRectangleV(Vector2{MouseGridPos.x + 50, MouseGridPos.y},
+                               Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x * M_UNIT * 1.f,
+                                       BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y * M_UNIT * 1.f},
+                               Color{255, 255, 255, 100});
             }
-            
-        } else if (buildID == BT_DEMOLISH) {
-            if(MouseGridPos.x >= 0 && MouseGridPos.y >= 0)
+        }
+        else if (buildID == BT_DEMOLISH)
+        {
+            if (MouseGridPos.x >= 0 && MouseGridPos.y >= 0)
             {
                 DrawRectangleV(MouseGridPos, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
             }
-            else if(MouseGridPos.x < 0 && MouseGridPos.y < 0)
+            else if (MouseGridPos.x < 0 && MouseGridPos.y < 0)
             {
-                DrawRectangleV(Vector2{MouseGridPos.x+50, MouseGridPos.y + 50}, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
+                DrawRectangleV(Vector2{MouseGridPos.x + 50, MouseGridPos.y + 50}, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
             }
-            else if(MouseGridPos.x >= 0 && MouseGridPos.y < 0)
+            else if (MouseGridPos.x >= 0 && MouseGridPos.y < 0)
             {
                 DrawRectangleV(Vector2{MouseGridPos.x, MouseGridPos.y + 50}, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
             }
-            else if(MouseGridPos.x < 0 && MouseGridPos.y >= 0)
+            else if (MouseGridPos.x < 0 && MouseGridPos.y >= 0)
             {
                 DrawRectangleV(Vector2{MouseGridPos.x + 50, MouseGridPos.y}, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
             }
-        }   
-        if (!buildPos.empty()) {
-            for (INT_TOUPLE p : buildPos) {
-                DrawRectangle(p.x, p.y, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT, Color{0,200,0,100});
+        }
+        if (!buildPos.empty())
+        {
+            for (INT_TOUPLE p : buildPos)
+            {
+                DrawRectangle(p.x, p.y, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x * M_UNIT, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y * M_UNIT, Color{0, 200, 0, 100});
             }
         }
 
         EndMode2D();
-
 
         /* UI */
         DrawRectangle(0, 0, 300, screenHeight, LIGHTGRAY);
         DrawRectangle(0, 0, screenWidth, 50, RAYWHITE);
         DrawRectangle(0, screenHeight - 50, screenWidth, 50, RAYWHITE);
 
-        for (int i = 0; i < aBtnN; i++) {
+        for (int i = 0; i < aBtnN; i++)
+        {
             actionButtons[i]->Render(actionButtons[i]->GetBuildID() == buildID);
         }
-        for (int i = 0; i < aBtnN; i++) {
+        for (int i = 0; i < aBtnN; i++)
+        {
             actionButtons[i]->RenderText();
         }
 
-        DrawText("Game speed", (300-MeasureText("Game speed", 28))/2, 840, 28, BLACK);
+        DrawText("Game speed", (300 - MeasureText("Game speed", 28)) / 2, 840, 28, BLACK);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
             timeButtons[i]->Render(_model->speedOfTime);
-        } 
-        for (int i = 0; i < 4; i++) {
+        }
+        for (int i = 0; i < 4; i++)
+        {
             timeButtons[i]->RenderText();
-        } 
+        }
 
         if (_model->GetFWindow() != nullptr)
             _model->GetFWindow()->Render();
 
         // DrawText(("Residental count: " + STR(resCounter)).c_str(), 20, screenHeight-40, 20, BLACK);
-        DrawText(("Money: " + STR(_model->stat._finState.total_founds) + "$").c_str(), 20, screenHeight-32, 20, BLACK);
-        DrawText(_model->GetCurrentDate().c_str(), 600, screenHeight-40, 20, BLACK);
+        DrawText(("Money: " + STR(_model->stat._finState.total_founds) + "$").c_str(), 20, screenHeight - 32, 20, BLACK);
+        DrawText(_model->GetCurrentDate().c_str(), 600, screenHeight - 40, 20, BLACK);
         char snum[10];
-        // itoa(_model->satisfaction, snum, 10);
-        DrawText(snum, 1000, screenHeight-40, 20, BLACK);
+        itoa(_model->satisfaction, snum, 10);
+        DrawText(snum, 1000, screenHeight - 40, 20, BLACK);
         DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
         if (_model->Gameover == true)
         {
-            DrawText("YOU FUCKED UP BIG TIME\nGAME OVER", screenWidth/2-500, screenHeight/2, 100, WHITE);
+            DrawText("YOU FUCKED UP BIG TIME\nGAME OVER", screenWidth / 2 - 500, screenHeight / 2, 100, WHITE);
         }
+
+        if (exitWindowRequested)
+        {
+            DrawRectangle(0, 100, screenWidth, 200, BLACK);
+            DrawText("Are you sure you want to exit program? [Y/N]", 40, 180, 30, WHITE);
+            if (IsKeyPressed(KEY_Z)) //idióta amerikaiak, ez az y
+            {
+                CloseWindow();
+            }
+            
+            else if (IsKeyPressed(KEY_N)) exitWindowRequested = false;
+        }
+        
         
 
         EndDrawing();
