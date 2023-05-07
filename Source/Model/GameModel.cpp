@@ -86,7 +86,7 @@ void GameModel::NewGame()
     *   \return Whether the buil_fin_stateding was successful or not
     **/
 bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
-    if (!Gameover && stat._finState.total_founds > 0)
+    if (!Gameover && (stat._finState.total_founds) - BuildCosts.at(field_t) > 0)
     {
         for (INT_TOUPLE pos : *poses) {
             //Building type alapján példányosítjuk
@@ -119,6 +119,11 @@ bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
 
         CheckInfrastructure();  //Update the infrastructure
     }
+    // does not recognise it. Does not work
+    // else
+    // {
+    //     int button = MessageBox("This is a warning message!","Warning");
+    // }
     return false;
 } 
 
