@@ -21,8 +21,8 @@ public:
 protected: 
     bool hasElectricity = false;
     bool isOnFire = false;
-    bool isConnectedToRoad;
-    bool isHabitable;
+    bool isConnectedToRoad = false;
+    bool isHabitable = true;
 };
 
 #endif

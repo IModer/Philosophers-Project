@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <queue>
-#include <set>
+#include <unordered_set>
 #include <algorithm>
 //#include <raylib.h>
 
@@ -99,7 +99,7 @@ bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
             }
 
             //Check if pos is a valid position in _fields
-            if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
+            if (checkCoordsNotInPlayField(pos)) {
                 delete f;
                 continue; //Failed
             }
@@ -166,13 +166,12 @@ bool GameModel::Demolition(Vector2 pos)
         return false; //Indicate that we didnt demolish 
     }
     return false;
-    return false;
 }
 
 //Check if a pos is in the playing fields or not
-bool GameModel::checkCoordsInPlayField(INT_TOUPLE pos)
+bool GameModel::checkCoordsNotInPlayField(INT_TOUPLE pos)
 {
-    return pos.x > _fields_dim.x || pos.x < 0 || pos.y < 0 || pos.y > _fields_dim.y;
+    return pos.x > _fields_corner_rightbottom.x || pos.x < _fields_corner_topleft.x || pos.y < _fields_corner_topleft.y || pos.y > _fields_corner_rightbottom.y ;
 }
 
 void GameModel::Causality()
@@ -383,8 +382,8 @@ void GameModel::Update()
     }
 
     ////Munkába menetel
-    //hetente
-    if ((stat._time / 60) % 7 == 0)
+    //6 hónaponta
+    if ((stat._time / 60) % 7*4*6 == 0)
     {
         //Minden emberhez próbálunk munkát osztani hetente aki nem tud munkába menni elköltözik
         int totalResidents;
@@ -488,9 +487,9 @@ void GameModel::CheckInfrastructure()
     }
     
     //Kiindulunk a kezdő ütból ami pályán kívül van
-    auto queue = std::queue<INT_TOUPLE>();
-    auto visited = std::set<INT_TOUPLE>();
-    queue.push(StartingRoadCoords);
+    auto queue = std::queue<Field*>();
+    auto visited = std::unordered_set<Field*>();
+    queue.push(new Field(FOREST, StartingRoadCoords));
     while (!queue.empty())
     {
         auto v = queue.front(); queue.pop();
@@ -504,26 +503,38 @@ void GameModel::CheckInfrastructure()
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    if (checkCoordsInPlayField(INT_TOUPLE{v.x+i, v.y+j}))
+                    if (!checkCoordsNotInPlayField(INT_TOUPLE{v->GetX()+(i * M_UNIT), v->GetY()+(j * M_UNIT)}))
                     {
                         //itt lehetne az egyszer kifejtett mártix szerint menni csak akkor elötte ki kell fejteni a mátrixba a _fields-t
+                        //printf("BFS: %i %i\n", v.x+(i*M_UNIT), v.y+(j*M_UNIT));
                         for (auto f : _fields)
                         {
+                            /*printf("BFS: check %i %i == %i %i != %i %i && %i \n", 
+                            v->GetX()+(i*M_UNIT), v->GetY()+(j*M_UNIT), 
+                            f->GetX(), f->GetY(), 
+                            v->GetX(), v->GetY(), 
+                            visited.count(f));
+                            */
                             //Ha f ben megtaláltuk aki kell és az i! = j != 0 != i és még nem látogattuk meg ezt a pontot
-                            if (f->GetX() == v.x+i && f->GetY() == v.y+j && (i != 0 && j != 0) && (visited.count(INT_TOUPLE{v.x+i, v.y+j}) == 0) )
+                            if (f->GetX() == v->GetX()+(i*M_UNIT) &&
+                                f->GetY() == v->GetY()+(j*M_UNIT) &&
+                                !(v->GetX()+(i*M_UNIT) == v->GetX() && v->GetY()+(j*M_UNIT) == v->GetY()) &&
+                                (visited.count(f) == 0))
                             {
                                 //Itt amúgy csak a road lenne jó, de electric pole még nincs úgy se 
+                                //printf("Yeppe\n");
                                 if (f->GetId() == ROADANDELECTRICPOLE)
                                 {
                                     //Ha út akkor megyünk a mentén
-                                    queue.push(INT_TOUPLE{f->GetX(), f->GetY()});
+                                    queue.push(f);
+                                    auto cf = dynamic_cast<GameField*>(f);
+                                    cf->SetIsConnectedToRoad(true);
                                 } else if (f->GetId() != GAMEFIELD && f->GetId() != FOREST) {
                                     auto cf = dynamic_cast<GameField*>(f);
                                     cf->SetIsConnectedToRoad(true);
                                 }
                             }
-                        }
-                        
+                        }    
                     }
                 }   
             }
