@@ -87,6 +87,18 @@ void View::Update()
             camera.target = Vector2Add(camera.target, delta);
         }
         //left click
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && buildID > 0) {
+            INT_TOUPLE pos = INT_TOUPLE{gridX, gridY};
+            bool l = true;
+            for (INT_TOUPLE i : buildPos) {
+                if (CheckCollisionRecs(Rectangle{static_cast<float>(pos.x), static_cast<float>(pos.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f},
+                    Rectangle{static_cast<float>(i.x), static_cast<float>(i.y), BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f})) {
+                    l = false;
+                    break;
+                }
+            }
+            if (l) buildPos.push_back(pos);
+        }
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
             bool l = true;
@@ -104,9 +116,8 @@ void View::Update()
             } else {
                 if (buildID) {
                     if (buildID > 0) {
-                        //This is not good!
-                        _model->Build(static_cast<FIELD_TYPES>(buildID), INT_TOUPLE{gridX, gridY});
-                    } else _model->Demolition(INT_TOUPLE{gridX, gridY});
+                        _model->Build(static_cast<FIELD_TYPES>(buildID), &buildPos);
+                    } else _model->Demolition(mouseWorldPos);
                 } else {
                     for (Field* f : (_model->_fields)) {
                         if (isPosOnRect(mouseWorldPos, f->GetRect()))
@@ -121,6 +132,7 @@ void View::Update()
             if (_model->GetFWindow() != nullptr && l) {
                 _model->CloseFWindow();
             }
+            if (!buildPos.empty()) buildPos.clear();
         }
         //wheel action
         float wheel = GetMouseWheelMove();
@@ -195,9 +207,14 @@ void View::Render()
             MouseGridPos.y = MouseGridPos.y -50;
 
         if (buildID > 0) {
-            DrawRectangleV(MouseGridPos, Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, Color{100, 200, 0, 100});
+            DrawRectangleV(MouseGridPos, Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, Color{255, 255, 255, 100});
         } else if (buildID == BT_DEMOLISH) {
             DrawRectangleV(MouseGridPos, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
+        }
+        if (!buildPos.empty()) {
+            for (INT_TOUPLE p : buildPos) {
+                DrawRectangle(p.x, p.y, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT, Color{0,200,0,100});
+            }
         }
 
         EndMode2D();

@@ -3,6 +3,7 @@
 #include "ServiceZone.h"
 #include "ResidentalZone.h"
 #include "Zone.h"
+#include <raylib.h>
 #include <stdlib.h>
 #include <time.h>
 #include <queue>
@@ -10,6 +11,9 @@
 //#include <raylib.h>
 
 //#include "../View/View.h" // búúúúú
+bool operator<(const INT_TOUPLE& it1, const INT_TOUPLE& it2) {
+    return it1.x < it2.x && it1.y < it2.y; //! nemtom mi kéne
+}
 
 /**
     *   \brief Saves current gamestate
@@ -81,40 +85,44 @@ void GameModel::NewGame()
     *   \param pos where to build it to, should be in some [min, max]
     *   \return Whether the buil_fin_stateding was successful or not
     **/
-bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
+bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
     if (!Gameover)
     {
-        //Building type alapján példányosítjuk
-        auto f = Field::Factory(field_t, pos);
-        if (f == nullptr)
-        {
-            printf("DEBUG");
-            return false; //Failed 
-        }
+        for (INT_TOUPLE pos : *poses) {
+            //Building type alapján példányosítjuk
+            auto f = Field::Factory(field_t, pos);
+            if (f == nullptr)
+            {
+                continue; //Failed 
+            }
 
-        //Check if pos is a valid position in _fields
-        if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
-            delete f;
-            return false; //Failed
-        }
-
-        // Check all other buildings
-        for(Field* i : _fields) {
-            if (CheckCollisionRecs(f->GetRect(), i->GetRect())) {
+            //Check if pos is a valid position in _fields
+            if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
                 delete f;
-                return false;
+                continue; //Failed
+            }
+
+            // Check all other buildings
+            bool l = true;
+            for(Field* i : _fields) {
+                if (CheckCollisionRecs(f->GetRect(), i->GetRect())) {
+                    delete f;
+                    l = false;
+                    break;
+                }
+            }
+            if (l) {
+                _fields.push_back(f); //Build the field
+                stat._finState.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
             }
         }
 
-        _fields.push_back(f); //Build the field
-        stat._finState.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
-        return true;
-
         CheckInfrastructure();  //Update the infrastructure
     }
+    return false;
 } 
 
-bool GameModel::Demolition(INT_TOUPLE pos) 
+bool GameModel::Demolition(Vector2 pos) 
 {
     if (!Gameover)
     {
@@ -126,7 +134,7 @@ bool GameModel::Demolition(INT_TOUPLE pos)
         //Find the building at pos and delete it
         for (Field* f : _fields)
         {
-            if (CheckCollisionPointRec(IT_TO_V2(pos), f->GetRect()))
+            if (CheckCollisionPointRec(pos, f->GetRect()))
             {
                 //Check for conflicting demolish
 
@@ -138,6 +146,7 @@ bool GameModel::Demolition(INT_TOUPLE pos)
                     //If yes then we
 
                 _fields.remove(f);
+                delete f;
                 //Bonus: we can give back some small money like:
                 //_fin_state.total_founds -= 0.2 * BuildCosts.at(f->GetId());
                 CheckInfrastructure();
@@ -146,6 +155,7 @@ bool GameModel::Demolition(INT_TOUPLE pos)
         }
         return false; //Indicate that we didnt demolish 
     }
+    return false;
 }
 
 //Check if a pos is in the playing fields or not
