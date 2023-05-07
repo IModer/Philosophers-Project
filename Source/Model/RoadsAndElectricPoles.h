@@ -23,6 +23,7 @@ public:
                 STR(direction);
     }
 protected:
+    bool hasElectricity = false;
     int direction;
 };
 

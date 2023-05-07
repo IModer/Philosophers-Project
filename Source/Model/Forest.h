@@ -35,10 +35,6 @@ public:
     }
 protected:
     double age;
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
     bool hasGrownOut;
 };
 

@@ -29,6 +29,7 @@ public:
     }
 protected:
     int capacity;
+    bool hasElectricity = true;
     static const int maxCapacity = 10; // TODO: ne 10
 };
 

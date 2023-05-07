@@ -18,10 +18,6 @@ public:
     std::string toString();
     
 protected:
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
     int profit;
     int workers;
 };
