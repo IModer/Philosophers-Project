@@ -21,10 +21,10 @@ public:
     }
 
     void Update() {
-        if (residents == 0 && isConnectedToRoad && rand() < 0.05) residents = maxresidents;
+        //if (residents == 0 && isConnectedToRoad && rand() < 0.05) residents = maxresidents;
     }
     std::string GetDescription() {
-        return GameField::GetDescription() + "\nResidents: " + STR(residents) + "\n has Forrest: " + (hasForest?"true":"false") + "\n Has Staidon: " + (hasNeighbouringStadion?"true":"false");
+        return GameField::GetDescription() + "\nResidents: " + STR(residents) + "\n has Forrest: " + (hasForest?"true":"false") + "\n Has Staidon: " + (hasStadion?"true":"false");
     }
 
     int electricityConsumption();
@@ -40,11 +40,15 @@ public:
                 STR(isConnectedToRoad) + " " +
                 STR(isHabitable) + " " +
                 STR(hasForest) + " " +
-                STR(hasNeighbouringStadion) + " " +
+                STR(hasStadion) + " " +
                 STR(residents);
     }
     void SetHasForest(bool b) {hasForest = b;}
-    void SetHasStadium(bool b) {hasNeighbouringStadion = b;}
+
+    void SetHasPolice(bool b) {hasPolice = b;}
+    
+    void SetHasStadion(bool b) {hasStadion = b;}
+    
     int GetResidents() {return residents;}
     void MoveResidentsIn(int p) { residents += p; }
     void MoveResidentsOut(int p) { residents -= p; }
@@ -55,7 +59,8 @@ protected:
     int maxresidents = 10;
     
     bool hasForest = false;
-    bool hasNeighbouringStadion;
+    bool hasStadion = false;
+    bool hasPolice = false;
 };
 
 #endif

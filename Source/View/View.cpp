@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <ctime>
 #include <raylib.h>
+#include <stdlib.h>
 
 Texture2D View::images;
 
@@ -366,8 +367,7 @@ void View::Render()
         DrawText(("Money: " + STR(_model->stat._finState.total_founds) + "$").c_str(), 20, screenHeight - 32, 20, BLACK);
         DrawText(_model->GetCurrentDate().c_str(), 600, screenHeight - 40, 20, BLACK);
         char snum[10];
-        itoa(_model->satisfaction, snum, 10);
-        DrawText(snum, 1000, screenHeight - 40, 20, BLACK);
+        DrawText(STR(_model->satisfaction).c_str(), 1000, screenHeight - 40, 20, BLACK);
         DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
         if (_model->Gameover == true)
         {
