@@ -44,6 +44,7 @@ public:
                 STR(residents);
     }
     void SetHasForest(bool b) {hasForest = b;}
+    void SetHasStadium(bool b) {hasNeighbouringStadion = b;}
     int GetResidents() {return residents;}
     void MoveResidentsIn(int p) { residents += p; }
     void MoveResidentsOut(int p) { residents -= p; }
