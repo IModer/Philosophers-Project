@@ -220,6 +220,9 @@ void GameModel::Update()
     {
         Gameover = true;
     }
+
+    // Building updates
+    for (Field* i : _fields) i->Update();
     
     ////Tax
     //We tax every month
