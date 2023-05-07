@@ -23,6 +23,9 @@ public:
     void Update() {
         if (residents == 0 && isConnectedToRoad && rand() < 0.05) residents = maxresidents;
     }
+    std::string GetDescription() {
+        return GameField::GetDescription() + "\nResidents: " + STR(residents) + "\n has Forrest: " + (hasForest?"true":"false") + "\n Has Staidon: " + (hasNeighbouringStadion?"true":"false");
+    }
 
     int electricityConsumption();
 
