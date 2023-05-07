@@ -5,6 +5,7 @@
 #include "../Model/GameModel.h"
 #include "Button.h"
 #include "ImgBtn.h"
+#include <vector>
 
 class View 
 {
@@ -30,6 +31,7 @@ class View
     ImgBtn* actionButtons[aBtnN];
     BUILD_TYPES buildID;
     int resCounter = 0;
+    std::vector<INT_TOUPLE> buildPos;
 };
 
 #endif
