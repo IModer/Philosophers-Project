@@ -9,6 +9,7 @@
 #include <time.h>
 #include <queue>
 #include <set>
+#include <algorithm>
 //#include <raylib.h>
 
 //#include "../View/View.h" // búúúúú
@@ -118,6 +119,9 @@ bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
             }
         }
 
+        _fields.sort([](Field* f1, Field* f2){
+            return f1->GetY() < f2->GetY();
+        });
         CheckInfrastructure();  //Update the infrastructure
     }
     // does not recognise it. Does not work

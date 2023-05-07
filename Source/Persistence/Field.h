@@ -59,7 +59,6 @@ class Field : public GameObject
 
         static Field* Factory(FIELD_TYPES id, INT_TOUPLE pos={0,0});
         static Field* Factory(FIELD_TYPES id, std::stringstream& ss);
-
     protected:
         // Variables
         FIELD_TYPES id;
