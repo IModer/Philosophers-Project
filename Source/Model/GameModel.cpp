@@ -86,7 +86,7 @@ void GameModel::NewGame()
     *   \return Whether the buil_fin_stateding was successful or not
     **/
 bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
-    if (!Gameover)
+    if (!Gameover && (stat._finState.total_founds) - BuildCosts.at(field_t) > 0)
     {
         for (INT_TOUPLE pos : *poses) {
             //Building type alapján példányosítjuk
@@ -119,6 +119,11 @@ bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
 
         CheckInfrastructure();  //Update the infrastructure
     }
+    // does not recognise it. Does not work
+    // else
+    // {
+    //     int button = MessageBox("This is a warning message!","Warning");
+    // }
     return false;
 } 
 
@@ -466,7 +471,8 @@ void GameModel::CheckInfrastructure()
                         //itt lehetne az egyszer kifejtett mártix szerint menni csak akkor elötte ki kell fejteni a mátrixba a _fields-t
                         for (auto f : _fields)
                         {
-                            if (f->GetX() == v.x+i && f->GetY() == v.y+j)
+                            //Ha f ben megtaláltuk aki kell és az i! = j != 0 != i és még nem látogattuk meg ezt a pontot
+                            if (f->GetX() == v.x+i && f->GetY() == v.y+j && (i != 0 && j != 0) && (visited.count(INT_TOUPLE{v.x+i, v.y+j}) == 0) )
                             {
                                 //Itt amúgy csak a road lenne jó, de electric pole még nincs úgy se 
                                 if (f->GetId() == ROADANDELECTRICPOLE)
