@@ -10,8 +10,7 @@ public:
 
     ResidentalZone(FIELD_TYPES id,
            INT_TOUPLE location,
-           INT_TOUPLE size,
-           int residents) : GameField(id, location, size) {}
+           int residents) : GameField(id, location) {}
 
     int electricityConsumption();
 
@@ -21,8 +20,6 @@ public:
                 return  STR(id) + " " +
                 STR(location.x) + " " +
                 STR(location.y) + " " +
-                STR(size.x) + " " +
-                STR(size.y) + " " +
                 STR(hasElectricity) + " " +
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +
@@ -31,8 +28,15 @@ public:
                 STR(hasNeighbouringStadion) + " " +
                 STR(residents);
     }
+    
+    int GetResidents() {return residents;}
+    void MoveResidentsIn(int p) { residents += p; }
+    void MoveResidentsOut(int p) { residents -= p; }
+    int GetMaxresidents() { return  maxresidents; }
+
 protected:
     int residents;
+    int maxresidents = 10;
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;

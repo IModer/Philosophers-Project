@@ -25,6 +25,7 @@
 
 #define STR(x) std::to_string(x)
 #define V2_TO_IT(v) INT_TOUPLE{static_cast<int>(v.x), static_cast<int>(v.y)}
+#define IT_TO_V2(it) Vector2{static_cast<float>(it.x), static_cast<float>(it.y)}
 
 typedef struct INT_TOUPLE { 
     int x, y;
@@ -34,6 +35,7 @@ typedef struct INT_TOUPLE {
 } INT_TOUPLE;
 
 //Ids for Field types
+
 typedef enum {
     ROADANDELECTRICPOLE = 1,
     GAMEFIELD = 2,
@@ -75,10 +77,11 @@ const std::map<FIELD_TYPES, int> BuildCosts = {
     {STADIUM,              4000},
     {SERVICEZONE,          2000},
     {INDUSTRIALZONE,       3000},
-    {RESIDENTALZONE,       1000}
+    {RESIDENTALZONE,       1000},
+    {POLICESTATION,        1000}
 };
 
-const std::map<FIELD_TYPES, std::string> buildingNames = {
+const std::map<FIELD_TYPES, std::string> BuildingNames = {
     {ROADANDELECTRICPOLE,  "Road"},
     {FOREST,               "Forest"},
     {FIREDEPARTMENT,       "Fire department"},
@@ -86,24 +89,25 @@ const std::map<FIELD_TYPES, std::string> buildingNames = {
     {STADIUM,              "Stadium"},
     {SERVICEZONE,          "Service zone"},
     {INDUSTRIALZONE,       "Industrial zone"},
-    {RESIDENTALZONE,       "Residental zone"}
+    {RESIDENTALZONE,       "Residental zone"},
+    {POLICESTATION,        "Police station"}
 };
 
 // I think we should use this, but this needs refactoring
-/* const std::map<FIELD_TYPES, INT_TOUPLE> buildingSizes = {
+const std::map<FIELD_TYPES, INT_TOUPLE> BuildingSizes = {
     {ROADANDELECTRICPOLE,  INT_TOUPLE{1,1}},
     {FOREST,               INT_TOUPLE{1,1}},
-    {FIREDEPARTMENT,       INT_TOUPLE{2,2}},
+    {FIREDEPARTMENT,       INT_TOUPLE{2,2}},  //could be 1x1
     {POWERPLANT,           INT_TOUPLE{2,2}},
     {STADIUM,              INT_TOUPLE{2,2}},  //Could be 3x3
     {SERVICEZONE,          INT_TOUPLE{1,1}},
     {INDUSTRIALZONE,       INT_TOUPLE{1,1}},
-    {RESIDENTALZONE,       INT_TOUPLE{1,1}}
-}; */
+    {RESIDENTALZONE,       INT_TOUPLE{1,1}},
+    {POLICESTATION,        INT_TOUPLE{1,1}}
+};
 
 // I think we should also use this, but this also needs refactoring
-// ApoliceStation nek is van költsége
-/*const std::map<FIELD_TYPES, int> buildingMaintenanceCost= {
+const std::map<FIELD_TYPES, int> BuildingMaintenanceCost= {
     {ROADANDELECTRICPOLE,  100},
     {FOREST,               100},
     {FIREDEPARTMENT,       0},
@@ -111,8 +115,9 @@ const std::map<FIELD_TYPES, std::string> buildingNames = {
     {STADIUM,              100},  
     {SERVICEZONE,          0},
     {INDUSTRIALZONE,       0},
-    {RESIDENTALZONE,       0}
-};*/
+    {RESIDENTALZONE,       0},
+    {POLICESTATION,        100}
+};
 
 
 

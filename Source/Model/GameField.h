@@ -7,14 +7,15 @@ class GameField : public Field
 {
 public:
     GameField(FIELD_TYPES id,
-              INT_TOUPLE location,
-              INT_TOUPLE size) : Field(id, location, size) {}
+              INT_TOUPLE location) : Field(id, location) {}
 
     GameField(Field field) : Field(field) {};
     ~GameField();
     std::string toString();
     
     //getterek/setterek ide
+    bool GetIsConnectedToRoad() {return isConnectedToRoad;}
+    void SetIsConnectedToRoad(bool b) {isConnectedToRoad = b;}
 
 protected: 
     bool hasElectricity;

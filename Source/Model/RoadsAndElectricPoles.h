@@ -7,9 +7,7 @@
 class RoadsAndElectricPoles : public GameField
 {
 public:
-    RoadsAndElectricPoles(FIELD_TYPES id, INT_TOUPLE location, INT_TOUPLE size): GameField(id,location,size) {}
-
-        
+    RoadsAndElectricPoles(FIELD_TYPES id, INT_TOUPLE location): GameField(id,location) {}
         
     // Returns the string representation of a RoadsAndElectricPoles object
     std::string toString() 
@@ -17,8 +15,6 @@ public:
         return  STR(id) + " " +
                 STR(location.x) + " " +
                 STR(location.y) + " " +
-                STR(size.x) + " " +
-                STR(size.y) + " " +
                 STR(direction);
     }
 protected:

@@ -6,11 +6,8 @@ class PoliceStation : public GameField
 {
 public:
 
-    
-
     PoliceStation(FIELD_TYPES id,
-           INT_TOUPLE location,
-           INT_TOUPLE size) : GameField(id, location, size) {}
+           INT_TOUPLE location) : GameField(id, location) {}
 
     // Returns the string representation of a Stadion object
     std::string toString() 
@@ -18,8 +15,6 @@ public:
         return  STR(id) + " " +
                 STR(location.x) + " " +
                 STR(location.y) + " " +
-                STR(size.x) + " " +
-                STR(size.y) + " " +
                 STR(hasElectricity) + " " +
                 STR(isOnFire) + " " +
                 STR(isConnectedToRoad) + " " +
