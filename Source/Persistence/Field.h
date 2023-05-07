@@ -23,8 +23,9 @@ class Field : public GameObject
         FIELD_TYPES GetId() { return id;}
         int GetX()  { return location.x; }
         int GetY() { return location.y; }
-        //int GetWidth() { return size.x; }
-        //int GetHeight() { return size.y; }
+        INT_TOUPLE GetPos() { return location; }
+        int GetWidth() { return BuildingSizes.at(this->GetId()).x*M_UNIT; }
+        int GetHeight() { return BuildingSizes.at(this->GetId()).y*M_UNIT; }
         Rectangle GetRect() { return rect; }
         // Functions
         virtual std::string toString();

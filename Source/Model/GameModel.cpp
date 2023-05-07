@@ -3,8 +3,17 @@
 #include "ServiceZone.h"
 #include "ResidentalZone.h"
 #include "Zone.h"
+#include <raylib.h>
+#include <stdlib.h>
+#include <time.h>
+#include <queue>
+#include <set>
+//#include <raylib.h>
 
 //#include "../View/View.h" // búúúúú
+bool operator<(const INT_TOUPLE& it1, const INT_TOUPLE& it2) {
+    return it1.x < it2.x && it1.y < it2.y; //! nemtom mi kéne
+}
 
 /**
     *   \brief Saves current gamestate
@@ -73,38 +82,58 @@ void GameModel::NewGame()
     *   \param pos where to build it to, should be in some [min, max]
     *   \return Whether the buil_fin_stateding was successful or not
     **/
-bool GameModel::Build(FIELD_TYPES field_t, INT_TOUPLE pos) {
-    //Building type alapján példányosítjuk
-    auto f = Field::Factory(field_t, pos);
-    if (f == nullptr)
-        return false; //Failed 
+bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
+    if (!Gameover)
+    {
+        for (INT_TOUPLE pos : *poses) {
+            //Building type alapján példányosítjuk
+            auto f = Field::Factory(field_t, pos);
+            if (f == nullptr)
+            {
+                continue; //Failed 
+            }
 
-    //Check if pos is a valid position in _fields
-    if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
-        std::cout << "oh shet\n";
-        return false; //Failed
+            //Check if pos is a valid position in _fields
+            if (pos.x > _fields_dim.x/2*M_UNIT || pos.x < _fields_dim.x/-2*M_UNIT || pos.y < _fields_dim.y/-2*M_UNIT || pos.y > (_fields_dim.y/2)*M_UNIT ) {
+                delete f;
+                continue; //Failed
+            }
+
+            // Check all other buildings
+            bool l = true;
+            for(Field* i : _fields) {
+                if (CheckCollisionRecs(f->GetRect(), i->GetRect())) {
+                    delete f;
+                    l = false;
+                    break;
+                }
+            }
+            if (l) {
+                _fields.push_back(f); //Build the field
+                stat._finState.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
+            }
+        }
+
+        CheckInfrastructure();  //Update the infrastructure
     }
-
-    _fields.push_back(f); //Build the field
-    stat._finState.total_founds -= BuildCosts.at(field_t); //This might not be the best way to do it, we should check if we go into debt
-    return true;
-
-    //ChechInfrastructure();  //Update the infrastructure
+    return false;
 } 
 
-bool GameModel::Demolition(INT_TOUPLE pos) 
+bool GameModel::Demolition(Vector2 pos) 
 {
-    //Check if pos is a valid position in _fields
-    //its commented cos size in View and model are not compatible yet
-    //if (checkCoordsInPlayField(pos))
-    //    return false; //Failed
-
-    //Find the building at pos and delete it
-    for (Field* f : _fields)
+    if (!Gameover)
     {
-        if (f->GetX() == pos.x && f->GetY() == pos.y)
+        //Check if pos is a valid position in _fields
+        //its commented cos size in View and model are not compatible yet
+        //if (checkCoordsInPlayField(pos))
+        //    return false; //Failed
+
+        //Find the building at pos and delete it
+        for (Field* f : _fields)
         {
-            //Check for conflicting demolish
+            if (CheckCollisionPointRec(pos, f->GetRect()))
+            {
+                //Check for conflicting demolish
 
             //Is it a road 
                 //Will it disconnect from the main road?
@@ -113,13 +142,17 @@ bool GameModel::Demolition(INT_TOUPLE pos)
             //Is it a Residental Zone
                 //If yes then we
 
-            _fields.remove(f);
-            //Bonus: we can give back some small money like:
-            //_fin_state.total_founds -= 0.2 * BuildCosts.at(f->GetId());
-            return true;  //Demolished successfully
+                _fields.remove(f);
+                delete f;
+                //Bonus: we can give back some small money like:
+                //_fin_state.total_founds -= 0.2 * BuildCosts.at(f->GetId());
+                CheckInfrastructure();
+                return true;  //Demolished successfully
+            }
         }
+        return false; //Indicate that we didnt demolish 
     }
-    return false; //Indicate that we didnt demolish 
+    return false;
 }
 
 //Check if a pos is in the playing fields or not
