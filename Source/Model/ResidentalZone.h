@@ -44,10 +44,13 @@ public:
                 STR(residents);
     }
     void SetHasForest(bool b) {hasForest = b;}
+    bool GetHasForest() {return hasForest;}
 
     void SetHasPolice(bool b) {hasPolice = b;}
-    
+    bool GetHasPolice() {return hasPolice;}
+
     void SetHasStadion(bool b) {hasStadion = b;}
+    bool GetHasStadion() {return hasStadion;}
     
     int GetResidents() {return residents;}
     void MoveResidentsIn(int p) { residents += p; }

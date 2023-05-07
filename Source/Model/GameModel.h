@@ -23,14 +23,18 @@ class GameModel
 
         bool Gameover;
 
-        int satisfaction = 10;
+        int satisfaction = StartingSatisfaction;
 
         int numOfSaves;
         const string savesPath = "./saves/";
 
         //Gameplay variables
-        const int StartingCash = 10000;
+        const int StartingCash = 1000000;  //loan of a small million dollar
         const double StartingTaxRate = 0.3;
+        const int StartingSatisfaction = 100;
+        const int MinSatisfaction = 0;
+
+        //TODO modifiers for easier balancing, like from satisfaction calculation
 
         INT_TOUPLE StartingRoadCoords = INT_TOUPLE{0,-1300};
 
