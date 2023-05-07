@@ -235,6 +235,7 @@ void GameModel::Update()
     for (Field* i : _fields) i->Update();
     
     bool check_forest = false;
+    bool check_stadium = false;
     for (auto f : _fields)
     {
         if (f->GetId() == RESIDENTALZONE)
@@ -252,11 +253,17 @@ void GameModel::Update()
                                 check_forest = true;
                                 //dynamic_cast<ResidentalZone *>(f)->SetHasForest(true);
                             }
+                            else if (g->GetId() == STADIUM)
+                            {
+                                check_stadium = true;
+                            }
+                            
                         }
                     }
                 }
             }
             dynamic_cast<ResidentalZone *>(f)->SetHasForest(check_forest);
+            dynamic_cast<ResidentalZone *>(f)->SetHasStadium(check_stadium);
         }
     }
     ////Tax

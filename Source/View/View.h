@@ -21,6 +21,8 @@ class View
     View(GameModel* model);
     void Update();
     void Render();
+    bool exitWindowRequested = false;   // Flag to request window to exit
+    bool exitWindow = false;    // Flag to set window to exit
     private:
     GameModel* _model;
     GAME_STATE gameState;
