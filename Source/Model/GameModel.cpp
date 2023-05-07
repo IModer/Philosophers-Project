@@ -155,10 +155,9 @@ bool GameModel::Demolition(Vector2 pos)
 
                 //Is it a Residental Zone
                     //If yes then we
-
                 _fields.remove(f);
                 delete f;
-                //Bonus: we can give back some small money like:
+                //TODO we can give back some small money like:
                 //_fin_state.total_founds -= 0.2 * BuildCosts.at(f->GetId());
                 CheckInfrastructure();
                 return true;  //Demolished successfully
@@ -288,7 +287,7 @@ void GameModel::Update()
     ////Calculate satisfaction
     // ez lehetne csak naponta
 
-    int new_sat = 100; //starting satisfaction
+    int new_sat = StartingSatisfaction; //starting satisfaction
     //Adók ha 0.5 alatt vannak + 1, amúgy -1
     //súlyozni kell total_residents el
     if (stat._finState.GetIndustrialTaxRate()   < 0.5) {new_sat += 1 * (total_residents/2);}
