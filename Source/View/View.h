@@ -17,7 +17,6 @@ class View
     static const int screenHeight = 1080;
     
     static bool isPosOnRect(Vector2 Pos, Rectangle rect);
-    static Texture2D images;
     View(GameModel* model);
     void Update();
     void Render();

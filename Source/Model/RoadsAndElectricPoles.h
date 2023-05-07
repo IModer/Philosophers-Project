@@ -11,7 +11,7 @@ public:
     RoadsAndElectricPoles(FIELD_TYPES id, INT_TOUPLE location): GameField(id,location) {}
         
     void Render() {
-        DrawRectangleRec(rect, GRAY);
+        DrawRectangleRec(rect, Color{74, 84, 98, 255});
     }
     
     // Returns the string representation of a RoadsAndElectricPoles object

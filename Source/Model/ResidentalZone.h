@@ -50,14 +50,26 @@ public:
     void SetHasStadion(bool b) {hasStadion = b;}
     
     int GetResidents() {return residents;}
-    void MoveResidentsIn(int p) { residents += p; }
+    void MoveResidentsIn(int p) { 
+        if (sourceRect.x == 0) {
+            sourceRect.x += 50;
+        }
+        residents += p; 
+    }
     void MoveResidentsOut(int p) { residents -= p; }
     int GetMaxresidents() { return  maxresidents; }
+
+    void Upgrade() {
+        if (level < 2) {
+            level++;
+            sourceRect.x+=50;
+        }
+    }
 
 protected:
     int residents;
     int maxresidents = 10;
-    
+    int level = 0;
     bool hasForest = false;
     bool hasStadion = false;
     bool hasPolice = false;

@@ -8,7 +8,6 @@
 #include <raylib.h>
 #include <stdlib.h>
 
-Texture2D View::images;
 
 bool View::isPosOnRect(Vector2 Pos, Rectangle rect)
 {
@@ -50,7 +49,7 @@ View::View(GameModel *model)
 
     SetTargetFPS(60);
 
-    images = LoadTexture("../Assets/tiles.png");
+    Field::images = LoadTexture("../Assets/tiles.png");
 };
 
 void View::Update()
@@ -264,7 +263,7 @@ void View::Render()
             }
             else
             {
-                DrawTexturePro(images, SourceRects.at(i->GetId()), i->GetDrawRect(), {0, 0}, 0.f, WHITE);
+                DrawTexturePro(Field::images, i->GetSourceRect(), i->GetDrawRect(), {0, 0}, 0.f, WHITE);
             }
         }
 

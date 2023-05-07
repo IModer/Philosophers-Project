@@ -10,6 +10,8 @@
 #include "../Model/PoliceStation.h"
 #include <raylib.h>
 
+Texture2D Field::images;
+
 // Returns the string representation of a Fields object
 std::string Field::toString()
 {

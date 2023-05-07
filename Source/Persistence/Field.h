@@ -9,6 +9,7 @@
 class Field : public GameObject
 {
     public:
+        static Texture2D images;
         // Constructor
         Field(FIELD_TYPES id, INT_TOUPLE location): id(id), location(location)
         {
@@ -18,6 +19,7 @@ class Field : public GameObject
                 static_cast<float>(GetWidth()),
                 static_cast<float>(GetHeight())
                 };
+            sourceRect = SourceRects.at(id);
         }
         // Get, set
         FIELD_TYPES GetId() { return id;}
@@ -30,6 +32,9 @@ class Field : public GameObject
         Rectangle GetDrawRect() {
             int w = BuildingSizes.at(GetId()).y;
             return Rectangle{rect.x, rect.y-10*w, rect.width, rect.height+10*w};
+        }
+        Rectangle GetSourceRect() {
+            return sourceRect;
         }
         virtual std::string GetDescription();
         // Functions
@@ -65,6 +70,7 @@ class Field : public GameObject
         INT_TOUPLE location;
         INT_TOUPLE size;
         Rectangle rect;
+        Rectangle sourceRect;
 };
 
 
