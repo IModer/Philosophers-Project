@@ -1,6 +1,7 @@
 #ifndef FOREST_H_DEFINED
 #define FOREST_H_DEFINED
 #include "GameField.h"
+#include <raylib.h>
 
 class Forest : public GameField
 {
@@ -11,6 +12,13 @@ public:
                                {
                                 hasGrownOut = false;
                                }
+    void Render() {
+        DrawRectangleRec(rect, GREEN);
+        DrawText(STR((int)(age)).c_str(), location.x, location.y, 24, WHITE);
+    }
+    void Update() {
+        age+=1/360.f;
+    }
 
     // Returns the string representation of a Forest object
     std::string toString() 
@@ -26,7 +34,7 @@ public:
                 STR(age);
     }
 protected:
-    int age;
+    double age;
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;

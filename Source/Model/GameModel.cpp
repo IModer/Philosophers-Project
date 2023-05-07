@@ -4,6 +4,7 @@
 #include "ResidentalZone.h"
 #include "Zone.h"
 #include <raylib.h>
+#include <raylib.h>
 #include <stdlib.h>
 #include <time.h>
 #include <queue>
@@ -86,7 +87,7 @@ void GameModel::NewGame()
     *   \return Whether the buil_fin_stateding was successful or not
     **/
 bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
-    if (!Gameover && (stat._finState.total_founds) - BuildCosts.at(field_t) > 0)
+    if (!Gameover)
     {
         for (INT_TOUPLE pos : *poses) {
             //Building type alapján példányosítjuk
@@ -161,6 +162,7 @@ bool GameModel::Demolition(Vector2 pos)
         return false; //Indicate that we didnt demolish 
     }
     return false;
+    return false;
 }
 
 //Check if a pos is in the playing fields or not
@@ -225,6 +227,9 @@ void GameModel::Update()
     {
         Gameover = true;
     }
+
+    // Building updates
+    for (Field* i : _fields) i->Update();
     
     ////Tax
     //We tax every month

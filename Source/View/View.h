@@ -5,6 +5,7 @@
 #include "../Model/GameModel.h"
 #include "Button.h"
 #include "ImgBtn.h"
+#include "TimeBtn.h"
 #include <vector>
 
 class View 
@@ -29,6 +30,7 @@ class View
     private:
     static const int aBtnN = 10;
     ImgBtn* actionButtons[aBtnN];
+    TimeButton* timeButtons[4];
     BUILD_TYPES buildID;
     int resCounter = 0;
     std::vector<INT_TOUPLE> buildPos;

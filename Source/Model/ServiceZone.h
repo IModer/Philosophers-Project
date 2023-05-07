@@ -2,6 +2,7 @@
 #define SERVICE_ZONE_H_DEFINED
 
 #include "GameField.h"
+#include <raylib.h>
 
 class ServiceZone : public GameField
 {
@@ -9,6 +10,10 @@ public:
     ServiceZone(FIELD_TYPES id,
            INT_TOUPLE location,
            int workers) : GameField(id, location) {}
+
+    void Render() {
+        DrawRectangleRec(rect, PURPLE);
+    }
 
     int electricityConsumption();
 

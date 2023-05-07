@@ -4,8 +4,8 @@
 
 FloatingWindow::FloatingWindow(Field* field)
 {
-    _pos = GetMousePosition();
     _field = field;
+    rect = Rectangle{static_cast<float>(GetMouseX()), static_cast<float>(GetMouseY()), static_cast<float>(MeasureText(_field->GetDescription().c_str(), 18)+12), 400};
 }
 
 /**
@@ -16,6 +16,6 @@ FloatingWindow::FloatingWindow(Field* field)
 void FloatingWindow::Render()
 {
     //Maybe we need checks if the render fails somewhere
-    DrawRectangleV(_pos, Vector2{200.f, 400.f}, GRAY);
-    DrawText((BuildingNames.at(_field->GetId()) + "\nPosition: " + STR(_field->GetX()) + " " + STR(_field->GetY())).c_str(), _pos.x+4, _pos.y+8, 20, WHITE);
+    DrawRectangleRec(rect, Color{200, 200, 200, 200});
+    DrawText(_field->GetDescription().c_str(), rect.x+6, rect.y+8, 18, WHITE);
 }
