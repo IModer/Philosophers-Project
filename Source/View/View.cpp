@@ -16,6 +16,7 @@ View::View(GameModel *model)
 {
     _model = model;
     gameState = MENU;
+    buildID = BT_NULL;
 
     InitWindow(screenWidth, screenHeight, "$[Game_name]");
     SetWindowState(FLAG_FULLSCREEN_MODE);
@@ -46,7 +47,6 @@ View::View(GameModel *model)
 
 void View::Update()
 {
-    // TODO: mouse, keyboard input, building, stb
     switch (gameState)
     {
     case MENU:
