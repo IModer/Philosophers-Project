@@ -43,7 +43,7 @@ public:
                 STR(hasNeighbouringStadion) + " " +
                 STR(residents);
     }
-    void SetHasForest(bool b) {isConnectedToRoad = b;}
+    void SetHasForest(bool b) {hasForest = b;}
     int GetResidents() {return residents;}
     void MoveResidentsIn(int p) { residents += p; }
     void MoveResidentsOut(int p) { residents -= p; }
@@ -53,7 +53,7 @@ protected:
     int residents;
     int maxresidents = 10;
     
-    bool hasForest;
+    bool hasForest = false;
     bool hasNeighbouringStadion;
 };
 

@@ -234,6 +234,31 @@ void GameModel::Update()
     // Building updates
     for (Field* i : _fields) i->Update();
     
+    bool check_forest = false;
+    for (auto f : _fields)
+    {
+        if (f->GetId() == RESIDENTALZONE)
+        {
+            for (int i = f->GetPos().x - 150; i <= f->GetPos().x + 150; i += 50)
+            {
+                for (int j = f->GetPos().y - 150; j <= f->GetPos().y + 150; j += 50)
+                {
+                    for (auto g : _fields)
+                    {
+                        if (g->GetX() == i && g->GetY() == j)
+                        {
+                            if (g->GetId() == FOREST)
+                            {
+                                check_forest = true;
+                                //dynamic_cast<ResidentalZone *>(f)->SetHasForest(true);
+                            }
+                        }
+                    }
+                }
+            }
+            dynamic_cast<ResidentalZone *>(f)->SetHasForest(check_forest);
+        }
+    }
     ////Tax
     //We tax every month
     if ((stat._time / 60) % 30 == 0)
