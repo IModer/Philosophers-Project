@@ -52,10 +52,7 @@ public:
 protected:
     int residents;
     int maxresidents = 10;
-    bool hasElectricity;
-    bool isOnFire;
-    bool isConnectedToRoad;
-    bool isHabitable;
+    
     bool hasForest;
     bool hasNeighbouringStadion;
 };

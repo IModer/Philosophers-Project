@@ -19,8 +19,8 @@ public:
     void SetIsConnectedToRoad(bool b) {isConnectedToRoad = b;}
 
 protected: 
-    bool hasElectricity;
-    bool isOnFire;
+    bool hasElectricity = false;
+    bool isOnFire = false;
     bool isConnectedToRoad;
     bool isHabitable;
 };
