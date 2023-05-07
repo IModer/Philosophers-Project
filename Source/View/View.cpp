@@ -265,7 +265,7 @@ void View::Render()
             {
                 DrawRectangleV(Vector2{MouseGridPos.x + 50, MouseGridPos.y}, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
             }
-        }
+        }   
         if (!buildPos.empty()) {
             for (INT_TOUPLE p : buildPos) {
                 DrawRectangle(p.x, p.y, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT, Color{0,200,0,100});
