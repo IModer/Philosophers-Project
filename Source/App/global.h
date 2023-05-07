@@ -67,6 +67,18 @@ typedef enum {
 const int FPS = 60;
 const int M_UNIT = 50;
 
+const std::map<FIELD_TYPES, Rectangle> SourceRects = {
+    {ROADANDELECTRICPOLE, {0, 0, 0, 0}},
+    {FOREST, {50, 120, 50, 60}},
+    {FIREDEPARTMENT, {100, 60, 50, 60}},
+    {POWERPLANT, {150, 60, 50, 60}},
+    {STADIUM, {50, 60, 50, 60}},
+    {SERVICEZONE, {50, 120, 50, 60}},
+    {INDUSTRIALZONE, {200, 60, 50, 60}},
+    {RESIDENTALZONE, {0, 0, 50, 60}},
+    {POLICESTATION, {0, 60, 50, 60}}
+};
+
 //This can be tweaked any time to balace the game, maybe it can even scale with time or money spent, ect...
 //Scaleing wouldnt be that hard, int scale = x; 50*scale, 100*scale ...
 const std::map<FIELD_TYPES, int> BuildCosts = {
