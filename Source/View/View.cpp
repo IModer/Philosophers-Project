@@ -219,9 +219,52 @@ void View::Render()
             MouseGridPos.y = MouseGridPos.y -50;
 
         if (buildID > 0) {
-            DrawRectangleV(MouseGridPos, Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, Color{255, 255, 255, 100});
+            if(MouseGridPos.x >= 0 && MouseGridPos.y >= 0)
+            {
+                DrawRectangleV(MouseGridPos, 
+                        Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, 
+                        BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, 
+                        Color{255, 255, 255, 100});
+            }
+            else if(MouseGridPos.x < 0 && MouseGridPos.y < 0)
+            {
+                DrawRectangleV(Vector2{MouseGridPos.x+50, MouseGridPos.y + 50}, 
+                        Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, 
+                        BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, 
+                        Color{255, 255, 255, 100});
+            }
+            else if(MouseGridPos.x >= 0 && MouseGridPos.y < 0)
+            {
+                DrawRectangleV(Vector2{MouseGridPos.x, MouseGridPos.y + 50}, 
+                        Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, 
+                        BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, 
+                        Color{255, 255, 255, 100});
+            }
+            else if(MouseGridPos.x < 0 && MouseGridPos.y >= 0)
+            {
+                DrawRectangleV(Vector2{MouseGridPos.x + 50, MouseGridPos.y}, 
+                        Vector2{BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).x*M_UNIT*1.f, 
+                        BuildingSizes.at(static_cast<FIELD_TYPES>(buildID)).y*M_UNIT*1.f}, 
+                        Color{255, 255, 255, 100});
+            }
+            
         } else if (buildID == BT_DEMOLISH) {
-            DrawRectangleV(MouseGridPos, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
+            if(MouseGridPos.x >= 0 && MouseGridPos.y >= 0)
+            {
+                DrawRectangleV(MouseGridPos, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
+            }
+            else if(MouseGridPos.x < 0 && MouseGridPos.y < 0)
+            {
+                DrawRectangleV(Vector2{MouseGridPos.x+50, MouseGridPos.y + 50}, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
+            }
+            else if(MouseGridPos.x >= 0 && MouseGridPos.y < 0)
+            {
+                DrawRectangleV(Vector2{MouseGridPos.x, MouseGridPos.y + 50}, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
+            }
+            else if(MouseGridPos.x < 0 && MouseGridPos.y >= 0)
+            {
+                DrawRectangleV(Vector2{MouseGridPos.x + 50, MouseGridPos.y}, Vector2{M_UNIT, M_UNIT}, Color{255, 0, 0, 100});
+            }
         }
         if (!buildPos.empty()) {
             for (INT_TOUPLE p : buildPos) {
