@@ -32,13 +32,16 @@ class GameModel
         const int StartingCash = 10000;
         const double StartingTaxRate = 0.3;
 
-        INT_TOUPLE StartingRoadCoords = INT_TOUPLE{0,25};
+        INT_TOUPLE StartingRoadCoords = INT_TOUPLE{0,-1300};
 
         INT_TOUPLE _fields_dim = INT_TOUPLE{100,50};
 
+        INT_TOUPLE _fields_corner_topleft = INT_TOUPLE{-2500 ,-1250};
+        INT_TOUPLE _fields_corner_rightbottom = INT_TOUPLE{ 2450 , 1200};
+
         GameModel(Persistence* persistence) 
         {
-            //Init _persistance ans _fields
+            //Init _persistance and _fields
             _persistence = persistence;
             _fields = list<Field*>();
             stat._finState = finantial_state();
@@ -87,7 +90,7 @@ class GameModel
         
         void OnFieldClick(INT_TOUPLE p);
 
-        bool checkCoordsInPlayField(INT_TOUPLE pos);
+        bool checkCoordsNotInPlayField(INT_TOUPLE pos);
 
         INT_TOUPLE GetBuildingSize(Field* f) {return BuildingSizes.at((FIELD_TYPES)(f->GetId()));}
 

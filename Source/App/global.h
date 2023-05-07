@@ -97,6 +97,7 @@ const std::map<FIELD_TYPES, std::string> BuildingNames = {
 const std::map<FIELD_TYPES, INT_TOUPLE> BuildingSizes = {
     {ROADANDELECTRICPOLE,  INT_TOUPLE{1,1}},
     {FOREST,               INT_TOUPLE{1,1}},
+    {GAMEFIELD,            INT_TOUPLE{0,0}},
     {FIREDEPARTMENT,       INT_TOUPLE{2,2}},  //could be 1x1
     {POWERPLANT,           INT_TOUPLE{2,2}},
     {STADIUM,              INT_TOUPLE{2,2}},  //Could be 3x3
