@@ -15,7 +15,7 @@ class FloatingWindow
     void OnClick(INT_TOUPLE pos);
     private:
     Field* _field;
-    Vector2 _pos;
+    Rectangle rect;
 };
 
 #endif

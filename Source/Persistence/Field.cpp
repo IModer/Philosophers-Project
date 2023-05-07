@@ -16,6 +16,10 @@ std::string Field::toString()
     return STR(id) + " " + location.toString()  + " " + STR(BuildingSizes.at(this->GetId()).x) + " " + STR(BuildingSizes.at(this->GetId()).y);
 }
 
+std::string Field::GetDescription() {
+    return BuildingNames.at(id) + "\n" + "Position: " + STR(location.x) + " " + STR(location.y);
+}
+
 //The everything is 0 behaviour should be changed
 /**
     *   \brief Creates a subclass of Fields based on id

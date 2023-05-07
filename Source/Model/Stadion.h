@@ -1,6 +1,7 @@
 #ifndef STADION_H_DEFINED
 #define STADION_H_DEFINED
 #include "GameField.h"
+#include <raylib.h>
 
 class Stadion : public GameField
 {
@@ -9,6 +10,10 @@ public:
 
     Stadion(FIELD_TYPES id,
            INT_TOUPLE location) : GameField(id, location) {}
+
+    void Render() {
+        DrawRectangleRec(rect, DARKBLUE);
+    }
 
 
     // Returns the string representation of a Stadion object

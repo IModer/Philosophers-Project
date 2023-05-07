@@ -1,6 +1,7 @@
 #ifndef FIRE_DEPARTMENT_H_DEFINED
 #define FIRE_DEPARTMENT_H_DEFINED
 #include "GameField.h"
+#include <raylib.h>
 
 class FireDepartment : public GameField
 {
@@ -10,6 +11,9 @@ public:
     FireDepartment(FIELD_TYPES id,
            INT_TOUPLE location) : GameField(id, location) {}
 
+    void Render() {
+        DrawRectangleRec(rect, RED);
+    };
     // Returns the string representation of a FireDepartment object
     std::string toString() 
     {

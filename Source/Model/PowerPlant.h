@@ -1,6 +1,7 @@
 #ifndef POWER_PLANT_H_DEFINED
 #define POWER_PLANT_H_DEFINED
 #include "GameField.h"
+#include <raylib.h>
 
 class PowerPlant : public GameField
 {
@@ -9,6 +10,10 @@ public:
            INT_TOUPLE location) : GameField(id, location) {
             capacity = maxCapacity;
            }
+
+    void Render() {
+        DrawRectangleRec(rect, YELLOW);
+    }
 
     // Returns the string representation of a PowerPlant object
     std::string toString() 
