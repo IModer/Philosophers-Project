@@ -2,6 +2,7 @@
 #include "IndustrialZone.h"
 #include "ServiceZone.h"
 #include "ResidentalZone.h"
+#include "PowerPlant.h"
 #include "Zone.h"
 #include <raylib.h>
 #include <raylib.h>
@@ -221,6 +222,7 @@ void GameModel::ManipulateTime(TIME_ENUM t)
 
 //Is called every gametick by Causality
 //Handles:  tax
+//          profit
 //          satisfaction
 //          residents and workers
 void GameModel::Update()
@@ -233,39 +235,7 @@ void GameModel::Update()
 
     // Building updates
     for (Field* i : _fields) i->Update();
-    
-    bool check_forest = false;
-    bool check_stadium = false;
-    for (auto f : _fields)
-    {
-        if (f->GetId() == RESIDENTALZONE)
-        {
-            for (int i = f->GetPos().x - 150; i <= f->GetPos().x + 150; i += 50)
-            {
-                for (int j = f->GetPos().y - 150; j <= f->GetPos().y + 150; j += 50)
-                {
-                    for (auto g : _fields)
-                    {
-                        if (g->GetX() == i && g->GetY() == j)
-                        {
-                            if (g->GetId() == FOREST)
-                            {
-                                check_forest = true;
-                                //dynamic_cast<ResidentalZone *>(f)->SetHasForest(true);
-                            }
-                            else if (g->GetId() == STADIUM)
-                            {
-                                check_stadium = true;
-                            }
-                            
-                        }
-                    }
-                }
-            }
-            dynamic_cast<ResidentalZone *>(f)->SetHasForest(check_forest);
-            dynamic_cast<ResidentalZone *>(f)->SetHasStadium(check_stadium);
-        }
-    }
+
     ////Tax
     //We tax every month
     if ((stat._time / 60) % 30 == 0)
@@ -574,6 +544,111 @@ void GameModel::CheckInfrastructure()
                 }   
             }
 
+        }
+    }
+
+    //Elektromosság
+    for (auto g : _fields)
+    {
+        if (g->GetId() == POWERPLANT)
+        {
+            printf("Here be dragons\n");
+            auto cg = dynamic_cast<PowerPlant*>(g);
+            //BFS over roads késöbb electric-pole on
+            //miden ami nem ep (most még road) az costol valamennyi fuelt
+            auto queue = std::queue<Field*>();
+            auto visited = std::unordered_set<Field*>();
+            //Mivel POWERPLANT 2x2 es, ez a legnagyonn heck amit valaha nyomtam
+            auto cg1 = new PowerPlant(POWERPLANT,INT_TOUPLE{cg->GetX()+1*M_UNIT, cg->GetY()+1*M_UNIT});
+            auto cg2 = new PowerPlant(POWERPLANT,INT_TOUPLE{cg->GetX()+1*M_UNIT, cg->GetY()+0});
+            auto cg3 = new PowerPlant(POWERPLANT,INT_TOUPLE{cg->GetX()+0, cg->GetY()+1*M_UNIT});
+            queue.push(cg); 
+            queue.push(cg1); queue.push(cg2); queue.push(cg3);
+            while (!queue.empty() && cg->GetCapacity() > 0)
+            {
+                auto v = queue.front(); queue.pop();
+                if (visited.count(v) == 0)
+                {
+                    //printf("visit node: %s\n", v->toString().c_str());
+                    visited.insert(v);
+                    for (int i = -1; i <= 1; i++)
+                    {
+                        for (int j = -1; j <= 1; j++)
+                        {
+                            if (!checkCoordsNotInPlayField(INT_TOUPLE{v->GetX()+(i * M_UNIT), v->GetY()+(j * M_UNIT)}))
+                            {
+                                for (auto f : _fields)
+                                {
+                                    //printf("checking: %s\n", f->toString().c_str());
+                                    if (f->GetX() == v->GetX()+(i*M_UNIT) &&
+                                        f->GetY() == v->GetY()+(j*M_UNIT) &&
+                                        !(v->GetX()+(i*M_UNIT) == v->GetX() && v->GetY()+(j*M_UNIT) == v->GetY()) &&
+                                        (visited.count(f) == 0) &&
+                                        (cg->GetCapacity() > 0))
+                                    {
+                                        //printf("passed: %s\n", f->toString().c_str());
+                                        if (f->GetId() == ROADANDELECTRICPOLE)
+                                        {
+                                            //Ha út akkor csak megyünk a mentén
+                                            queue.push(f);
+                                            //TODO sok mindennek adhatnánk áramot, de most még csak SeriveZone/IndustrialZone-nak 
+                                        } else if (f->GetId() == SERVICEZONE || f->GetId() == INDUSTRIALZONE) {
+                                            queue.push(f);
+                                            auto cf = dynamic_cast<GameField*>(f);
+                                            if (!cf->GetHasElectricity())
+                                            {
+                                                cf->SetHasElectricity(true); cg->SetCapacity(cg->GetCapacity()-1);
+                                            }
+                                        }
+                                    }
+                                }    
+                            }
+                        }   
+                    }
+
+                }
+            }
+        }
+    }
+    
+
+    //Erdők, stadion, rendőrség
+    bool check_forest = false;
+    bool check_stadion = false;
+    bool check_police = false;
+    for (auto f : _fields)
+    {
+        if (f->GetId() == RESIDENTALZONE)
+        {
+            for (int i = f->GetPos().x - 150; i <= f->GetPos().x + 150; i += 50)
+            {
+                for (int j = f->GetPos().y - 150; j <= f->GetPos().y + 150; j += 50)
+                {
+                    for (auto g : _fields)
+                    {
+                        if (g->GetX() == i && g->GetY() == j)
+                        {
+                            if (g->GetId() == FOREST)
+                            {
+                                check_forest = true;
+                                //dynamic_cast<ResidentalZone *>(f)->SetHasForest(true);
+                            }
+                            else if (g->GetId() == STADIUM)
+                            {
+                                check_stadion = true;
+                            }
+                            else if (g->GetId() == POLICESTATION)
+                            {
+                                check_police = true;
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            dynamic_cast<ResidentalZone *>(f)->SetHasForest(check_forest);
+            dynamic_cast<ResidentalZone *>(f)->SetHasStadion(check_stadion);
+            dynamic_cast<ResidentalZone *>(f)->SetHasPolice(check_police);
         }
     }
 };

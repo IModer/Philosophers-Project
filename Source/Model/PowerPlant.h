@@ -8,11 +8,15 @@ class PowerPlant : public GameField
 public:
     PowerPlant(FIELD_TYPES id,
            INT_TOUPLE location) : GameField(id, location) {
-            capacity = maxCapacity;
+            //capacity = maxCapacity;
            }
 
     void Render() {
         DrawRectangleRec(rect, YELLOW);
+    }
+
+    std::string GetDescription() {
+        return GameField::GetDescription() + "\nCapacity: " + STR(capacity);
     }
 
     // Returns the string representation of a PowerPlant object
@@ -27,10 +31,13 @@ public:
                 STR(isHabitable) + " " +
                 STR(capacity);
     }
+
+    int GetCapacity() {return capacity;}
+    int SetCapacity(int p) {capacity = p;}
 protected:
-    int capacity;
+    int capacity = 10;
     bool hasElectricity = true;
-    static const int maxCapacity = 10; // TODO: ne 10
+    //static const int maxCapacity = 10;
 };
 
 #endif
