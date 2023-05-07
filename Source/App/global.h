@@ -73,7 +73,7 @@ const std::map<FIELD_TYPES, Rectangle> SourceRects = {
     {FIREDEPARTMENT, {100, 60, 50, 60}},
     {POWERPLANT, {150, 60, 50, 60}},
     {STADIUM, {50, 60, 50, 60}},
-    {SERVICEZONE, {50, 120, 50, 60}},
+    {SERVICEZONE, {0, 120, 50, 60}},
     {INDUSTRIALZONE, {200, 60, 50, 60}},
     {RESIDENTALZONE, {0, 0, 50, 60}},
     {POLICESTATION, {0, 60, 50, 60}}
