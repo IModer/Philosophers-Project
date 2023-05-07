@@ -11,6 +11,7 @@ public:
 
     GameField(Field field) : Field(field) {};
     ~GameField();
+    virtual std::string GetDescription();
     std::string toString();
     
     //getterek/setterek ide

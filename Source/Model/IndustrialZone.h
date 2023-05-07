@@ -42,7 +42,7 @@ public:
         DrawRectangleRec(rect, WHITE);
     }
     std::string GetDescription() {
-        return Field::GetDescription() + "\nWorkers: " + STR(workers);
+        return GameField::GetDescription() + "\nWorkers: " + STR(workers);
     }
 protected:
     int workers;

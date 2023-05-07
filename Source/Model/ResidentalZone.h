@@ -21,7 +21,7 @@ public:
     }
 
     void Update() {
-        if (residents == 0 && rand() < 0.05) residents = maxresidents;
+        if (residents == 0 && isConnectedToRoad && rand() < 0.05) residents = maxresidents;
     }
 
     int electricityConsumption();
