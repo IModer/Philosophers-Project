@@ -45,7 +45,7 @@ public:
         return GameField::GetDescription() + "\nWorkers: " + STR(workers);
     }
 protected:
-    int workers;
+    int workers = 0;
     int profit;
     int maxworkers = 10;
     bool hasNeighbouringStadion;

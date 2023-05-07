@@ -351,8 +351,11 @@ void GameModel::Update()
         if (f->GetId() == RESIDENTALZONE && dynamic_cast<GameField*>(f)->GetIsConnectedToRoad()) 
         {
             auto cf = dynamic_cast<ResidentalZone*>(f);
-            freeSpace += cf->GetMaxresidents() - cf->GetResidents();
-            freeSpaceFields.push_back(cf);
+            if (cf->GetMaxresidents() - cf->GetResidents() > 0)
+            {
+                freeSpace += cf->GetMaxresidents() - cf->GetResidents();
+                freeSpaceFields.push_back(cf);
+            }
         }
     }
     
@@ -408,7 +411,7 @@ void GameModel::Update()
 
     ////Munkába menetel
     //6 hónaponta
-    if (((stat._time / 60) % 7*4*6) == 0)
+    if (((stat._time / 60) % (7*4*6)) == 0)
     {
         //Minden emberhez próbálunk munkát osztani hetente aki nem tud munkába menni elköltözik
         int totalResidents;

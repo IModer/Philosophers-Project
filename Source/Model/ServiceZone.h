@@ -45,7 +45,7 @@ public:
     int GetMaxWorkers() {return maxworkers;}
 
 protected:
-    int workers;
+    int workers = 0;
     int profit;
     int maxworkers = 10;
     //int residents;
