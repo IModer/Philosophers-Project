@@ -28,7 +28,8 @@ class Field : public GameObject
         int GetHeight() { return BuildingSizes.at(this->GetId()).y*M_UNIT; }
         Rectangle GetRect() { return rect; }
         Rectangle GetDrawRect() {
-            return Rectangle{rect.x, rect.y-10, rect.width, rect.height+10};
+            int w = BuildingSizes.at(GetId()).y;
+            return Rectangle{rect.x, rect.y-10*w, rect.width, rect.height+10*w};
         }
         virtual std::string GetDescription();
         // Functions
