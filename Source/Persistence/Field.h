@@ -27,10 +27,11 @@ class Field : public GameObject
         int GetWidth() { return BuildingSizes.at(this->GetId()).x*M_UNIT; }
         int GetHeight() { return BuildingSizes.at(this->GetId()).y*M_UNIT; }
         Rectangle GetRect() { return rect; }
+        virtual std::string GetDescription();
         // Functions
         virtual std::string toString();
-        void Render() { 
-            Color c;
+        virtual void Render() { 
+            /*Color c;
             switch (id) {
                 case ROADANDELECTRICPOLE:
                 c = GRAY;
@@ -48,8 +49,9 @@ class Field : public GameObject
                 c = BLUE;
                 break;
             }
-            DrawRectangleRec(rect, c); 
-            };
+            DrawRectangleRec(rect, c); */
+        };
+        virtual void Update() {};
 
         static Field* Factory(FIELD_TYPES id, INT_TOUPLE pos={0,0});
         static Field* Factory(FIELD_TYPES id, std::stringstream& ss);

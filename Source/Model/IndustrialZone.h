@@ -2,6 +2,7 @@
 #define INDUSTRIAL_ZONE_H_DEFINED
 
 #include "GameField.h"
+#include <raylib.h>
 
 class IndustrialZone : public GameField
 {
@@ -36,6 +37,13 @@ public:
     void MoveWorkerOut(int p) {workers -= p;}
 
     int GetMaxWorkers() {return maxworkers;}
+
+    void Render() {
+        DrawRectangleRec(rect, WHITE);
+    }
+    std::string GetDescription() {
+        return Field::GetDescription() + "\nWorkers: " + STR(workers);
+    }
 protected:
     int workers;
     int profit;
