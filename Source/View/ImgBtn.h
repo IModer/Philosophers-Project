@@ -13,6 +13,7 @@ class ImgBtn {
     BUILD_TYPES GetBuildID() { return aID; }
 
     void Render(bool active=false);
+    void RenderText();
     private:
     std::string _fName;
     BUILD_TYPES aID;

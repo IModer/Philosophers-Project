@@ -14,10 +14,10 @@ public:
                                }
     void Render() {
         DrawRectangleRec(rect, GREEN);
-        DrawText(hasGrownOut?"+":"-", location.x, location.y, 24, WHITE);
+        DrawText(STR((int)(age)).c_str(), location.x, location.y, 24, WHITE);
     }
     void Update() {
-
+        age+=1/360.f;
     }
 
     // Returns the string representation of a Forest object
@@ -34,7 +34,7 @@ public:
                 STR(age);
     }
 protected:
-    int age;
+    double age;
     bool hasElectricity;
     bool isOnFire;
     bool isConnectedToRoad;

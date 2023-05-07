@@ -14,8 +14,13 @@ void ImgBtn::Render(bool active)
     DrawText(_fName.c_str(), _rect.x + (_rect.width - MeasureText(_fName.c_str(), 18)) / 2, _rect.y + (_rect.height - 18) / 2, 18, WHITE);
 
     if (isClicked()) {
-        if (hover > FPS) {
-            DrawText(_helpText.c_str(), GetMouseX() + 10, GetMouseY() + 5,  16, GRAY);
-        } else hover++;
+        if (hover <= FPS)  hover++;
     } else hover = 0;
+}
+
+void ImgBtn::RenderText() {
+    if (hover > FPS) {
+        DrawRectangle(GetMouseX()+ 12, GetMouseY() + 3, MeasureText(_helpText.c_str(), 18) + 4, 22, Color{0, 0, 0, 200});
+        DrawText(_helpText.c_str(), GetMouseX() + 14, GetMouseY() + 5,  18, WHITE);
+    }
 }
