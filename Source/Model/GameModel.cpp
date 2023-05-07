@@ -453,7 +453,8 @@ void GameModel::CheckInfrastructure()
                         //itt lehetne az egyszer kifejtett mártix szerint menni csak akkor elötte ki kell fejteni a mátrixba a _fields-t
                         for (auto f : _fields)
                         {
-                            if (f->GetX() == v.x+i && f->GetY() == v.y+j)
+                            //Ha f ben megtaláltuk aki kell és az i! = j != 0 != i és még nem látogattuk meg ezt a pontot
+                            if (f->GetX() == v.x+i && f->GetY() == v.y+j && (i != 0 && j != 0) && (visited.count(INT_TOUPLE{v.x+i, v.y+j}) == 0) )
                             {
                                 //Itt amúgy csak a road lenne jó, de electric pole még nincs úgy se 
                                 if (f->GetId() == ROADANDELECTRICPOLE)
