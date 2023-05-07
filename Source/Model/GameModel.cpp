@@ -86,7 +86,7 @@ void GameModel::NewGame()
     *   \return Whether the buil_fin_stateding was successful or not
     **/
 bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
-    if (!Gameover)
+    if (!Gameover && stat._finState.total_founds > 0)
     {
         for (INT_TOUPLE pos : *poses) {
             //Building type alapján példányosítjuk
