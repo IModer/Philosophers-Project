@@ -46,7 +46,7 @@ View::View(GameModel *model)
 
     SetTargetFPS(60);
 
-    images = LoadTexture("Assets/tiles.png");
+    images = LoadTexture("../Assets/tiles.png");
 };
 
 void View::Update()
