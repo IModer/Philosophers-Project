@@ -20,6 +20,7 @@ build:
   before_script:
     - cd Source
   script:
+    - pwd
     - make all TEST_MODE?=TEST
   artifacts:
     paths:
