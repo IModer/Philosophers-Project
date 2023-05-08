@@ -20,6 +20,7 @@ build:
   # before_script:
   #   - apt update && apt -y install make autoconf
   script:
+    - cd Source
     - make all
   artifacts:
     paths:
