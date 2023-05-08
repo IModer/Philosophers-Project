@@ -72,9 +72,9 @@ void GameModel::NewGame()
     stat._finState.SetServiceTaxRate(StartingTaxRate);
     stat._finState.SetResidentialTaxRate(StartingTaxRate);
     speedOfTime = NORMAL;
-    satisfaction = 10; //idk
+    satisfaction = StartingSatisfaction; //idk
     Gameover = false;
-    //ChechInfrastructure();
+    CheckInfrastructure();
     // LoadGame(-1); // Alap pálya betöltése
     
     return;
@@ -159,10 +159,9 @@ bool GameModel::Demolition(Vector2 pos)
 
                 //Is it a Residental Zone
                     //If yes then we
-
                 _fields.remove(f);
                 delete f;
-                //Bonus: we can give back some small money like:
+                //TODO we can give back some small money like:
                 //_fin_state.total_founds -= 0.2 * BuildCosts.at(f->GetId());
                 CheckInfrastructure();
                 return true;  //Demolished successfully
@@ -232,7 +231,7 @@ void GameModel::ManipulateTime(TIME_ENUM t)
 void GameModel::Update()
 {
     ////Check if we game over
-    if (satisfaction < -10)
+    if (satisfaction < MinSatisfaction)
     {
         Gameover = true;
     }
@@ -240,6 +239,27 @@ void GameModel::Update()
     // Building updates
     for (Field* i : _fields) i->Update();
 
+    //Profit
+    int total_residents = 0;
+    for (auto f : _fields)
+    {
+        if (f->GetId() == SERVICEZONE)
+        {
+            auto cf = dynamic_cast<ServiceZone*>(f);
+            stat._finState.total_founds += cf->GetWorkers() * 50;
+        }
+        else if (f->GetId() == INDUSTRIALZONE)
+        {
+            auto cf = dynamic_cast<IndustrialZone*>(f);
+            stat._finState.total_founds += cf->GetWorkers() * 100;
+        }
+        else if (f->GetId() == RESIDENTALZONE)
+        {
+            auto cf = dynamic_cast<ResidentalZone*>(f);
+            total_residents += cf->GetResidents();
+        }
+    }
+    
     ////Tax
     //We tax every month
     if ((stat._time / 60) % 30 == 0)
@@ -264,28 +284,36 @@ void GameModel::Update()
                 break;
             }
         }
-        stat._finState.total_founds -= tax;
+        //Get money from tax
+        stat._finState.total_founds += tax;
     }
 
     ////Calculate satisfaction
     // ez lehetne csak naponta
 
-    int new_sat = 10; //starting satisfaction
+    int new_sat = StartingSatisfaction; //starting satisfaction
     //Adók ha 0.5 alatt vannak + 1, amúgy -1
-    //TODO súlyozni kell total_residents el
-    if (stat._finState.GetIndustrialTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
-    if (stat._finState.GetResidentialTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
-    if (stat._finState.GetServiceTaxRate() < 0.5) {new_sat += 1;} else {new_sat -= 1;}
+    //súlyozni kell total_residents el
+    if (stat._finState.GetIndustrialTaxRate()   < 0.5) {new_sat += 1 * (total_residents/2);}
+                                                  else {new_sat -= 1 * total_residents;}
+    if (stat._finState.GetResidentialTaxRate()  < 0.5) {new_sat += 1 * (total_residents/2);} 
+                                                  else {new_sat -= 1 * total_residents;}
+    if (stat._finState.GetServiceTaxRate()      < 0.5) {new_sat += 1 * (total_residents/2);}
+                                                  else {new_sat -= 1 * total_residents;}
 
-    //közel := x (mondjuk 3) távolságon belüli DFSs-ben mérve
+    //közel := x (mondjuk 3) távolságon belüli végtelen normában-ben mérve
     //Ha a lakóhelyhez van közel munkahely (industrial, service) +1, -1 residental zone mezönkéne * residents
     //Ha a lakóhelyhez nincs közel ipari épület (industrial) +1, -1 residental zone mezönkéne * residents
     //Van e a közelben rendőrség, +1, -1 residental zone mezönkéne * residents
     //TODO + Erdő.age * 0.1, mezönként
     int numOfIndustrial = 0;
     int numOfService = 0;
+    int numOfResWithForrest = 0;
+    int numOfResWithStadion = 0;
+    int numOfResWithPolice = 0;
     for (auto f : _fields)
     {
+        //TODO this can be an if/elseif
         switch (f->GetId())
         {
             case INDUSTRIALZONE:
@@ -295,30 +323,32 @@ void GameModel::Update()
                 numOfService++;
                 break;
             case RESIDENTALZONE:
-                //TODO_DFS
-                //közeli munkahely
-                //közeli ipari épület
-                //van e rendőrség
-                //erdő
+                //TODO itt az erdő nem a kora szerint hat :(
+                if (dynamic_cast<ResidentalZone*>(f)->GetHasForest()) {numOfResWithForrest++;}
+                if (dynamic_cast<ResidentalZone*>(f)->GetHasPolice()) {numOfResWithPolice++;}
+                if (dynamic_cast<ResidentalZone*>(f)->GetHasStadion()) {numOfResWithStadion++;}
                 break;
             default:
                 //nothing
-                //it lehetne csalni hogy nem nézünk távolságokat csak hogy hány erdő, rendérség van az alapján +
                 break;
         }
     }
 
+    //TODO balance
+    new_sat += total_residents*numOfResWithForrest/10;
+    new_sat += total_residents*numOfResWithPolice/10;
+    new_sat += total_residents*numOfResWithStadion/10;
+
     //Csak negítív
     //Ha total_funds < 0, (total_funds / 1000), vagyis ha hitel van
-    //TODO súlyozni kell total_residents el
     if (stat._finState.total_founds < 0)
     {
-        new_sat += (stat._finState.total_founds / 1000); // jó a += mert az érték negatív
+        new_sat += (stat._finState.total_founds / 5000); // jó a += mert az érték negatív
     }
     // (|servicezone| - |industrialzone| / X) * -1    //X = 2
     // Ha kiegyensúlyozatlan a s-zone, i-zone arány
-    //TODO súlyozni kell total_residents el
-    new_sat -= abs(numOfIndustrial - numOfService)/2;
+    //súlyozni kell total_residents el
+    new_sat -= total_residents*abs(numOfIndustrial - numOfService)/10;
     satisfaction = new_sat;
 
     ////New people coming to the city
