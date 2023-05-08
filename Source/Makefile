@@ -209,15 +209,10 @@ else
 	CFLAGS += -s -O1
 endif
 
-$(info $$TEST_MODE is [${TEST_MODE}])
-ifeq ($(TEST_MODE),TEST)
-	CFLAGS += -D'TEST' -Icatch.hpp
-endif
-
 # Additional flags for compiler (if desired)
 #CFLAGS += -Wextra -Wmissing-prototypes -Wstrict-prototypes
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
-    $(info $$PLATFORM_OS is [${PLATFORM_OS}])
+#$(info $$PLATFORM_OS is [${PLATFORM_OS}])
 	ifeq ($(PLATFORM_OS),WINDOWS)
 		# resource file contains windows executable icon and properties
 		# -Wl,--subsystem,windows hides the console window
@@ -391,7 +386,7 @@ endif
 
 all:
 #$(info $$OBJS2 is [${OBJS2}])
-	$(MAKE) $(MAKEFILE_PARAMS)
+	$(MAKE) $(MAKEFILE_PARAMS) 2> makee.log
 #2> makee.log
 # Project target defined by PROJECT_NAME
 $(PROJECT_NAME): $(OBJS2)
@@ -403,27 +398,39 @@ $(PROJECT_NAME): $(OBJS2)
 #%.o: %.cpp
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(@D)
-	$(CC) -c "$<" -o "$@" $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM)
+	$(CC) -c "$<" -o "$@" $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM) 2> gppe.log
 #2> gppe.log
 #$(info $$< is [${<}])
 #$(info $$@ is [${@}])
 
+$(info $$TEST_MODE is [${TEST_MODE}])
+ifeq ($(TEST_MODE),TEST)
+	CFLAGS += -D'TEST' -Icatch.hpp
+	MAKEFILE_PARAMS = TEST
+	SRC3 = $(filter-out ./App/main.cpp,$(SRC2))
+    $(info $$SRC3 is [${SRC3}])
+endif
+
+#Testing
+TEST:
+	$(CC) $(SRC3) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS)
+
 # Clean everything
 clean:
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
-    ifeq ($(PLATFORM_OS),WINDOWS)
+	ifeq ($(PLATFORM_OS),WINDOWS)
 		del *.o *.exe /s
-    endif
-    ifeq ($(PLATFORM_OS),LINUX)
+	endif
+	ifeq ($(PLATFORM_OS),LINUX)
 		sudo rm *.o $(OBJS2) game
 # TODO SOLVE THIS
 #rm -f *.o
 #find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
-    endif
-    ifeq ($(PLATFORM_OS),OSX)
+	endif
+	ifeq ($(PLATFORM_OS),OSX)
 		find . -type f -perm +ugo+x -delete
 		rm -f *.o
-    endif
+	endif
 endif
 ifeq ($(PLATFORM),PLATFORM_RPI)
 	find . -type f -executable -delete
