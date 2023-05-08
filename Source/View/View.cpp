@@ -22,6 +22,7 @@ View::View(GameModel *model)
 
     InitWindow(screenWidth, screenHeight, "$[Game_name]");
     SetWindowState(FLAG_FULLSCREEN_MODE);
+    
 
     /* Menu buttons */
     newGameBtn = new Button("New game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f, 400, 80}, 40);
@@ -245,14 +246,17 @@ void View::Render()
         ClearBackground(BLUE);
         BeginMode2D(camera);
         DrawRectangle(-50 * M_UNIT, -25 * M_UNIT, 100 * M_UNIT, 50 * M_UNIT, DARKGREEN);
+        DrawRectangle(0, -26*M_UNIT, M_UNIT, M_UNIT, Color{74, 84, 98, 255});
 
         // Draw the 3d grid, rotated 90 degrees and centered around 0,0
         // just so we have something in the XY plane
-        rlPushMatrix();
-        rlTranslatef(0, 25 * 50, 0);
-        rlRotatef(90, 1, 0, 0);
-        DrawGrid(100, 50);
-        rlPopMatrix();
+        if (buildID != 0) {
+            rlPushMatrix();
+            rlTranslatef(0, 25 * 50, 0);
+            rlRotatef(90, 1, 0, 0);
+            DrawGrid(100, 50);
+            rlPopMatrix();
+        }
 
         for (Field *i : (_model->_fields))
         {
