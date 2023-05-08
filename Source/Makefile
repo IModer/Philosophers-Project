@@ -59,7 +59,7 @@ RAYLIB_LIBTYPE        ?= SHARED
 BUILD_MODE            ?= DEBUG
 
 #Test mode
-TEST_MODE 			  ?= NO_TEST
+#TEST_MODE 			  ?= NO_TEST
 
 # Use external GLFW library instead of rglfw module
 # TODO: Review usage on Linux. Target version of choice. Switch on -lglfw or -lglfw3
@@ -211,6 +211,7 @@ endif
 
 ifeq ($(TEST_MODE),TEST)
 	CFLAGS += -D'TEST' -Icatch.hpp
+	echo 'testing'
 endif
 
 # Additional flags for compiler (if desired)
