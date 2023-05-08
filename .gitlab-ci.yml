@@ -43,6 +43,7 @@ build:
 test:
   stage: test
   script:
+    - cd Source
     - ./test.out
 
 deploy:
