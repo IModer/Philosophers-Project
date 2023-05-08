@@ -18,11 +18,11 @@ build:
   # instead of calling g++ directly you can also use some build toolkit like make
   # install the necessary build tools when needed
   before_script:
-    - apt-get update
-    - apt-get install cmake pkg-config
-    - apt-get install mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
-    - apt-get install libglew-dev libglfw3-dev libglm-dev
-    - apt-get install libao-dev libmpg123-dev
+    - apt-get update -y
+    - apt-get install cmake pkg-config -y
+    - apt-get install mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev -y
+    - apt-get install libglew-dev libglfw3-dev libglm-dev -y
+    - apt-get install libao-dev libmpg123-dev -y
     - cd Source
     - LD_LIBRARY_PATH=/usr/local/lib:/builds/szofttech-ab-2023/group-05/philosophers/Dep/raylib/lib
     - export LD_LIBRARY_PATH
