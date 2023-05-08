@@ -20,7 +20,7 @@ build:
   before_script:
     - cd Source
   script:
-    - make all
+    - make all TEST?=TEST
   artifacts:
     paths:
       - mybinary
