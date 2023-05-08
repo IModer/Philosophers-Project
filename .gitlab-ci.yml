@@ -30,7 +30,7 @@ build:
   script:
     - pwd
     - make all TEST_MODE?=TEST
-    - ./a.out
+
   artifacts:
     paths:
       - mybinary
@@ -43,7 +43,7 @@ build:
 test:
   stage: test
   script:
-    - ./runmytests.sh
+    - ./test.out
 
 deploy:
   stage: deploy
