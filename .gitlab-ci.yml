@@ -22,6 +22,8 @@ build:
   script:
     - cd Source
     - make all
+    - cat gpee.log
+    - cat makee.log
   artifacts:
     paths:
       - mybinary
