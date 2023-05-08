@@ -20,7 +20,7 @@ build:
   # before_script:
   #   - apt update && apt -y install make autoconf
   script:
-    - g++ Source/App/App.cpp -o mybinary
+    - make all
   artifacts:
     paths:
       - mybinary
