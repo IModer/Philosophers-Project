@@ -20,7 +20,7 @@ build:
   # before_script:
   #   - apt update && apt -y install make autoconf
   script:
-    - g++ dfs.cpp -o mybinary
+    - g++ app.cpp -o mybinary
   artifacts:
     paths:
       - mybinary
