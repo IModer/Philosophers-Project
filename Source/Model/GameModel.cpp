@@ -109,6 +109,10 @@ bool GameModel::Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses) {
             bool l = true;
             for(Field* i : _fields) {
                 if (CheckCollisionRecs(f->GetRect(), i->GetRect())) {
+                    if (i->GetId() == RESIDENTALZONE && f->GetId() == RESIDENTALZONE) {
+                        ((ResidentalZone*)i)->Upgrade();
+                        stat._finState.total_founds -= BuildCosts.at(field_t);
+                    }
                     delete f;
                     l = false;
                     break;
