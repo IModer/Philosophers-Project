@@ -209,9 +209,9 @@ else
 	CFLAGS += -s -O1
 endif
 
+$(info $$TEST_MODE is [${TEST_MODE}])
 ifeq ($(TEST_MODE),TEST)
 	CFLAGS += -D'TEST' -Icatch.hpp
-	echo 'testing'
 endif
 
 # Additional flags for compiler (if desired)
