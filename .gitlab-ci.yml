@@ -19,11 +19,8 @@ build:
   # install the necessary build tools when needed
   before_script:
     - cd Source
-    - make all
-    - cat gpee.log
-    - cat makee.log
   script:
-    - echo "asd"
+    - make all
   artifacts:
     paths:
       - mybinary
