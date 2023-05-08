@@ -418,7 +418,7 @@ void GameModel::Update()
 
     ////Munkába menetel
     //6 hónaponta
-    if (((stat._time / 60) % (7*4*6)) == 0)
+    if (((stat._time / 60) % (7*2)) == 0)
     {
         //Minden emberhez próbálunk munkát osztani hetente aki nem tud munkába menni elköltözik
         int totalResidents;
