@@ -42,7 +42,7 @@ test:
   stage: test
 
   before_script:
-    - apt-get update && apt-get install libgl1
+    - apt-get update && apt-get install libgl1 -y
 
   script:
     - cd Source
