@@ -23,6 +23,7 @@ build:
     - apt-get install mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev -y
     - apt-get install libglew-dev libglfw3-dev libglm-dev -y
     - apt-get install libao-dev libmpg123-dev -y
+    - apt-get install ffmpeg libsm6 libxext6  -y
     - cd Source
   script:
     - pwd
