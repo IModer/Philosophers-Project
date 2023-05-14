@@ -12,6 +12,7 @@ public:
     GameField(Field field) : Field(field) {};
     ~GameField();
     virtual std::string GetDescription();
+    bool HasElectricity() { return hasElectricity; };
     std::string toString();
     
     //getterek/setterek ide

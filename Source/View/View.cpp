@@ -267,7 +267,7 @@ void View::Render()
             }
             else
             {
-                DrawTexturePro(Field::images, i->GetSourceRect(), i->GetDrawRect(), {0, 0}, 0.f, WHITE);
+                DrawTexturePro(Field::images, i->GetSourceRect(), i->GetDrawRect(), {0, 0}, 0.f, ((GameField*)i)->HasElectricity()?WHITE:DARKGRAY);
             }
         }
 
