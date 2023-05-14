@@ -23,17 +23,15 @@ build:
     - apt-get install mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev -y
     - apt-get install libglew-dev libglfw3-dev libglm-dev -y
     - apt-get install libao-dev libmpg123-dev -y
+    - apt-get install ffmpeg libsm6 libxext6  -y
     - cd Source
-    - LD_LIBRARY_PATH=/usr/local/lib:/builds/szofttech-ab-2023/group-05/philosophers/Dep/raylib/lib
-    - export LD_LIBRARY_PATH
-    - ldconfig
   script:
     - pwd
     - make all TEST_MODE?=TEST
 
   artifacts:
     paths:
-      - test.out
+      - Source/test.out
       # depending on your build setup it's most likely a good idea to cache outputs to reduce the build time
       # cache:
       #   paths:
@@ -42,8 +40,15 @@ build:
 # run tests using the binary built before
 test:
   stage: test
+
+  before_script:
+    - apt-get update && apt-get install libgl1 -y
+
   script:
     - cd Source
+    - LD_LIBRARY_PATH=/usr/local/lib:/builds/szofttech-ab-2023/group-05/philosophers/Dep/raylib/lib
+    - export LD_LIBRARY_PATH
+    - ldconfig
     - ./test.out
 
 deploy:
