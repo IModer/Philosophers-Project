@@ -1,4 +1,5 @@
 #include "GameModel.h"
+#include "GameField.h"
 #include "IndustrialZone.h"
 #include "ServiceZone.h"
 #include "ResidentalZone.h"
@@ -172,6 +173,13 @@ bool GameModel::Demolition(Vector2 pos)
     return false;
 }
 
+void GameModel::CauseCatastrophe() {
+    printf("oi\n");
+    for (auto i : _fields) {
+        if (i->GetId() != ROADANDELECTRICPOLE && rand()%100 < 50) ((GameField*)i)->SetOnFire();
+    }
+}
+
 //Check if a pos is in the playing fields or not
 bool GameModel::checkCoordsNotInPlayField(INT_TOUPLE pos)
 {
@@ -237,7 +245,13 @@ void GameModel::Update()
     }
 
     // Building updates
-    for (Field* i : _fields) i->Update();
+    list<Field*>::iterator i = _fields.begin();
+    while (i != _fields.end()) {
+        if ((*i)->Update()) {
+            _fields.erase(i++);
+        } else i++;
+    }
+
 
     //Profit
     int total_residents = 0;

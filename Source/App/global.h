@@ -79,6 +79,8 @@ const std::map<FIELD_TYPES, Rectangle> SourceRects = {
     {POLICESTATION, {0, 60, 50, 60}}
 };
 
+const Rectangle fireSourceRect[2] = {{100, 120, 50, 60}, {150, 120, 50, 60}};
+
 //This can be tweaked any time to balace the game, maybe it can even scale with time or money spent, ect...
 //Scaleing wouldnt be that hard, int scale = x; 50*scale, 100*scale ...
 const std::map<FIELD_TYPES, int> BuildCosts = {

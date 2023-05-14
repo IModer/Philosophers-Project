@@ -9,6 +9,7 @@ public:
     PowerPlant(FIELD_TYPES id,
            INT_TOUPLE location) : GameField(id, location) {
             //capacity = maxCapacity;
+            hasElectricity = true;
            }
 
     void Render() {
@@ -33,7 +34,7 @@ public:
     }
 
     int GetCapacity() {return capacity;}
-    int SetCapacity(int p) {capacity = p;}
+    void SetCapacity(int p) {capacity = p;}
 protected:
     int capacity = 10;
     bool hasElectricity = true;

@@ -191,8 +191,9 @@ void View::Update()
             }
             if (!buildPos.empty())
                 buildPos.clear();
-            if (!buildPos.empty())
-                buildPos.clear();
+        }
+        if (IsKeyReleased(KEY_C)) {
+            _model->CauseCatastrophe();
         }
         // wheel action
         float wheel = GetMouseWheelMove();
@@ -268,6 +269,7 @@ void View::Render()
             else
             {
                 DrawTexturePro(Field::images, i->GetSourceRect(), i->GetDrawRect(), {0, 0}, 0.f, ((GameField*)i)->HasElectricity()?WHITE:DARKGRAY);
+                if (((GameField*)i)->IsOnFire()) DrawTexturePro(Field::images, fireSourceRect[(_model->stat._time%30)/15], i->GetDrawRect(), {0, 0}, 0.f, WHITE);
             }
         }
 

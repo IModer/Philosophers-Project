@@ -35,7 +35,6 @@ class View
     ImgBtn* actionButtons[aBtnN];
     TimeButton* timeButtons[4];
     BUILD_TYPES buildID;
-    int resCounter = 0;
     std::vector<INT_TOUPLE> buildPos;
 };
 
