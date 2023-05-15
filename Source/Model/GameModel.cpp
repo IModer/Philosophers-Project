@@ -174,7 +174,6 @@ bool GameModel::Demolition(Vector2 pos)
 }
 
 void GameModel::CauseCatastrophe() {
-    printf("oi\n");
     for (auto i : _fields) {
         if (i->GetId() != ROADANDELECTRICPOLE && rand()%100 < 50) ((GameField*)i)->SetOnFire();
     }
@@ -245,13 +244,15 @@ void GameModel::Update()
     }
 
     // Building updates
+    bool needUpdate = false;
     list<Field*>::iterator i = _fields.begin();
     while (i != _fields.end()) {
         if ((*i)->Update()) {
             _fields.erase(i++);
+            needUpdate = true;
         } else i++;
     }
-
+    if (needUpdate) CheckInfrastructure();
 
     //Profit
     int total_residents = 0;
