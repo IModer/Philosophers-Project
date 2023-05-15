@@ -35,7 +35,7 @@ void App::Run()
         _view->Render();  
         //_model->CheckInfrastructure();
         if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) _view->exitWindowRequested = true;
-        
-          
     }
+
+    printf("byeee\n");
 }

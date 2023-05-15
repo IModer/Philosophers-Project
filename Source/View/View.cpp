@@ -272,6 +272,7 @@ void View::Render()
                 if (((GameField*)i)->IsOnFire()) DrawTexturePro(Field::images, fireSourceRect[(_model->stat._time%30)/15], i->GetDrawRect(), {0, 0}, 0.f, WHITE);
             }
         }
+        if (_model->GetFWindow() != nullptr) _model->GetFWindow()->RenderExtra();
 
         // Build place
         Vector2 MouseGridPos = Vector2{floor(mouseWorldPos.x / 50) * 50, floor(mouseWorldPos.y / 50) * 50};

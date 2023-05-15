@@ -62,6 +62,7 @@ public:
         if (level < 2) {
             level++;
             sourceRect.x+=50;
+            maxresidents*=2;
         }
     }
 
