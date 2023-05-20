@@ -12,6 +12,16 @@ public:
     GameField(Field field) : Field(field) {};
     ~GameField();
     virtual std::string GetDescription();
+    virtual bool Update() {
+        if (isOnFire) {
+            if (beenOnFire++ > 15 && rand()%100 < 20) return true;
+        }else if (rand()%1000 < 1) SetOnFire();
+        return false;
+    }
+    bool HasElectricity() { return hasElectricity; };
+    bool IsOnFire() { return isOnFire; }
+    void SetOnFire() { isOnFire = true; }
+    void Extinguish() { isOnFire = false; beenOnFire = 0; }
     std::string toString();
     
     //getterek/setterek ide
@@ -22,6 +32,7 @@ public:
     void SetHasElectricity(bool b) {hasElectricity = b;}
 
 protected: 
+    int beenOnFire = 0;
     bool hasElectricity = false;
     bool isOnFire = false;
     bool isConnectedToRoad = false;

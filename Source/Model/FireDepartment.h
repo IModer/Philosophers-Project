@@ -26,9 +26,9 @@ public:
                 STR(isHabitable) + " " +
                 STR(hasOpenCapacity);
     }
+    static const int radius = 20; // TODO: ne 10
 protected:
     bool hasOpenCapacity;
-    static const int radius = 10; // TODO: ne 10
 };
 
 #endif

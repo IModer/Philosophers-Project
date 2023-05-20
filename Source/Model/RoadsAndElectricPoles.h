@@ -13,6 +13,7 @@ public:
     void Render() {
         DrawRectangleRec(rect, Color{74, 84, 98, 255});
     }
+    bool Update() { return false; };
     
     // Returns the string representation of a RoadsAndElectricPoles object
     std::string toString() 

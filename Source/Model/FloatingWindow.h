@@ -12,6 +12,7 @@ class FloatingWindow
 
     void Update();
     void Render();
+    void RenderExtra();
     void OnClick(INT_TOUPLE pos);
     private:
     Field* _field;

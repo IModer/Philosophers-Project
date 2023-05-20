@@ -16,8 +16,9 @@ public:
         DrawRectangleRec(rect, GREEN);
         DrawText(STR((int)(age)).c_str(), location.x, location.y, 24, WHITE);
     }
-    void Update() {
+    bool Update() {
         age+=1/360.f;
+        return false;
     }
 
     // Returns the string representation of a Forest object

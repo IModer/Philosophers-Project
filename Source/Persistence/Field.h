@@ -60,7 +60,7 @@ class Field : public GameObject
             }
             DrawRectangleRec(rect, c); */
         };
-        virtual void Update() {};
+        virtual bool Update() { return false; };
 
         static Field* Factory(FIELD_TYPES id, INT_TOUPLE pos={0,0});
         static Field* Factory(FIELD_TYPES id, std::stringstream& ss);

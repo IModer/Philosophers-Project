@@ -19,10 +19,6 @@ public:
         DrawRectangleRec(rect, BROWN);
         DrawText(residents==0?"empty":STR(residents).c_str(), location.x, location.y, 24, WHITE);
     }
-
-    void Update() {
-        //if (residents == 0 && isConnectedToRoad && rand() < 0.05) residents = maxresidents;
-    }
     std::string GetDescription() {
         return GameField::GetDescription() + "\nResidents: " + STR(residents) + "\n has Forrest: " + (hasForest?"true":"false") + "\n Has Staidon: " + (hasStadion?"true":"false");
     }
@@ -66,6 +62,7 @@ public:
         if (level < 2) {
             level++;
             sourceRect.x+=50;
+            maxresidents*=2;
         }
     }
 
