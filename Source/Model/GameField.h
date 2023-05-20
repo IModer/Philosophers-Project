@@ -15,7 +15,7 @@ public:
     virtual bool Update() {
         if (isOnFire) {
             if (beenOnFire++ > 15 && rand()%100 < 20) return true;
-        }else if (rand()%1000 < 1) SetOnFire();
+        }else if (rand()%10000 < 1) SetOnFire();
         return false;
     }
     bool HasElectricity() { return hasElectricity; };

@@ -610,6 +610,8 @@ void GameModel::CheckInfrastructure()
         {
             printf("Here be dragons\n");
             auto cg = dynamic_cast<PowerPlant*>(g);
+            cg->SetHasElectricity(true);
+            cg->SetCapacity(10);
             //BFS over roads késöbb electric-pole on
             //miden ami nem ep (most még road) az costol valamennyi fuelt
             auto queue = std::queue<Field*>();
