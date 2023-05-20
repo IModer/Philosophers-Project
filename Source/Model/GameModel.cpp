@@ -581,6 +581,13 @@ void GameModel::CheckInfrastructure()
         }
     }
 
+    //Elötte mindenkinek lenullázzuk az elektromosságát
+    for (auto g : _fields)
+    {
+        auto cg = dynamic_cast<GameField*>(g);
+        cg->SetHasElectricity(false);
+    }
+
     //Elektromosság
     for (auto g : _fields)
     {
@@ -625,13 +632,22 @@ void GameModel::CheckInfrastructure()
                                         {
                                             //Ha út akkor csak megyünk a mentén
                                             queue.push(f);
-                                            //TODO sok mindennek adhatnánk áramot, de most még csak SeriveZone/IndustrialZone-nak 
-                                        } else if (f->GetId() == SERVICEZONE || f->GetId() == INDUSTRIALZONE) {
+                                            //SeriveZone/IndustrialZone vin le capacityt 
+                                        } else if ( f->GetId() == SERVICEZONE || 
+                                                    f->GetId() == INDUSTRIALZONE) {
                                             queue.push(f);
                                             auto cf = dynamic_cast<GameField*>(f);
                                             if (!cf->GetHasElectricity())
                                             {
                                                 cf->SetHasElectricity(true); cg->SetCapacity(cg->GetCapacity()-1);
+                                            }
+                                        } else //Minden más
+                                        {
+                                            queue.push(f);
+                                            auto cf = dynamic_cast<GameField*>(f);
+                                            if (!cf->GetHasElectricity())
+                                            {
+                                                cf->SetHasElectricity(true);
                                             }
                                         }
                                     }
