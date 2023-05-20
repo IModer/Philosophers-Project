@@ -387,6 +387,7 @@ void View::Render()
             if (IsKeyPressed(KEY_Z)) //idióta amerikaiak, ez az y
             {
                 CloseWindow();
+                exit(0);
             }
             
             else if (IsKeyPressed(KEY_N)) exitWindowRequested = false;
