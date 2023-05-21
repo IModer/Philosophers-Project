@@ -1,3 +1,5 @@
+#ifdef TEST
+
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
@@ -18,3 +20,5 @@ TEST_CASE("GameModel Tests", "[GameModel]") {
 
     // Add more test cases as needed
 }
+
+#endif
