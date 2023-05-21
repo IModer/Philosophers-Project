@@ -618,7 +618,7 @@ void GameModel::CheckInfrastructure()
     {
         if (g->GetId() == POWERPLANT)
         {
-            printf("Here be dragons\n");
+            //printf("Here be dragons\n");
             auto cg = dynamic_cast<PowerPlant*>(g);
             cg->SetHasElectricity(true);
             cg->SetCapacity(10);

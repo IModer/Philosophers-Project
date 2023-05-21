@@ -18,7 +18,12 @@ public:
         DrawText(STR((int)(age)).c_str(), location.x, location.y, 24, WHITE);
     }
     bool Update() {
-        age+=1/360.f;
+        if (age < 1)
+        {
+            age+=1/360.f;
+        } else {
+            hasGrownOut = true;
+        }
         return false;
     }
 
