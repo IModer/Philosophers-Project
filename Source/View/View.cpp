@@ -195,6 +195,9 @@ void View::Update()
         if (IsKeyReleased(KEY_C)) {
             _model->CauseCatastrophe();
         }
+        if (IsKeyReleased(KEY_S)) {
+            _model->SaveGame();
+        }
         // wheel action
         float wheel = GetMouseWheelMove();
 

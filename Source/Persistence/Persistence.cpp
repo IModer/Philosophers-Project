@@ -67,7 +67,7 @@ void Persistence::readGameState(std::string path, std::list<Field*>& fields, Sta
     fields.clear();
     for (auto x : l)
     {
-        //std::cout << "DEBUG x: " << buildingNames.at(x->GetId()) << " = " << x->toString() << std::endl;
+        //std::cout << "DEBUG: " << BuildingNames.at(x->GetId()) << " = " << x->toString() << std::endl;
         fields.push_back(x);
     }
 
@@ -94,13 +94,13 @@ bool Persistence::writeGameState(std::string path, std::list<Field*> fields, Sta
     if (f.is_open())
     {
         //write the time
-        f << stat._time;
+        f << stat._time << " ";
         //write financial struct
-        f << stat._finState << std::endl;
+        f << stat._finState;  //nem kell endl mert a _finState kiírja
         //writing fields to the file
         for (auto field : (fields))
         {
-            f << field->toString() << std::endl;
+            f << field->Serialize() << std::endl;
         }
     } else {
         return false; //unsuccessful
