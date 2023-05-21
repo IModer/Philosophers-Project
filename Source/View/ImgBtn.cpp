@@ -10,8 +10,11 @@ bool ImgBtn::isClicked()
 void ImgBtn::Render(bool active) 
 {
     // render image
-    DrawRectangleRec(_rect, isClicked()?GREEN:(active?BLUE:DARKGREEN));
-    DrawText(_fName.c_str(), _rect.x + (_rect.width - MeasureText(_fName.c_str(), 18)) / 2, _rect.y + (_rect.height - 18) / 2, 18, WHITE);
+    DrawRectangleRec(_rect, isClicked()?GREEN:(active?BLUE:Color{74, 84, 98, 255}));
+    if (aID < 2) {
+        DrawText(_fName.c_str(), _rect.x + (_rect.width - MeasureText(_fName.c_str(), 18)) / 2, _rect.y + (_rect.height - 18) / 2, 18, WHITE);
+    }else {
+        DrawTexturePro(Field::images, SourceRects.at(static_cast<FIELD_TYPES>(aID)), {_rect.x+15, _rect.y-5, _rect.width-30, _rect.height-10}, {0, 0}, 0, WHITE);    }
 
     if (isClicked()) {
         if (hover <= FPS)  hover++;

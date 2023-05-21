@@ -112,10 +112,14 @@ class GameModel
         };
 
         //Setters for Tax rates
-        void SetResidentialTaxRate(int num) {stat._finState.SetResidentialTaxRate(num);}
-        void SetIndustrialTaxRate(int num) {stat._finState.SetIndustrialTaxRate(num);}
-        void SetServiceTaxRate(int num) {stat._finState.SetServiceTaxRate(num);}
-        //Maybe also getter?
+        void SetResidentialTaxRate(float num) {stat._finState.SetResidentialTaxRate(num);
+        cout << num << endl;}
+        void SetIndustrialTaxRate(float num) {stat._finState.SetIndustrialTaxRate(num);}
+        void SetServiceTaxRate(float num) {stat._finState.SetServiceTaxRate(num);}
+
+        float GetResidentialTaxRate() { return stat._finState.GetResidentialTaxRate(); }
+        float GetIndustrialTaxRate() { return stat._finState.GetIndustrialTaxRate(); }
+        float GetServiceTaxRate() { return stat._finState.GetServiceTaxRate(); }
 
         //A kiadási oldalhoz
         int GetBuildingCost(Field* f) {return BuildCosts.at((FIELD_TYPES)(f->GetId()));}

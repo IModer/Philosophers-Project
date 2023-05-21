@@ -10,6 +10,7 @@
 #include <vector>
 #include <istream>
 #include <stdexcept>
+#include <iostream>
 
 #ifdef debug
 #include <iostream>
@@ -148,32 +149,35 @@ private:
 
 public:
     int total_founds;
-    int loan; //Ez nem tudom hogy kell-e
+    int loan;
 
     float GetResidentialTaxRate() {return residential_tax_rate;}
     float GetIndustrialTaxRate() {return industrial_tax_rate;}
     float GetServiceTaxRate() {return service_tax_rate;}
 
-    void SetResidentialTaxRate(int num)
+    void SetResidentialTaxRate(float num)
     {
-        if (num > 1 && num < 0)
-            throw std::invalid_argument("Invalid argument passed to SetResidentialTaxRate. num should be in range [0,1]");
-        
+        if (num > 1 || num < 0)
+            num = 0;
+            // throw std::invalid_argument("Invalid argument passed to SetResidentialTaxRate. num should be in range [0,1]");
+        std::cout << "all good\n";
         residential_tax_rate = num;
     }
 
-    void SetIndustrialTaxRate(int num)
+    void SetIndustrialTaxRate(float num)
     {
-        if (num > 1 && num < 0)
-            throw std::invalid_argument("Invalid argument passed to SetIndustrialTaxRate. num should be in range [0,1]");
+        if (num > 1 || num < 0)
+            num = 0;
+            // throw std::invalid_argument("Invalid argument passed to SetIndustrialTaxRate. num should be in range [0,1]");
         
         industrial_tax_rate = num;
     }
 
-    void SetServiceTaxRate(int num)
+    void SetServiceTaxRate(float num)
     {
-        if (num > 1 && num < 0)
-            throw std::invalid_argument("Invalid argument passed to SetServiceTaxRate. num should be in range [0,1]");
+        if (num > 1 || num < 0)
+            num = 0;
+            // throw std::invalid_argument("Invalid argument passed to SetServiceTaxRate. num should be in range [0,1]");
         
         service_tax_rate = num;
     }

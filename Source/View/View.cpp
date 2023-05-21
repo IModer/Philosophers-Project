@@ -1,4 +1,5 @@
 #include "View.h"
+#include "Button.h"
 #include "ImgBtn.h"
 #include "rlgl.h"
 #include "raymath.h"
@@ -7,7 +8,7 @@
 #include <ctime>
 #include <raylib.h>
 #include <stdlib.h>
-
+#include <format>
 
 bool View::isPosOnRect(Vector2 Pos, Rectangle rect)
 {
@@ -42,6 +43,11 @@ View::View(GameModel *model)
     timeButtons[1] = new TimeButton("Normal", NORMAL, Rectangle{160, 880, 130, 60}, "Normal speed (1 sec = 1 day)");
     timeButtons[2] = new TimeButton("Fast", FAST, Rectangle{10, 950, 130, 60}, "Fast speed (1 sec = 2 days)");
     timeButtons[3] = new TimeButton("Faster", FASTER, Rectangle{160, 950, 130, 60}, "Faster speed (1 sec = 3 days)");
+
+    for (int i = 0; i < 6; i+=2) {
+        TaxButtons[i] = new Button("-", {screenWidth - 240 - i*120.f, screenHeight-45.f, 40, 40}, 32);
+        TaxButtons[i+1] = new Button("+", {screenWidth - 50 - i*120.f, screenHeight-45.f, 40, 40}, 32);
+    }
 
     camera = {0};
     camera.zoom = 1.0f;
@@ -138,7 +144,7 @@ void View::Update()
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
             bool l = true;
-            if (isPosOnRect(GetMousePosition(), Rectangle{0, 0, 300, screenHeight}))
+            if (isPosOnRect(GetMousePosition(), Rectangle{0, 0, 300, static_cast<float>(screenHeight)}))
             {
                 /* UI */
                 for (int i = 0; i < aBtnN; i++)
@@ -162,6 +168,14 @@ void View::Update()
                         _model->speedOfTime = timeButtons[i]->getTime();
                     }
                 }
+            }
+            else if (isPosOnRect(GetMousePosition(), {screenWidth - 720, screenHeight - 45, 710, 40})) {
+                if (TaxButtons[0]->isClicked()) _model->SetResidentialTaxRate(_model->GetResidentialTaxRate()-0.01f);
+                if (TaxButtons[1]->isClicked()) _model->SetResidentialTaxRate(_model->GetResidentialTaxRate()+0.01f);
+                if (TaxButtons[2]->isClicked()) _model->SetIndustrialTaxRate(_model->GetIndustrialTaxRate()-0.01f);
+                if (TaxButtons[3]->isClicked()) _model->SetIndustrialTaxRate(_model->GetIndustrialTaxRate()+0.01f);
+                if (TaxButtons[4]->isClicked()) _model->SetServiceTaxRate(_model->GetServiceTaxRate()-0.01f);
+                if (TaxButtons[5]->isClicked()) _model->SetServiceTaxRate(_model->GetServiceTaxRate()+0.01f);
             }
             else
             {
@@ -374,14 +388,24 @@ void View::Render()
             timeButtons[i]->RenderText();
         }
 
+        DrawRectangle(screenWidth - 720, screenHeight - 45, 710, 40, LIGHTGRAY);
+        for (int i = 0; i < 6; i++) TaxButtons[i]->Render();
+
         if (_model->GetFWindow() != nullptr)
             _model->GetFWindow()->Render(_model);
 
-        // DrawText(("Residental count: " + STR(resCounter)).c_str(), 20, screenHeight-40, 20, BLACK);
-        DrawText(("Money: " + STR(_model->stat._finState.total_founds) + "$").c_str(), 20, screenHeight - 32, 20, BLACK);
-        DrawText(_model->GetCurrentDate().c_str(), 600, screenHeight - 40, 20, BLACK);
-        char snum[10];
-        DrawText(STR(_model->satisfaction).c_str(), 1000, screenHeight - 40, 20, BLACK);
+        DrawRectangle(8, screenHeight - 45, 180, 40, LIGHTGRAY);
+        DrawText(("Date: " + _model->GetCurrentDate()).c_str(), 20, screenHeight - 32, 20, BLACK);
+        DrawRectangle(198, screenHeight - 45, 200, 40, LIGHTGRAY);
+        DrawText(("Satisfaction: " + STR(_model->satisfaction)).c_str(), 210, screenHeight - 32, 20, BLACK);
+        DrawRectangle(408, screenHeight - 45, 200, 40, LIGHTGRAY);
+        DrawText(("Money: " + STR(_model->stat._finState.total_founds) + "$").c_str(), 420, screenHeight - 32, 20, BLACK);
+
+        DrawText(("Res. Tax: " + STR((int)(_model->GetResidentialTaxRate()*100)) + "%").c_str(), screenWidth - 190, screenHeight - 32, 20, BLACK);
+        DrawText(("Ind. Tax: " + STR((int)(_model->GetIndustrialTaxRate()*100)) + "%").c_str(), screenWidth - 435, screenHeight - 32, 20, BLACK);
+        DrawText(("Ser. Tax: " + STR((int)(_model->GetServiceTaxRate()*100)) + "%").c_str(), screenWidth - 675, screenHeight - 32, 20, BLACK);
+
+
         DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
         if (_model->Gameover == true)
         {
