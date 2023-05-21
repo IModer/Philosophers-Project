@@ -35,6 +35,7 @@ class View
     ImgBtn* actionButtons[aBtnN];
     TimeButton* timeButtons[4];
     Button* TaxButtons[6];
+    ExitButton* closeBtn;
     BUILD_TYPES buildID;
     std::vector<INT_TOUPLE> buildPos;
 };

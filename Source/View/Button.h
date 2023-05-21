@@ -12,10 +12,16 @@ class Button
     bool isClicked();
 
     void Render();
-    private:
+    protected:
     std::string _text;
     Rectangle _rect;
     int _fontSize;
+};
+
+class ExitButton : public Button {
+    public:
+    ExitButton(Rectangle rect) : Button("X", rect, 40) {};
+    void Render();
 };
 
 #endif

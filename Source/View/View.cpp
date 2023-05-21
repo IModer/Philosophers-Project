@@ -49,6 +49,8 @@ View::View(GameModel *model)
         TaxButtons[i+1] = new Button("+", {screenWidth - 50 - i*120.f, screenHeight-45.f, 40, 40}, 32);
     }
 
+    closeBtn = new ExitButton(Rectangle{screenWidth - 50, 5, 40, 40});
+
     camera = {0};
     camera.zoom = 1.0f;
 
@@ -176,6 +178,9 @@ void View::Update()
                 if (TaxButtons[3]->isClicked()) _model->SetIndustrialTaxRate(_model->GetIndustrialTaxRate()+0.01f);
                 if (TaxButtons[4]->isClicked()) _model->SetServiceTaxRate(_model->GetServiceTaxRate()-0.01f);
                 if (TaxButtons[5]->isClicked()) _model->SetServiceTaxRate(_model->GetServiceTaxRate()+0.01f);
+            }
+            else if (closeBtn->isClicked()) {
+                exitWindowRequested = true;
             }
             else
             {
@@ -368,6 +373,8 @@ void View::Render()
         DrawRectangle(0, 0, screenWidth, 50, RAYWHITE);
         DrawRectangle(0, screenHeight - 50, screenWidth, 50, RAYWHITE);
 
+        closeBtn->Render();
+
         for (int i = 0; i < aBtnN; i++)
         {
             actionButtons[i]->Render(actionButtons[i]->GetBuildID() == buildID);
@@ -401,7 +408,7 @@ void View::Render()
         DrawRectangle(408, screenHeight - 45, 200, 40, LIGHTGRAY);
         DrawText(("Money: " + STR(_model->stat._finState.total_founds) + "$").c_str(), 420, screenHeight - 32, 20, BLACK);
 
-        DrawText(("Res. Tax: " + STR((int)(_model->GetResidentialTaxRate()*100)) + "%").c_str(), screenWidth - 190, screenHeight - 32, 20, BLACK);
+        DrawText(("Res. Tax: " + STR((int)(_model->GetResidentialTaxRate()*100)) + "%").c_str(), screenWidth - 195, screenHeight - 32, 20, BLACK);
         DrawText(("Ind. Tax: " + STR((int)(_model->GetIndustrialTaxRate()*100)) + "%").c_str(), screenWidth - 435, screenHeight - 32, 20, BLACK);
         DrawText(("Ser. Tax: " + STR((int)(_model->GetServiceTaxRate()*100)) + "%").c_str(), screenWidth - 675, screenHeight - 32, 20, BLACK);
 
