@@ -172,6 +172,9 @@ void View::Update()
                     else
                         _model->Demolition(mouseWorldPos);
                 }
+                else if (_model->GetFWindow() != nullptr && _model->GetFWindow()->IsMouseOver()) {
+                    _model->GetFWindow()->OnClick(GetMousePosition());
+                }
                 else
                 {
                     for (Field *f : (_model->_fields))
@@ -370,7 +373,7 @@ void View::Render()
         }
 
         if (_model->GetFWindow() != nullptr)
-            _model->GetFWindow()->Render();
+            _model->GetFWindow()->Render(_model);
 
         // DrawText(("Residental count: " + STR(resCounter)).c_str(), 20, screenHeight-40, 20, BLACK);
         DrawText(("Money: " + STR(_model->stat._finState.total_founds) + "$").c_str(), 20, screenHeight - 32, 20, BLACK);

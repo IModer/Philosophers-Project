@@ -4,6 +4,7 @@
 #include <filesystem>
 #include "../App/global.h"
 #include "../Persistence/Persistence.h"
+#include "FireDepartment.h"
 #include "FloatingWindow.h"
 #include "enum/time_enum.h"
 #include "IndustrialZone.h"
@@ -152,6 +153,20 @@ class GameModel
             return total;
         };
 
+    FireDepartment* GetClosestFireDepartment(Field* field) {
+        FireDepartment* fd = nullptr;
+        for (Field* f : _fields) {
+            if (f->GetId() == FIREDEPARTMENT) {
+                FireDepartment* tmp = (FireDepartment*)f;
+                if (tmp->InRange(field)) {
+                    if (tmp->getACount() == 0) return tmp;
+                    if (fd == nullptr || fd->getACount() > tmp->getACount()) fd = tmp;
+                }
+            }
+        }
+        return fd;
+    };
+    
     private:
     FloatingWindow* _fWindow;
 

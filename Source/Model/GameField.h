@@ -20,7 +20,7 @@ public:
     }
     bool HasElectricity() { return hasElectricity; };
     bool IsOnFire() { return isOnFire; }
-    void SetOnFire() { isOnFire = true; }
+    virtual void SetOnFire() { isOnFire = true; }
     void Extinguish() { isOnFire = false; beenOnFire = 0; }
     std::string toString();
 
