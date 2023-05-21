@@ -3,7 +3,8 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-#include "../Model/GameModel.h" 
+#include "../Model/GameModel.h"
+#include "../Model/GameModel.cpp" 
 
 TEST_CASE("GameModel", "[Constructor]") {
     Persistence persistence; // Create a Persistence object
