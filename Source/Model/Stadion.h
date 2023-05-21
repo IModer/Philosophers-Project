@@ -15,6 +15,10 @@ public:
         DrawRectangleRec(rect, DARKBLUE);
     }
 
+    std::string GetDescription() {
+        return GameField::GetDescription() + "\nNem propaganda. Increases nearby happiness.";
+    }
+
     //virtual std::string Serialize();
 
     // Returns the string representation of a Stadion object

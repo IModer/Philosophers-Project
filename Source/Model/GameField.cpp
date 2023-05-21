@@ -8,7 +8,7 @@ GameField::~GameField()
 }
 
 std::string GameField::GetDescription() {
-    return Field::GetDescription() + "\nHas elecricity: " + (hasElectricity?"true":"false") + "\nConnected To Road: " + (isConnectedToRoad?"true":"false");
+    return Field::GetDescription() + "\n" + (hasElectricity?"Has electricity":"Doesn't have electricity") + "\n" + (isConnectedToRoad?"Is connected to a road":"Isn't connected to a road");
 }
 
 // Returns a string representation of a GameField object

@@ -11,14 +11,18 @@ public:
            INT_TOUPLE location,
            int workers) : GameField(id, location) {}
 
-    void Render() {
+    void Render() override {
         DrawRectangleRec(rect, PURPLE);
+    }
+
+    std::string GetDescription() override {
+        return GameField::GetDescription() + "A place to shop and work.";
     }
 
     int electricityConsumption();
 
     // Returns the string representation of a ServiceZone object
-    std::string toString() 
+    std::string toString() override
     {
         return  STR(id) + " " +
                 STR(location.x) + " " +

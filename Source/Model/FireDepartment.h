@@ -19,6 +19,10 @@ public:
         DrawRectangleRec(rect, RED);
     };
 
+    std::string GetDescription() {
+        return GameField::GetDescription() + "\nFirefighters can be sent out every 20 seconds\nto extinguish fires.";
+    }
+
     bool Update() {
         if (availableCount > 0) availableCount--;
         return false;

@@ -13,6 +13,9 @@ public:
     void Render() {
         DrawRectangleRec(rect, BLUE);
     }
+    std::string GetDescription() {
+        return GameField::GetDescription() + "\nA police station to stop crime.\nIncreases happiness.";
+    }
 
     // Returns the string representation of a Stadion object
     std::string toString() 

@@ -14,6 +14,10 @@ public:
         DrawRectangleRec(rect, Color{74, 84, 98, 255});
     }
     bool Update() { return false; };
+
+    std::string GetDescription() {
+        return Field::GetDescription() + "\nBasic road with electricity lines alongside it.";
+    }
     
     // Returns the string representation of a RoadsAndElectricPoles object
     std::string toString() 

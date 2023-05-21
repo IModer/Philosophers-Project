@@ -14,7 +14,7 @@ public:
     int electricityConsumption();
 
     // Returns the string representation of a IndustrialZone object
-    std::string toString() 
+    std::string toString() override
     {
         return  STR(id) + " " +
                 STR(location.x) + " " +
@@ -43,11 +43,11 @@ public:
 
     int GetMaxWorkers() {return maxworkers;}
 
-    void Render() {
+    void Render() override {
         DrawRectangleRec(rect, WHITE);
     }
-    std::string GetDescription() {
-        return GameField::GetDescription() + "\nWorkers: " + STR(workers);
+    std::string GetDescription() override {
+        return GameField::GetDescription() + "\nWorkers: " + STR(workers) + "\nA place for people to work in.\nDecreases nearby happiness.";
     }
 protected:
     int workers = 0;

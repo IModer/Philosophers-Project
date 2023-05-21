@@ -13,11 +13,11 @@ public:
                                 hasGrownOut = false;
                                 age = 0;
                                }
-    void Render() {
+    void Render() override {
         DrawRectangleRec(rect, GREEN);
         DrawText(STR((int)(age)).c_str(), location.x, location.y, 24, WHITE);
     }
-    bool Update() {
+    bool Update() override {
         if (age < 1)
         {
             age+=1/360.f;
@@ -27,13 +27,17 @@ public:
         return false;
     }
 
+    std::string GetDescription() override {
+        return GameField::GetDescription() + "\nA forest that needs 10 years to grow out.\nIncreases nearby happiness.";
+    }
+
     void SetAge(int i)
     {
         age = i;
     }
 
     // Returns the string representation of a Forest object
-    std::string toString() 
+    std::string toString() override
     {
         return  STR(id) + " " +
                 STR(location.x) + " " +

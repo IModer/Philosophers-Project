@@ -15,18 +15,18 @@ public:
            INT_TOUPLE location,
            int residents) : GameField(id, location) { this->residents = residents; }
 
-    void Render() {
+    void Render() override {
         DrawRectangleRec(rect, BROWN);
         DrawText(residents==0?"empty":STR(residents).c_str(), location.x, location.y, 24, WHITE);
     }
-    std::string GetDescription() {
-        return GameField::GetDescription() + "\nResidents: " + STR(residents) + "\n has Forrest: " + (hasForest?"true":"false") + "\n Has Staidon: " + (hasStadion?"true":"false");
+    std::string GetDescription() override {
+        return GameField::GetDescription() + "\nResidents: " + STR(residents) + "\n" + (level==0?"Basic housing. Can accomodate 10 people.":(level==1?"A big house. Can accomodate 20 people.":"A luxurius apartment complex.\nCan accomodate 40 people."));
     }
 
     int electricityConsumption();
 
     // Returns the string representation of a ResidentalZone object
-    std::string toString() 
+    std::string toString() override
     {
                 return  STR(id) + " " +
                 STR(location.x) + " " +

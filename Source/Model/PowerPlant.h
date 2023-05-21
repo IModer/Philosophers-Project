@@ -17,7 +17,7 @@ public:
     }
 
     std::string GetDescription() {
-        return GameField::GetDescription() + "\nCapacity: " + STR(capacity);
+        return GameField::GetDescription() + "\nCapacity: " + STR(capacity) + "\nThe electricity can travel throug the electric poles\nAlongside roads and buildings.";
     }
 
     //virtual std::string Serialize();
