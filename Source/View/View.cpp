@@ -73,6 +73,8 @@ void View::Update()
             if (exitBtn->isClicked())
             {
                 CloseWindow();
+                //return 0;
+                exit(0);
             }
         }
         break;
@@ -380,7 +382,7 @@ void View::Render()
         DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
         if (_model->Gameover == true)
         {
-            DrawText("YOU FUCKED UP BIG TIME\nGAME OVER", screenWidth / 2 - 500, screenHeight / 2, 100, WHITE);
+            DrawText("GAME OVER", screenWidth / 2 - 500, screenHeight / 2, 100, WHITE);
         }
 
         if (exitWindowRequested)
