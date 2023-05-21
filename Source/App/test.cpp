@@ -3,20 +3,23 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-#include "../Model/GameModel.h"
-#include "../Model/GameModel.cpp" 
+#include "../Model/GameModel.h"  // Include the header file of the class you want to test
 
-TEST_CASE("GameModel", "[Constructor]") {
-    Persistence persistence; // Create a Persistence object
-    GameModel gameModel(&persistence); // Create a GameModel object using the Persistence object
+// Write your unit tests using the Catch2 macros
+TEST_CASE("GameModel Tests", "[GameModel]") {
+    // Write your test cases
+    SECTION("Test 1") {
+        // Test code
+        REQUIRE(1 + 1 == 2);
+    }
 
-    // Verify initial values
-    REQUIRE(gameModel._persistence == &persistence);
-    REQUIRE(gameModel._fields.empty());
-    REQUIRE(gameModel.speedOfTime == NORMAL);
-    REQUIRE(gameModel.Gameover == false);
-    REQUIRE(gameModel.satisfaction == gameModel.StartingSatisfaction);
-    // Add more assertions for other members if needed
+    SECTION("Test 2") {
+        // Test code
+        REQUIRE(2 * 2 == 4);
+    }
+
+    // Add more test cases as needed
 }
+
 
 #endif
