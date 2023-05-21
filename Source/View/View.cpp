@@ -382,7 +382,7 @@ void View::Render()
         DrawText(_model->GetCurrentDate().c_str(), 600, screenHeight - 40, 20, BLACK);
         char snum[10];
         DrawText(STR(_model->satisfaction).c_str(), 1000, screenHeight - 40, 20, BLACK);
-        DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
+        DrawText("Mouse right button drag to move, mouse wheel to zoom | ESC - QUIT | S - SAVE | C - cause catastrope", 310, 60, 20, WHITE);
         if (_model->Gameover == true)
         {
             DrawText("GAME OVER", screenWidth / 2 - 500, screenHeight / 2, 100, WHITE);
