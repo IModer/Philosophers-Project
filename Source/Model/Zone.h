@@ -16,6 +16,8 @@ public:
     int electricityConsumption();
 
     std::string toString();
+
+    //virtual std::string Serialize();
     
 protected:
     int profit;

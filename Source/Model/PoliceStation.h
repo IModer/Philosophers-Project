@@ -26,6 +26,8 @@ public:
                 STR(isHabitable);
     }
 
+    //virtual std::string Serialize();
+
 protected:
     static const int radius = 10; // TODO: ne 10
 };

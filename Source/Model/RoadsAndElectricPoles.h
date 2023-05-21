@@ -23,6 +23,8 @@ public:
                 STR(location.y) + " " +
                 STR(direction);
     }
+
+    //virtual std::string Serialize();
 protected:
     bool hasElectricity = false;
     int direction;

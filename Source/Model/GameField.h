@@ -23,6 +23,8 @@ public:
     void SetOnFire() { isOnFire = true; }
     void Extinguish() { isOnFire = false; beenOnFire = 0; }
     std::string toString();
+
+    //virtual std::string Serialize() {};
     
     //getterek/setterek ide
     bool GetIsConnectedToRoad() {return isConnectedToRoad;}

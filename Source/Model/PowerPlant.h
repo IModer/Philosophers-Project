@@ -20,6 +20,8 @@ public:
         return GameField::GetDescription() + "\nCapacity: " + STR(capacity);
     }
 
+    //virtual std::string Serialize();
+
     // Returns the string representation of a PowerPlant object
     std::string toString() 
     {

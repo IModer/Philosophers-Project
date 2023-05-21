@@ -11,6 +11,7 @@ public:
            INT_TOUPLE location) : GameField(id, location)
                                {
                                 hasGrownOut = false;
+                                age = 0;
                                }
     void Render() {
         DrawRectangleRec(rect, GREEN);
@@ -19,6 +20,11 @@ public:
     bool Update() {
         age+=1/360.f;
         return false;
+    }
+
+    void SetAge(int i)
+    {
+        age = i;
     }
 
     // Returns the string representation of a Forest object
@@ -34,6 +40,12 @@ public:
                 STR(hasGrownOut) + " " +
                 STR(age);
     }
+
+    std::string Serialize() override
+    {
+        return STR(id) + " " + location.toString() + " " + STR(age);
+    } 
+
 protected:
     double age;
     bool hasGrownOut;

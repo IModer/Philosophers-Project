@@ -5,6 +5,7 @@
 #include "ResidentalZone.h"
 #include "PowerPlant.h"
 #include "Zone.h"
+#include "Forest.h"
 #include <raylib.h>
 #include <raylib.h>
 #include <stdlib.h>
@@ -44,14 +45,16 @@ void GameModel::LoadGame(int savenum)
     if (savenum == -1)
     {
         _persistence->readGameState(savesPath + "base.sf", _fields, stat);
-    }
-    if (savenum > numOfSaves || savenum <= 0)
+        return;
+    } else if (savenum > numOfSaves || savenum <= 0)
     {
         //SHOULD BE UNREACHABLE
+        throw std::invalid_argument("Invalid argument passed to LoadGame. savenum should be in range [1,numOfSaves]");
         return;
     }
     _persistence->readGameState(savesPath + "savefile" + STR(savenum) + ".sf", _fields, stat);
     CheckInfrastructure();
+    return;
 }
 
 /**
@@ -67,16 +70,18 @@ void GameModel::NewGame()
     _fields.clear();
     stat._time = 0;
     stat._finState = finantial_state();
+    speedOfTime = NORMAL;
+    satisfaction = StartingSatisfaction; //idk
+    Gameover = false;
+    
+    LoadGame(-1); // Alap pálya betöltése
+    CheckInfrastructure();
+
     stat._finState.total_founds = StartingCash;
     stat._finState.loan = 0;
     stat._finState.SetIndustrialTaxRate(StartingTaxRate);
     stat._finState.SetServiceTaxRate(StartingTaxRate);
     stat._finState.SetResidentialTaxRate(StartingTaxRate);
-    speedOfTime = NORMAL;
-    satisfaction = StartingSatisfaction; //idk
-    Gameover = false;
-    CheckInfrastructure();
-    // LoadGame(-1); // Alap pálya betöltése
     
     return;
 }
@@ -601,6 +606,11 @@ void GameModel::CheckInfrastructure()
     {
         auto cg = dynamic_cast<GameField*>(g);
         cg->SetHasElectricity(false);
+        if (cg->GetId() == FOREST)
+        {
+            auto cfg = dynamic_cast<Forest*>(cg);
+            cfg->SetHasElectricity(true);
+        }
     }
 
     //Elektromosság

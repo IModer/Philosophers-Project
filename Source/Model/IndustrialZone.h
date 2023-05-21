@@ -27,6 +27,11 @@ public:
                 STR(profit);
     }
 
+    std::string Serialize() override
+    {
+        return STR(id) + " " + location.toString() + " " + STR(workers);
+    } 
+
     //getter/setter
     int GetProfit() {return profit;}
     void SetProfit(int p) {profit = p;}

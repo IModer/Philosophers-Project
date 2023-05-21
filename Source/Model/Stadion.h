@@ -15,6 +15,7 @@ public:
         DrawRectangleRec(rect, DARKBLUE);
     }
 
+    //virtual std::string Serialize();
 
     // Returns the string representation of a Stadion object
     std::string toString() 

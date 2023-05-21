@@ -39,6 +39,12 @@ public:
                 STR(hasStadion) + " " +
                 STR(residents);
     }
+
+    std::string Serialize() override
+    {
+        return STR(id) + " " + location.toString() + " " +STR(residents);
+    } 
+
     void SetHasForest(bool b) {hasForest = b;}
     bool GetHasForest() {return hasForest;}
 

@@ -26,6 +26,9 @@ public:
                 STR(isHabitable) + " " +
                 STR(hasOpenCapacity);
     }
+
+    //virtual std::string Serialize();
+
     static const int radius = 20; // TODO: ne 10
 protected:
     bool hasOpenCapacity;

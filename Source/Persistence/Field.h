@@ -39,6 +39,7 @@ class Field : public GameObject
         virtual std::string GetDescription();
         // Functions
         virtual std::string toString();
+        virtual std::string Serialize();
         virtual void Render() { 
             /*Color c;
             switch (id) {

@@ -22,6 +22,11 @@ std::string Field::GetDescription() {
     return BuildingNames.at(id) + "\n" + "Position: " + STR(location.x) + " " + STR(location.y);
 }
 
+std::string Field::Serialize()
+{
+    return STR(id) + " " + location.toString();
+}
+
 //The everything is 0 behaviour should be changed
 /**
     *   \brief Creates a subclass of Fields based on id
@@ -81,116 +86,73 @@ Field* Field::Factory(FIELD_TYPES id, INT_TOUPLE pos)
     **/
 Field* Field::Factory(FIELD_TYPES id, std::stringstream& ss)
 {
-    //elágazunk az id alapján
     Field* r;
-    int direction, maintenanceCost, age, capacity, workers, profit, residents;
-    INT_TOUPLE location, size;
-    bool hasElectricity, isOnFire, isConnectedToRoad, isHabitable, hasGrownOut, hasOpenCapacity, hasForest, hasNeighbouringStadion;
+    int age, workers, residents;
+    INT_TOUPLE location;
+ 
+    ss >> location.x >> location.y;
+    
+    //elágazunk az id alapján
     switch (id)
     {
-    case ROADANDELECTRICPOLE:
-        {
-            ss >> location.x >> location.y >> size.x >> size.y >> direction;
-            RoadsAndElectricPoles* a = new RoadsAndElectricPoles(id, location);
-            // a->direction = direction; // checkInfrastructure dolga
-            r = a;
+        case ROADANDELECTRICPOLE:
+            {
+                RoadsAndElectricPoles* a = new RoadsAndElectricPoles(id, location);
+                r = a;
+                break;
+            }
+        case GAMEFIELD:
             break;
-        }
-    case GAMEFIELD:
-        //
-
-        break;
-    case FOREST:
-        {
-            ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> hasGrownOut >> maintenanceCost >> age;
-            auto b = new Forest(id, location);
-            //set age
-            // b->hasElectricity = hasElectricity; // checkInfrastructure dolga
-            // b->isOnFire = isOnFire;
-            // b->isConnectedToRoad = isConnectedToRoad;
-            // b->isHabitable = isHabitable;
-            // b->hasGrownOut = hasGrownOut;
-            // b->maintenanceCost = maintenanceCost;
-            r = b;
+        case FOREST:
+            {
+                ss >> age;
+                auto b = new Forest(id, location);
+                b->SetAge(age);
+                r = b;
+                break;
+            }
+        case FIREDEPARTMENT:
+            {
+                auto c = new FireDepartment(id, location);
+                r = c;
+                break;
+            }
+        case POWERPLANT:
+            {
+                auto d = new PowerPlant(id, location);
+                r = d;
+                break;
+            }
+        case STADIUM:
+            {
+                auto e = new Stadion(id, location);
+                r = e;
+                break;
+            }
+        case SERVICEZONE:
+            {
+                ss >> workers;
+                auto f = new ServiceZone(id, location, workers);
+                r = f;
+                break;
+            }
+        case INDUSTRIALZONE:
+            {
+                ss >> workers;
+                auto g = new IndustrialZone(id, location, workers);
+                r = g;
+                break;
+            }
+        case RESIDENTALZONE:
+            {
+                ss >> residents;
+                auto i = new ResidentalZone(id, location, residents);
+                r = i;
+                break;
+            }
+        default:
+            //UNREACHABLE
             break;
-        }
-    case FIREDEPARTMENT:
-        {
-            ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> hasOpenCapacity;
-            auto c = new FireDepartment(id, location);
-            /*c->hasElectricity = hasElectricity; // checkInfrastructure dolga
-            c->isOnFire = isOnFire;
-            c->isConnectedToRoad = isConnectedToRoad;
-            c->isHabitable = isHabitable;
-            c->hasOpenCapacity = hasOpenCapacity; */
-            r = c;
-            break;
-        }
-    case POWERPLANT:
-        {
-            ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> capacity;
-            auto d = new PowerPlant(id, location);
-            // d->hasElectricity = hasElectricity;
-            // d->isOnFire = isOnFire;
-            // d->isConnectedToRoad = isConnectedToRoad;
-            // d->isHabitable = isHabitable;
-            // d->capacity = capacity;
-            r = d;
-            break;
-        }
-    case STADIUM:
-        {
-            ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable;
-            auto e = new Stadion(id, location);
-            // e->hasElectricity = hasElectricity;
-            // e->isOnFire = isOnFire;
-            // e->isConnectedToRoad = isConnectedToRoad;
-            // e->isHabitable = isHabitable;
-            r = e;
-            break;
-        }
-    case SERVICEZONE:
-        {
-            ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> workers >> profit;
-            auto f = new ServiceZone(id, location, workers);  //TODO
-            // f->hasElectricity = hasElectricity;
-            // f->isOnFire = isOnFire;
-            // f->isConnectedToRoad = isConnectedToRoad;
-            // f->isHabitable = isHabitable;
-            // f->workers = workers;
-            // f->profit = profit;
-            r = f;
-            break;
-        }
-    case INDUSTRIALZONE:
-        {
-            ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> workers >> profit;
-            auto g = new IndustrialZone(id, location, workers);  //TODO
-            // g->hasElectricity = hasElectricity;
-            // g->isOnFire = isOnFire;
-            // g->isConnectedToRoad = isConnectedToRoad;
-            // g->isHabitable = isHabitable;
-            // g->workers = workers;
-            // g->profit = profit;
-            r = g;
-            break;
-        }
-    case RESIDENTALZONE:
-        {
-            ss >> location.x >> location.y >> size.x >> size.y >> hasElectricity >> isOnFire >> isConnectedToRoad >> isHabitable >> hasForest >> hasNeighbouringStadion >> residents;
-            auto i = new ResidentalZone(id, location, residents);  //TODO
-            // i->hasElectricity = hasElectricity;
-            // i->isOnFire = isOnFire;
-            // i->isConnectedToRoad = isConnectedToRoad;
-            // i->isHabitable = isHabitable;
-            // i->hasForest = hasForest;
-            // i->hasNeighbouringStadion = hasNeighbouringStadion;
-            r = i;
-            break;
-        }
-    default:
-        //UNREACHABLE
-        break;
     }
 
     return r;
