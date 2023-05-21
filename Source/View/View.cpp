@@ -413,7 +413,7 @@ void View::Render()
         DrawText(("Ser. Tax: " + STR((int)(_model->GetServiceTaxRate()*100)) + "%").c_str(), screenWidth - 675, screenHeight - 32, 20, BLACK);
 
 
-        DrawText("Mouse right button drag to move, mouse wheel to zoom", 310, 60, 20, WHITE);
+        DrawText("Mouse right button drag to move, mouse wheel to zoom | ESC - QUIT | S - SAVE | C - cause catastrope", 310, 60, 20, WHITE);   
         if (_model->Gameover == true)
         {
             DrawText("GAME OVER", screenWidth / 2 - 500, screenHeight / 2, 100, WHITE);
