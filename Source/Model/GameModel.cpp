@@ -253,6 +253,7 @@ void GameModel::Update()
     list<Field*>::iterator i = _fields.begin();
     while (i != _fields.end()) {
         if ((*i)->Update()) {
+            //Remove building if the fire destroyed it
             _fields.erase(i++);
             needUpdate = true;
         } else i++;
@@ -260,26 +261,10 @@ void GameModel::Update()
     if (needUpdate) CheckInfrastructure();
 
     //Profit
+    HandleProfit();
+
     int total_residents = 0;
-    for (auto f : _fields)
-    {
-        if (f->GetId() == SERVICEZONE)
-        {
-            auto cf = dynamic_cast<ServiceZone*>(f);
-            stat._finState.total_founds += cf->GetWorkers() * 50;
-        }
-        else if (f->GetId() == INDUSTRIALZONE)
-        {
-            auto cf = dynamic_cast<IndustrialZone*>(f);
-            stat._finState.total_founds += cf->GetWorkers() * 100;
-        }
-        else if (f->GetId() == RESIDENTALZONE)
-        {
-            auto cf = dynamic_cast<ResidentalZone*>(f);
-            total_residents += cf->GetResidents();
-        }
-    }
-    
+
     ////Tax
     //We tax every month
     if ((stat._time / 60) % 30 == 0)
@@ -298,6 +283,7 @@ void GameModel::Update()
                 break;
             case RESIDENTALZONE:
                 tax += dynamic_cast<ResidentalZone*>(f)->GetResidents() * stat._finState.GetResidentialTaxRate() / 12;
+                total_residents += dynamic_cast<ResidentalZone*>(f)->GetResidents();
                 break;
             default:
                 //Unreachable
@@ -333,7 +319,6 @@ void GameModel::Update()
     int numOfResWithPolice = 0;
     for (auto f : _fields)
     {
-        //TODO this can be an if/elseif
         switch (f->GetId())
         {
             case INDUSTRIALZONE:
@@ -343,7 +328,7 @@ void GameModel::Update()
                 numOfService++;
                 break;
             case RESIDENTALZONE:
-                //TODO itt az erdő nem a kora szerint hat :(
+                //Erdő nem a kora szerint had de ez van
                 if (dynamic_cast<ResidentalZone*>(f)->GetHasForest()) {numOfResWithForrest++;}
                 if (dynamic_cast<ResidentalZone*>(f)->GetHasPolice()) {numOfResWithPolice++;}
                 if (dynamic_cast<ResidentalZone*>(f)->GetHasStadion()) {numOfResWithStadion++;}
@@ -445,7 +430,7 @@ void GameModel::Update()
     if (((stat._time / 60) % (7*2)) == 0)
     {
         //Minden emberhez próbálunk munkát osztani hetente aki nem tud munkába menni elköltözik
-        int totalResidents;
+        int totalResidents = 0;
 
         for (auto f : _fields)
         {
@@ -525,19 +510,29 @@ void GameModel::Update()
     }
 }
 
-//Kéne asszem:
-//Megnészi van e egy X hosszú körben van e erdő (végtelen norma)
-//CheckIsForrestInRange(GameField* f)
-
-//Megnézi hogy van t tipusú mezű az f r sugarú környezetében
-//CheckIsFIELD_TYPEInRange(GameField* f, FIELD_TYPE t, int r)
-
-//
+void GameModel::HandleProfit()
+{
+    for (auto f : _fields)
+    {
+        if (f->GetId() == SERVICEZONE)
+        {
+            auto cf = dynamic_cast<ServiceZone*>(f);
+            stat._finState.total_founds += cf->GetWorkers() * 50;
+        }
+        else if (f->GetId() == INDUSTRIALZONE)
+        {
+            auto cf = dynamic_cast<IndustrialZone*>(f);
+            stat._finState.total_founds += cf->GetWorkers() * 100;
+        }
+    }
+}
 
 void GameModel::CheckInfrastructure() 
 {
+    CheckHasSpecialFieldNearby();
+
     ////Utak megnézése
-    
+
     //Először mindenkit false ra rakunk
     for (auto f : _fields)
     {
@@ -545,10 +540,10 @@ void GameModel::CheckInfrastructure()
         cf->SetIsConnectedToRoad(false);
     }
     
-    //Kiindulunk a kezdő ütból ami pályán kívül van
+    //Kiindulunk a kezdő útból ami pályán kívül van
     auto queue = std::queue<Field*>();
     auto visited = std::unordered_set<Field*>();
-    queue.push(new Field(FOREST, StartingRoadCoords));
+    queue.push(new Field(ROADANDELECTRICPOLE, StartingRoadCoords));
     while (!queue.empty())
     {
         auto v = queue.front(); queue.pop();
@@ -565,15 +560,8 @@ void GameModel::CheckInfrastructure()
                     if (!checkCoordsNotInPlayField(INT_TOUPLE{v->GetX()+(i * M_UNIT), v->GetY()+(j * M_UNIT)}))
                     {
                         //itt lehetne az egyszer kifejtett mártix szerint menni csak akkor elötte ki kell fejteni a mátrixba a _fields-t
-                        //printf("BFS: %i %i\n", v.x+(i*M_UNIT), v.y+(j*M_UNIT));
                         for (auto f : _fields)
                         {
-                            /*printf("BFS: check %i %i == %i %i != %i %i && %i \n", 
-                            v->GetX()+(i*M_UNIT), v->GetY()+(j*M_UNIT), 
-                            f->GetX(), f->GetY(), 
-                            v->GetX(), v->GetY(), 
-                            visited.count(f));
-                            */
                             //Ha f ben megtaláltuk aki kell és az i! = j != 0 != i és még nem látogattuk meg ezt a pontot
                             if (f->GetX() == v->GetX()+(i*M_UNIT) &&
                                 f->GetY() == v->GetY()+(j*M_UNIT) &&
@@ -581,7 +569,6 @@ void GameModel::CheckInfrastructure()
                                 (visited.count(f) == 0))
                             {
                                 //Itt amúgy csak a road lenne jó, de electric pole még nincs úgy se 
-                                //printf("Yeppe\n");
                                 if (f->GetId() == ROADANDELECTRICPOLE)
                                 {
                                     //Ha út akkor megyünk a mentén
@@ -597,7 +584,6 @@ void GameModel::CheckInfrastructure()
                     }
                 }   
             }
-
         }
     }
 
@@ -687,8 +673,10 @@ void GameModel::CheckInfrastructure()
             }
         }
     }
-    
+};
 
+void GameModel::CheckHasSpecialFieldNearby()
+{
     //Erdők, stadion, rendőrség
     bool check_forest = false;
     bool check_stadion = false;

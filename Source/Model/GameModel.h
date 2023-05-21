@@ -82,7 +82,9 @@ class GameModel
         void LoadGame(int savenum);
         //Ö checkeli hogy gameover van-e 
         void Update();
+            void HandleProfit();
         void CheckInfrastructure();
+            void CheckHasSpecialFieldNearby();
 
         //Ezek csak akkor mennek ha nem gameover
         bool Build(FIELD_TYPES field_t, vector<INT_TOUPLE>* poses);
