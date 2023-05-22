@@ -24,4 +24,13 @@ class ExitButton : public Button {
     void Render();
 };
 
+class SaveButton : public Button {
+    public:
+    SaveButton(Rectangle rect, int n, bool available) : Button("Save file " + STR(n), rect, 40), _n(n), l(available) {};
+    void Render();
+    private:
+    int _n;
+    bool l;
+};
+
 #endif

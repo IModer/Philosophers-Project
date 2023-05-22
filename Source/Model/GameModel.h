@@ -112,8 +112,7 @@ class GameModel
         };
 
         //Setters for Tax rates
-        void SetResidentialTaxRate(float num) {stat._finState.SetResidentialTaxRate(num);
-        cout << num << endl;}
+        void SetResidentialTaxRate(float num) {stat._finState.SetResidentialTaxRate(num);}
         void SetIndustrialTaxRate(float num) {stat._finState.SetIndustrialTaxRate(num);}
         void SetServiceTaxRate(float num) {stat._finState.SetServiceTaxRate(num);}
 

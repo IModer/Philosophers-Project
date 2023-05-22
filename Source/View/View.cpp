@@ -30,11 +30,16 @@ View::View(GameModel *model)
     loadGameBtn = new Button("Load game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f + 100, 400, 80}, 40);
     exitBtn = new Button("Exit game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f + 200, 400, 80}, 40);
 
+    /* Save Buttons */
+    for (int i = 0; i < 10; i++) {
+        saveBtns[i] = new SaveButton({(screenWidth-400)/2.f, 200+i*60.f, 400, 40}, i+1, _model->numOfSaves > i);
+    }
+
     /* Action Buttons */
     int n = 0;
     for (std::pair<FIELD_TYPES, std::string> i : BuildingNames)
     {
-        actionButtons[n] = new ImgBtn(i.second, static_cast<BUILD_TYPES>(i.first), Rectangle{10 + (n % 2) * 150.f, 60 + (n / 2) * 150.f, 130, 130}, "Builds a new " + i.second);
+        actionButtons[n] = new ImgBtn(i.second, static_cast<BUILD_TYPES>(i.first), Rectangle{10 + (n % 2) * 150.f, 60 + (n / 2) * 150.f, 130, 130}, "Builds a new " + i.second + " Cost: " + STR(BuildCosts.at(i.first)) + "$");
         n++;
     }
     actionButtons[aBtnN - 1] = new ImgBtn("Demolition", BT_DEMOLISH, Rectangle{10 + (n % 2) * 150.f, 60 + (n / 2) * 150.f, 130, 130}, "Demolishes buildings");
@@ -49,6 +54,7 @@ View::View(GameModel *model)
         TaxButtons[i+1] = new Button("+", {screenWidth - 50 - i*120.f, screenHeight-45.f, 40, 40}, 32);
     }
 
+    menuBtn = new Button("MENU", Rectangle{5, 5, 100, 40}, 36);
     closeBtn = new ExitButton(Rectangle{screenWidth - 50, 5, 40, 40});
 
     camera = {0};
@@ -70,19 +76,27 @@ void View::Update()
         {
             if (newGameBtn->isClicked())
             {
-                // TODO
                 gameState = GAME;
                 _model->NewGame();
             }
             if (loadGameBtn->isClicked())
             {
-                // TODO
+                gameState = LOAD;
             }
             if (exitBtn->isClicked())
             {
                 CloseWindow();
                 //return 0;
                 exit(0);
+            }
+        }
+        break;
+    case LOAD:
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+            for (int i = 0; i < 10; i++) {
+                if (saveBtns[i]->isClicked()) _model->LoadGame(i+1);
+                gameState = GAME;
+                break;
             }
         }
         break;
@@ -146,7 +160,7 @@ void View::Update()
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
             bool l = true;
-            if (isPosOnRect(GetMousePosition(), Rectangle{0, 0, 300, static_cast<float>(screenHeight)}))
+            if (isPosOnRect(GetMousePosition(), Rectangle{0, 50, 300, static_cast<float>(screenHeight)}))
             {
                 /* UI */
                 for (int i = 0; i < aBtnN; i++)
@@ -178,6 +192,9 @@ void View::Update()
                 if (TaxButtons[3]->isClicked()) _model->SetIndustrialTaxRate(_model->GetIndustrialTaxRate()+0.01f);
                 if (TaxButtons[4]->isClicked()) _model->SetServiceTaxRate(_model->GetServiceTaxRate()-0.01f);
                 if (TaxButtons[5]->isClicked()) _model->SetServiceTaxRate(_model->GetServiceTaxRate()+0.01f);
+            }
+            else if (menuBtn->isClicked()) {
+                gameState = MENU;
             }
             else if (closeBtn->isClicked()) {
                 exitWindowRequested = true;
@@ -263,6 +280,14 @@ void View::Render()
         newGameBtn->Render();
         loadGameBtn->Render();
         exitBtn->Render();
+
+        EndDrawing();
+        break;
+    case LOAD:
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        for (int i = 0; i < 10; i++) saveBtns[i]->Render();
 
         EndDrawing();
         break;
@@ -373,6 +398,7 @@ void View::Render()
         DrawRectangle(0, 0, screenWidth, 50, RAYWHITE);
         DrawRectangle(0, screenHeight - 50, screenWidth, 50, RAYWHITE);
 
+        menuBtn->Render();
         closeBtn->Render();
 
         for (int i = 0; i < aBtnN; i++)

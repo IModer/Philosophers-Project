@@ -137,7 +137,7 @@ const std::map<FIELD_TYPES, int> BuildingMaintenanceCost= {
 
 
 
-typedef enum { MENU = 0, GAME } GAME_STATE;
+typedef enum { MENU = 0, LOAD, GAME } GAME_STATE;
 
 struct finantial_state
 {
@@ -160,7 +160,6 @@ public:
         if (num > 1 || num < 0)
             num = 0;
             // throw std::invalid_argument("Invalid argument passed to SetResidentialTaxRate. num should be in range [0,1]");
-        std::cout << "all good\n";
         residential_tax_rate = num;
     }
 

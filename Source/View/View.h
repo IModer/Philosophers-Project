@@ -31,11 +31,13 @@ class View
     Camera2D camera;
 
     private:
+    SaveButton* saveBtns[10];
     static const int aBtnN = 10;
     ImgBtn* actionButtons[aBtnN];
     TimeButton* timeButtons[4];
     Button* TaxButtons[6];
     ExitButton* closeBtn;
+    Button* menuBtn;
     BUILD_TYPES buildID;
     std::vector<INT_TOUPLE> buildPos;
 };
