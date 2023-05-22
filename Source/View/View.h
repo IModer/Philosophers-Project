@@ -32,6 +32,7 @@ class View
 
     private:
     SaveButton* saveBtns[10];
+    Button* loadExitBtn;
     static const int aBtnN = 10;
     ImgBtn* actionButtons[aBtnN];
     TimeButton* timeButtons[4];

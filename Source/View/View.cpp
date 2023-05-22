@@ -34,6 +34,7 @@ View::View(GameModel *model)
     for (int i = 0; i < 10; i++) {
         saveBtns[i] = new SaveButton({(screenWidth-400)/2.f, 200+i*60.f, 400, 40}, i+1, _model->numOfSaves > i);
     }
+    loadExitBtn = new Button("Back", Rectangle{(screenWidth-400)/2.f, 800, 400, 40}, 40);
 
     /* Action Buttons */
     int n = 0;
@@ -99,6 +100,7 @@ void View::Update()
                 gameState = GAME;
                 break;
             }
+            if (loadExitBtn->isClicked()) gameState = MENU;
         }
         break;
     case GAME:
@@ -294,6 +296,7 @@ void View::Render()
         ClearBackground(RAYWHITE);
 
         for (int i = 0; i < 10; i++) saveBtns[i]->Render();
+        loadExitBtn->Render();
 
         EndDrawing();
         break;
@@ -405,6 +408,7 @@ void View::Render()
         DrawRectangle(0, screenHeight - 50, screenWidth, 50, RAYWHITE);
 
         menuBtn->Render();
+        savebtn->Render();
         closeBtn->Render();
 
         for (int i = 0; i < aBtnN; i++)
