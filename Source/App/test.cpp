@@ -43,7 +43,7 @@ TEST_CASE("GameModel Tests", "[GameModel]") {
 
 }
 
-TEST_CASE("Persistance", "[Persistance]")
+TEST_CASE("Persistance good", "[Persistance 1]")
 {
     auto p = new Persistence();
     auto _fields = list<Field*>();
@@ -77,7 +77,7 @@ TEST_CASE("Persistance", "[Persistance]")
     }
 }
 
-TEST_CASE("Persistance", "[Persistance]")
+TEST_CASE("Persistance bad", "[Persistance 2]")
 {
     auto p = new Persistence();
     auto _fields = list<Field*>();
