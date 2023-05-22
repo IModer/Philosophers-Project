@@ -24,7 +24,7 @@ public:
         } else {
             hasGrownOut = true;
         }
-        return false;
+        return GameField::Update();
     }
 
     std::string GetDescription() override {

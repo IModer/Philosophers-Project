@@ -22,7 +22,7 @@ View::View(GameModel *model)
     buildID = BT_NULL;
 
     InitWindow(screenWidth, screenHeight, "$[Game_name]");
-    SetWindowState(FLAG_FULLSCREEN_MODE);
+    // SetWindowState(FLAG_FULLSCREEN_MODE);
     
 
     /* Menu buttons */
@@ -57,7 +57,7 @@ View::View(GameModel *model)
 
     menuBtn = new Button("MENU", Rectangle{5, 5, 120, 40}, 36);
     savebtn = new Button("SAVE", Rectangle{130, 5, 120, 40}, 36);
-    closeBtn = new ExitButton(Rectangle{screenWidth - 50, 5, 40, 40});
+    closeBtn = new ExitButton(Rectangle{screenWidth - 50.f, 5, 40, 40});
 
     /* Save buttons */
     for (int i = 0; i < 9; i++) {
@@ -208,7 +208,7 @@ void View::Update()
                     }
                 }
             }
-            else if (isPosOnRect(GetMousePosition(), {screenWidth - 720, screenHeight - 45, 710, 40})) {
+            else if (isPosOnRect(GetMousePosition(), {screenWidth - 720.f, screenHeight - 45.f, 710, 40})) {
                 if (TaxButtons[0]->isClicked()) _model->SetResidentialTaxRate(_model->GetResidentialTaxRate()-0.01f);
                 if (TaxButtons[1]->isClicked()) _model->SetResidentialTaxRate(_model->GetResidentialTaxRate()+0.01f);
                 if (TaxButtons[2]->isClicked()) _model->SetIndustrialTaxRate(_model->GetIndustrialTaxRate()-0.01f);

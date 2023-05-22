@@ -204,9 +204,9 @@ public:
 
         f.total_founds = std::stoi(s_total_founds);
         f.loan = std::stoi(s_loan);
-        f.residential_tax_rate = std::stoi(s_residential_tax_rate);
-        f.industrial_tax_rate = std::stoi(s_industrial_tax_rate);
-        f.service_tax_rate = std::stoi(s_entertainment_tax_rate);
+        f.residential_tax_rate = std::stof(s_residential_tax_rate);
+        f.industrial_tax_rate = std::stof(s_industrial_tax_rate);
+        f.service_tax_rate = std::stof(s_entertainment_tax_rate);
         
         return is;
     }

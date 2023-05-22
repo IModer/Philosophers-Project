@@ -27,7 +27,6 @@ bool operator<(const INT_TOUPLE& it1, const INT_TOUPLE& it2) {
     **/
 void GameModel::SaveGame(int savenum)
 {
-    cout << "ass\n";
     if (_persistence->writeGameState( savesPath + "savefile" + STR(savenum) + ".sf", _fields, stat))
     getNumOfSaves();
 }
@@ -47,7 +46,7 @@ void GameModel::LoadGame(int savenum)
     {
         _persistence->readGameState(savesPath + "base.sf", _fields, stat);
         return;
-    } else if (savenum > numOfSaves || savenum <= 0)
+    } else if (savenum > 9 || savenum <= 0)
     {
         //SHOULD BE UNREACHABLE
         throw std::invalid_argument("Invalid argument passed to LoadGame. savenum should be in range [1,numOfSaves]");
