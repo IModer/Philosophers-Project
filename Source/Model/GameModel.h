@@ -54,14 +54,7 @@ class GameModel
             Gameover = false;
             
             //numOfSaves beállítása
-            numOfSaves = 0;
-            for (const auto & entry : filesystem::directory_iterator(savesPath))
-            {
-                if (entry.path().extension() == ".sf")
-                {
-                    numOfSaves++;
-                }
-            }
+            getNumOfSaves();
 
             //Init FloatingWindow
             _fWindow = nullptr;
@@ -75,11 +68,28 @@ class GameModel
             } 
             _fWindow = new FloatingWindow(f); 
         };
+
+        int getNumOfSaves() {
+            numOfSaves = 0;
+            for (const auto & entry : filesystem::directory_iterator(savesPath))
+            {
+                if (entry.path().extension() == ".sf")
+                {
+                    numOfSaves++;
+                }
+            }
+            return numOfSaves;
+        }
+
+        bool SaveFileExsists(int n) {
+            filesystem::path f{ savesPath + "savefile" + STR(n) + ".sf" };
+            return  filesystem::exists(f);
+        }
         
         FloatingWindow* GetFWindow() { return _fWindow; }
         void CloseFWindow() { delete _fWindow; _fWindow = nullptr; }
         void NewGame();
-        void SaveGame();
+        void SaveGame(int savenum=1);
         void LoadGame(int savenum);
         //Ö checkeli hogy gameover van-e 
         void Update();

@@ -25,10 +25,11 @@ bool operator<(const INT_TOUPLE& it1, const INT_TOUPLE& it2) {
     *   Currently creates a new savefile every times its called 
     *   \return void
     **/
-void GameModel::SaveGame()
+void GameModel::SaveGame(int savenum)
 {
-    if (_persistence->writeGameState( savesPath + "savefile" + STR(numOfSaves) + ".sf", _fields, stat))
-        numOfSaves++;
+    cout << "ass\n";
+    if (_persistence->writeGameState( savesPath + "savefile" + STR(savenum) + ".sf", _fields, stat))
+    getNumOfSaves();
 }
 
 //Maybe SaveNewGame and SaveExistingGame

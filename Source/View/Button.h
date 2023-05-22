@@ -27,7 +27,9 @@ class ExitButton : public Button {
 class SaveButton : public Button {
     public:
     SaveButton(Rectangle rect, int n, bool available) : Button("Save file " + STR(n), rect, 40), _n(n), l(available) {};
+    bool isClicked();
     void Render();
+    void SetAvailable(bool w) {l = w;};
     private:
     int _n;
     bool l;

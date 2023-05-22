@@ -137,7 +137,7 @@ const std::map<FIELD_TYPES, int> BuildingMaintenanceCost= {
 
 
 
-typedef enum { MENU = 0, LOAD, GAME } GAME_STATE;
+typedef enum { MENU = 0, LOAD, SAVE, GAME } GAME_STATE;
 
 struct finantial_state
 {

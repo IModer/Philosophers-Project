@@ -19,6 +19,10 @@ void ExitButton::Render() {
     DrawText(_text.c_str(), _rect.x + (_rect.width - MeasureText(_text.c_str(), _fontSize)) / 2, _rect.y + (_rect.height - _fontSize) / 2, _fontSize, WHITE);
 }
 
+bool SaveButton::isClicked() {
+    return Button::isClicked() && l;
+}
+
 void SaveButton::Render() {
     if (l) {
         Button::Render();

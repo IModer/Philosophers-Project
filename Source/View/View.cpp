@@ -30,9 +30,9 @@ View::View(GameModel *model)
     loadGameBtn = new Button("Load game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f + 100, 400, 80}, 40);
     exitBtn = new Button("Exit game", Rectangle{screenWidth / 2.f - 200, screenHeight / 2.f + 200, 400, 80}, 40);
 
-    /* Save Buttons */
-    for (int i = 0; i < 10; i++) {
-        saveBtns[i] = new SaveButton({(screenWidth-400)/2.f, 200+i*60.f, 400, 40}, i+1, _model->numOfSaves > i);
+    /* Load Buttons */
+    for (int i = 0; i < 9; i++) {
+        loadBtns[i] = new SaveButton({(screenWidth-400)/2.f, 200+i*60.f, 400, 40}, i+1, _model->SaveFileExsists(i+1));
     }
     loadExitBtn = new Button("Back", Rectangle{(screenWidth-400)/2.f, 800, 400, 40}, 40);
 
@@ -59,6 +59,11 @@ View::View(GameModel *model)
     savebtn = new Button("SAVE", Rectangle{130, 5, 120, 40}, 36);
     closeBtn = new ExitButton(Rectangle{screenWidth - 50, 5, 40, 40});
 
+    /* Save buttons */
+    for (int i = 0; i < 9; i++) {
+        saveBtns[i] = new SaveButton({(screenWidth-400)/2.f, 200+i*60.f, 400, 40}, i+1, true);
+    }
+
     camera = {0};
     camera.zoom = 1.0f;
 
@@ -83,6 +88,7 @@ void View::Update()
             }
             if (loadGameBtn->isClicked())
             {
+                initLoadBtns(); 
                 gameState = LOAD;
             }
             if (exitBtn->isClicked())
@@ -95,14 +101,28 @@ void View::Update()
         break;
     case LOAD:
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
-            for (int i = 0; i < 10; i++) {
-                if (saveBtns[i]->isClicked()) _model->LoadGame(i+1);
-                gameState = GAME;
-                break;
+            for (int i = 0; i < 9; i++) {
+                if (loadBtns[i]->isClicked()) {
+                    _model->LoadGame(i+1);
+                    gameState = GAME;
+                    break;
+                }
             }
             if (loadExitBtn->isClicked()) gameState = MENU;
         }
         break;
+    case SAVE:
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+        for (int i = 0; i < 9; i++) {
+            if (saveBtns[i]->isClicked()) {
+                _model->SaveGame(i+1);
+                gameState = GAME;
+                break;
+            }
+        }
+        if (loadExitBtn->isClicked()) gameState = GAME;
+    }
+    break;
     case GAME:
         Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
 
@@ -197,7 +217,7 @@ void View::Update()
                 if (TaxButtons[5]->isClicked()) _model->SetServiceTaxRate(_model->GetServiceTaxRate()+0.01f);
             }
             else if (savebtn->isClicked()) {
-                _model->SaveGame();
+                gameState = SAVE;
                 saveNotification = 60;
             }
             else if (menuBtn->isClicked()) {
@@ -244,7 +264,7 @@ void View::Update()
             _model->CauseCatastrophe();
         }
         if (IsKeyReleased(KEY_S)) {
-            _model->SaveGame();
+            gameState = SAVE;
             saveNotification = 60;
         }
         // wheel action
@@ -295,7 +315,20 @@ void View::Render()
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        for (int i = 0; i < 10; i++) saveBtns[i]->Render();
+        DrawText("Choose a file to load", (screenWidth - MeasureText("Choose a file to load", 42)) / 2, 40, 42, BLUE);
+
+        for (int i = 0; i < 9; i++) loadBtns[i]->Render();
+        loadExitBtn->Render();
+
+        EndDrawing();
+        break;
+    case SAVE:
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        DrawText("Choose a file to save", (screenWidth - MeasureText("Choose a file to save", 42)) / 2, 40, 42, BLUE);
+
+        for (int i = 0; i < 9; i++) saveBtns[i]->Render();
         loadExitBtn->Render();
 
         EndDrawing();
@@ -477,5 +510,11 @@ void View::Render()
         EndDrawing();
 
         break;
+    }
+}
+
+void View::initLoadBtns() {
+    for (int i = 0; i < 9; i++) {
+        loadBtns[i]->SetAvailable(_model->SaveFileExsists(i+1));
     }
 }

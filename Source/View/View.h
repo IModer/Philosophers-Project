@@ -31,7 +31,7 @@ class View
     Camera2D camera;
 
     private:
-    SaveButton* saveBtns[10];
+    SaveButton* loadBtns[9];
     Button* loadExitBtn;
     static const int aBtnN = 10;
     ImgBtn* actionButtons[aBtnN];
@@ -43,6 +43,9 @@ class View
     BUILD_TYPES buildID;
     std::vector<INT_TOUPLE> buildPos;
     int saveNotification = 0;
+    Button* saveBtns[9];
+
+    void initLoadBtns();
 };
 
 #endif
