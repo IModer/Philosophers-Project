@@ -55,6 +55,7 @@ View::View(GameModel *model)
     }
 
     menuBtn = new Button("MENU", Rectangle{5, 5, 120, 40}, 36);
+    savebtn = new Button("SAVE", Rectangle{130, 5, 120, 40}, 36);
     closeBtn = new ExitButton(Rectangle{screenWidth - 50, 5, 40, 40});
 
     camera = {0};
@@ -193,6 +194,10 @@ void View::Update()
                 if (TaxButtons[4]->isClicked()) _model->SetServiceTaxRate(_model->GetServiceTaxRate()-0.01f);
                 if (TaxButtons[5]->isClicked()) _model->SetServiceTaxRate(_model->GetServiceTaxRate()+0.01f);
             }
+            else if (savebtn->isClicked()) {
+                _model->SaveGame();
+                saveNotification = 60;
+            }
             else if (menuBtn->isClicked()) {
                 gameState = MENU;
             }
@@ -238,6 +243,7 @@ void View::Update()
         }
         if (IsKeyReleased(KEY_S)) {
             _model->SaveGame();
+            saveNotification = 60;
         }
         // wheel action
         float wheel = GetMouseWheelMove();
@@ -440,6 +446,10 @@ void View::Render()
 
 
         DrawText("Mouse right button drag to move, mouse wheel to zoom | ESC - QUIT | S - SAVE | C - cause catastrope", 310, 60, 20, WHITE);   
+        if (saveNotification) {
+            DrawText("Game saved!", 310, 100, 20, WHITE);
+            saveNotification--;
+        }
         if (_model->Gameover == true)
         {
             DrawText("GAME OVER", screenWidth / 2 - 500, screenHeight / 2, 100, WHITE);

@@ -38,8 +38,10 @@ class View
     Button* TaxButtons[6];
     ExitButton* closeBtn;
     Button* menuBtn;
+    Button* savebtn;
     BUILD_TYPES buildID;
     std::vector<INT_TOUPLE> buildPos;
+    int saveNotification = 0;
 };
 
 #endif
