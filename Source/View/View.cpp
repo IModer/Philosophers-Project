@@ -54,7 +54,7 @@ View::View(GameModel *model)
         TaxButtons[i+1] = new Button("+", {screenWidth - 50 - i*120.f, screenHeight-45.f, 40, 40}, 32);
     }
 
-    menuBtn = new Button("MENU", Rectangle{5, 5, 100, 40}, 36);
+    menuBtn = new Button("MENU", Rectangle{5, 5, 120, 40}, 36);
     closeBtn = new ExitButton(Rectangle{screenWidth - 50, 5, 40, 40});
 
     camera = {0};
