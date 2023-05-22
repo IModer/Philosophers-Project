@@ -24,7 +24,6 @@ class GameModel
 
         bool Gameover;
 
-        int satisfaction = StartingSatisfaction;
 
         int numOfSaves;
         const string savesPath = "./saves/";
@@ -35,6 +34,7 @@ class GameModel
         const int StartingSatisfaction = 100;
         const int MinSatisfaction = 0;
 
+        int satisfaction = StartingSatisfaction;
         //TODO modifiers for easier balancing, like from satisfaction calculation
 
         INT_TOUPLE StartingRoadCoords = INT_TOUPLE{0,-1300};

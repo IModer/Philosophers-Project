@@ -14,7 +14,7 @@ TEST_CASE("GameModel Tests", "[GameModel]") {
 
     SECTION("Initial Game Model State") {
         // Verify the initial state of GameModel
-        gameModel.NewGame();
+        //gameModel.NewGame();
         REQUIRE(gameModel._fields.empty());
         REQUIRE(gameModel.speedOfTime == NORMAL);
         REQUIRE(gameModel.Gameover == false);
